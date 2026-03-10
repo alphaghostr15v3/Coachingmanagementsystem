@@ -26,6 +26,7 @@ class ProfileUpdateRequest extends FormRequest
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
             'state' => ['nullable', 'string', 'max:100'],
+            'gst_number' => ['nullable', 'string', 'max:15'],
         ];
     }
 }

@@ -36,6 +36,9 @@
             <div class="col-md-6 text-md-end">
                 <h4 class="fw-bold mb-1">{{ auth()->user()->coaching->coaching_name ?? 'Coaching System' }}</h4>
                 <p class="text-white text-opacity-75 mb-0 small">
+                    @if($fee->institute_gst_number)
+                        GSTIN: <strong>{{ $fee->institute_gst_number }}</strong><br>
+                    @endif
                     Date: {{ \Carbon\Carbon::parse($fee->date)->format('d M, Y') }}<br>
                     Status: <span class="badge {{ $fee->status === 'paid' ? 'bg-success' : 'bg-danger' }} text-uppercase ms-1 px-2 py-1" style="font-size: 0.65rem;">{{ $fee->status }}</span>
                 </p>

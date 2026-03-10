@@ -12,6 +12,7 @@ class Coaching extends Model
         'email',
         'mobile',
         'state',
+        'gst_number',
         'database_name',
         'status',
         'subscription_plan',

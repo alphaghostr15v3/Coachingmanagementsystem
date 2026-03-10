@@ -46,14 +46,14 @@
                     </div>
 
                     <div class="row g-4 mb-4">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="mobile" class="form-label fw-bold small text-uppercase text-secondary">Contact Number <span class="text-danger">*</span></label>
                             <input type="text" name="mobile" id="mobile" class="form-control form-control-lg border-0 bg-light rounded-4 @error('mobile') is-invalid @enderror" value="{{ old('mobile') }}" required placeholder="10-digit mobile number">
                             @error('mobile')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="state" class="form-label fw-bold small text-uppercase text-secondary">Institute State <span class="text-danger">*</span></label>
                             <select name="state" id="state" class="form-select form-select-lg border-0 bg-light rounded-4 @error('state') is-invalid @enderror" required>
                                 <option value="">Select State</option>
@@ -62,6 +62,13 @@
                                 @endforeach
                             </select>
                             @error('state')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-4">
+                            <label for="gst_number" class="form-label fw-bold small text-uppercase text-secondary">GST Registration Number</label>
+                            <input type="text" name="gst_number" id="gst_number" class="form-control form-control-lg border-0 bg-light rounded-4 @error('gst_number') is-invalid @enderror" value="{{ old('gst_number') }}" placeholder="e.g. 27AAAAA0000A1Z5">
+                            @error('gst_number')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

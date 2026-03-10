@@ -61,6 +61,12 @@
                 </select>
                 <x-input-error class="mt-2" :messages="$errors->get('state')" />
             </div>
+
+            <div class="mt-4">
+                <x-input-label for="gst_number" :value="__('Institute GST Number')" />
+                <x-text-input id="gst_number" name="gst_number" type="text" class="mt-1 block w-full" :value="old('gst_number', $coaching->gst_number ?? '')" placeholder="Enter GSTIN" />
+                <x-input-error class="mt-2" :messages="$errors->get('gst_number')" />
+            </div>
         @endif
 
         <div class="flex items-center gap-4">

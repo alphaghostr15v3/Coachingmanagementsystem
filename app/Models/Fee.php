@@ -23,6 +23,7 @@ class Fee extends Model
         'gst_type',
         'student_state',
         'institute_state',
+        'institute_gst_number',
     ];
 
     public function student()

@@ -57,25 +57,28 @@ class FeeController extends Controller
         // Determine GST type based on states
         $student        = Student::find($request->student_id);
         $studentState   = $student->state ?? '';
-        $instituteState = auth()->user()->coaching->state ?? '';
+        $institute      = auth()->user()->coaching;
+        $instituteState = $institute->state ?? '';
+        $instituteGST   = $institute->gst_number ?? '';
         $gstType        = ($studentState && $instituteState && strtolower($studentState) === strtolower($instituteState))
                             ? 'intra' : 'inter';
 
         Fee::create([
-            'student_id'     => $request->student_id,
-            'amount'         => $base,
-            'status'         => $request->status,
-            'date'           => $request->date,
-            'cgst_rate'      => $cgstRate,
-            'cgst_amount'    => $cgstAmt,
-            'sgst_rate'      => $sgstRate,
-            'sgst_amount'    => $sgstAmt,
-            'igst_rate'      => $igstRate,
-            'igst_amount'    => $igstAmt,
-            'total_amount'   => $total,
-            'gst_type'       => $gstType,
-            'student_state'  => $studentState,
-            'institute_state'=> $instituteState,
+            'student_id'           => $request->student_id,
+            'amount'               => $base,
+            'status'               => $request->status,
+            'date'                 => $request->date,
+            'cgst_rate'            => $cgstRate,
+            'cgst_amount'          => $cgstAmt,
+            'sgst_rate'            => $sgstRate,
+            'sgst_amount'          => $sgstAmt,
+            'igst_rate'            => $igstRate,
+            'igst_amount'          => $igstAmt,
+            'total_amount'         => $total,
+            'gst_type'             => $gstType,
+            'student_state'        => $studentState,
+            'institute_state'      => $instituteState,
+            'institute_gst_number' => $instituteGST,
         ]);
 
         return redirect()->route('coaching.fees.index')->with('success', 'Fee record added successfully.');
@@ -127,25 +130,28 @@ class FeeController extends Controller
         // Determine GST type based on states
         $student        = Student::find($request->student_id);
         $studentState   = $student->state ?? '';
-        $instituteState = auth()->user()->coaching->state ?? '';
+        $institute      = auth()->user()->coaching;
+        $instituteState = $institute->state ?? '';
+        $instituteGST   = $institute->gst_number ?? '';
         $gstType        = ($studentState && $instituteState && strtolower($studentState) === strtolower($instituteState))
                             ? 'intra' : 'inter';
 
         $fee->update([
-            'student_id'     => $request->student_id,
-            'amount'         => $base,
-            'status'         => $request->status,
-            'date'           => $request->date,
-            'cgst_rate'      => $cgstRate,
-            'cgst_amount'    => $cgstAmt,
-            'sgst_rate'      => $sgstRate,
-            'sgst_amount'    => $sgstAmt,
-            'igst_rate'      => $igstRate,
-            'igst_amount'    => $igstAmt,
-            'total_amount'   => $total,
-            'gst_type'       => $gstType,
-            'student_state'  => $studentState,
-            'institute_state'=> $instituteState,
+            'student_id'           => $request->student_id,
+            'amount'               => $base,
+            'status'               => $request->status,
+            'date'                 => $request->date,
+            'cgst_rate'            => $cgstRate,
+            'cgst_amount'          => $cgstAmt,
+            'sgst_rate'            => $sgstRate,
+            'sgst_amount'          => $sgstAmt,
+            'igst_rate'            => $igstRate,
+            'igst_amount'          => $igstAmt,
+            'total_amount'         => $total,
+            'gst_type'             => $gstType,
+            'student_state'        => $studentState,
+            'institute_state'      => $instituteState,
+            'institute_gst_number' => $instituteGST,
         ]);
 
         return redirect()->route('coaching.fees.index')->with('success', 'Fee record updated successfully.');

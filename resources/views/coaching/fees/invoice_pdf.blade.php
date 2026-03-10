@@ -67,6 +67,9 @@
         <div class="header-right">
             <div class="coaching-name">{{ auth()->user()->coaching->coaching_name ?? 'Coaching System' }}</div>
             <div class="header-meta">State: {{ $fee->institute_state ?? 'N/A' }}</div>
+            @if($fee->institute_gst_number)
+                <div class="header-meta">GSTIN: {{ $fee->institute_gst_number }}</div>
+            @endif
             <div class="header-meta">Date: {{ \Carbon\Carbon::parse($fee->date)->format('d M, Y') }}</div>
             <div class="status-badge {{ $fee->status !== 'paid' ? 'status-unpaid' : '' }}">{{ $fee->status }}</div>
         </div>

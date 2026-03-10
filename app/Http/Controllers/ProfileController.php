@@ -43,7 +43,10 @@ class ProfileController extends Controller
             }
             
             if ($coaching) {
-                $coaching->update(['state' => $request->state]);
+                $coaching->update([
+                    'state' => $request->state,
+                    'gst_number' => $request->gst_number,
+                ]);
             }
         }
 
