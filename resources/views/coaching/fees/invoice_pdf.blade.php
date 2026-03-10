@@ -159,8 +159,15 @@
                     <div class="header-meta">GSTIN: <strong>{{ $fee->institute_gst_number }}</strong></div>
                 @endif
                 <div class="header-meta">Date: {{ \Carbon\Carbon::parse($fee->date)->format('d M, Y') }}</div>
-                <div class="header-meta">
-                    Status: <span class="status-badge {{ $fee->status !== 'paid' ? 'status-unpaid' : '' }}">{{ $fee->status }}</span>
+                <div class="header-meta" style="margin-top: 5px;">
+                    <table style="width: auto; margin-left: auto; border-collapse: collapse;">
+                        <tr>
+                            <td style="padding: 0; vertical-align: middle; color: white; opacity: 0.8; font-weight: bold; font-size: 10px; padding-right: 5px;">Status:</td>
+                            <td style="padding: 0; vertical-align: middle;">
+                                <span class="status-badge {{ $fee->status !== 'paid' ? 'status-unpaid' : '' }}" style="margin: 0; padding: 3px 8px;">{{ $fee->status }}</span>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
