@@ -52,21 +52,17 @@
                             <span class="badge bg-success-subtle text-success px-2 py-1 small"><i class="fas fa-circle me-1" style="font-size: 0.5rem;"></i> Active</span>
                         </td>
                         <td class="text-end">
-                            <div class="dropdown">
-                                <button class="btn btn-light btn-sm rounded-3 shadow-sm border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-4 p-2">
-                                    <li><a class="dropdown-item rounded-3 py-2" href="{{ route('admin.system-users.edit', $user) }}"><i class="fas fa-edit me-2 text-primary"></i> Edit</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <form action="{{ route('admin.system-users.destroy', $user) }}" method="POST" onsubmit="return confirm('Deleting this user will also remove them from their institute database. Proceed?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="dropdown-item rounded-3 py-2 text-danger"><i class="fas fa-trash-alt me-2"></i> Delete User</button>
-                                        </form>
-                                    </li>
-                                </ul>
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="{{ route('admin.system-users.edit', $user) }}" class="btn btn-sm btn-outline-warning rounded-3" title="Edit User">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form action="{{ route('admin.system-users.destroy', $user) }}" method="POST" onsubmit="return confirm('Deleting this user will also remove them from their institute database. Proceed?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-3" title="Delete User">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>

@@ -20,20 +20,16 @@
                     <div class="bg-gradient-warning p-2 rounded-3 text-white shadow-sm" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
                         <i class="fas fa-bullhorn"></i>
                     </div>
-                    <div class="dropdown">
-                        <button class="btn btn-link link-secondary p-0" data-bs-toggle="dropdown">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-3">
-                            <li><a class="dropdown-item" href="{{ route('coaching.notices.edit', $notice) }}"><i class="fas fa-edit me-2"></i> Edit</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form action="{{ route('coaching.notices.destroy', $notice) }}" method="POST">
-                                    @csrf @method('DELETE')
-                                    <button class="dropdown-item text-danger"><i class="fas fa-trash-alt me-2"></i> Remove</button>
-                                </form>
-                            </li>
-                        </ul>
+                    <div class="d-flex gap-2">
+                        <a href="{{ route('coaching.notices.edit', $notice) }}" class="btn btn-sm btn-outline-warning rounded-3" title="Edit Notice">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form action="{{ route('coaching.notices.destroy', $notice) }}" method="POST" onsubmit="return confirm('Delete this notice?')">
+                            @csrf @method('DELETE')
+                            <button class="btn btn-sm btn-outline-danger rounded-3" title="Delete Notice">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
                 <h5 class="fw-bold mb-2">{{ $notice->title }}</h5>

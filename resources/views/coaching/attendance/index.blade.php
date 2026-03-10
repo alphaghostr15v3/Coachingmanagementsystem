@@ -52,7 +52,7 @@
                             <form action="{{ route('coaching.attendance.destroy', $attendance) }}" method="POST" onsubmit="return confirm('Delete this attendance entry?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger border-0 rounded-circle" style="width: 32px; height: 32px;">
+                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-3" title="Delete Entry">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </form>

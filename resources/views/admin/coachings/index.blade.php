@@ -53,37 +53,33 @@
                             @endif
                         </td>
                         <td class="text-center">
-                            <div class="dropdown">
-                                <button class="btn btn-sm btn-light border dropdown-toggle px-3 rounded-3" type="button" data-bs-toggle="dropdown">
-                                    Manage
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 p-2">
-                                    <li><a class="dropdown-item rounded-3 py-2" href="{{ route('admin.coachings.edit', $coaching) }}"><i class="fas fa-edit text-warning me-2"></i> Edit Account</a></li>
-                                    
-                                    @if($coaching->status === 'active')
-                                    <li>
-                                        <form action="{{ route('admin.coachings.deactivate', $coaching) }}" method="POST">
-                                            @csrf @method('PATCH')
-                                            <button type="submit" class="dropdown-item rounded-3 py-2"><i class="fas fa-pause-circle text-muted me-2"></i> Suspend Access</button>
-                                        </form>
-                                    </li>
-                                    @else
-                                    <li>
-                                        <form action="{{ route('admin.coachings.activate', $coaching) }}" method="POST">
-                                            @csrf @method('PATCH')
-                                            <button type="submit" class="dropdown-item rounded-3 py-2 text-success"><i class="fas fa-play-circle me-2"></i> Reactivate</button>
-                                        </form>
-                                    </li>
-                                    @endif
-                                    
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <form action="{{ route('admin.coachings.destroy', $coaching) }}" method="POST" onsubmit="return confirm('WARNING: This will permanently DELETE the institute and its isolated DATABASE. Proceed?')">
-                                            @csrf @method('DELETE')
-                                            <button type="submit" class="dropdown-item rounded-3 py-2 text-danger"><i class="fas fa-trash-alt me-2"></i> Terminate Account</button>
-                                        </form>
-                                    </li>
-                                </ul>
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="{{ route('admin.coachings.edit', $coaching) }}" class="btn btn-sm btn-outline-warning rounded-3" title="Edit Account">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                
+                                @if($coaching->status === 'active')
+                                <form action="{{ route('admin.coachings.deactivate', $coaching) }}" method="POST">
+                                    @csrf @method('PATCH')
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary rounded-3" title="Suspend Access">
+                                        <i class="fas fa-pause-circle"></i>
+                                    </button>
+                                </form>
+                                @else
+                                <form action="{{ route('admin.coachings.activate', $coaching) }}" method="POST">
+                                    @csrf @method('PATCH')
+                                    <button type="submit" class="btn btn-sm btn-outline-success rounded-3" title="Reactivate">
+                                        <i class="fas fa-play-circle"></i>
+                                    </button>
+                                </form>
+                                @endif
+                                
+                                <form action="{{ route('admin.coachings.destroy', $coaching) }}" method="POST" onsubmit="return confirm('WARNING: This will permanently DELETE the institute and its isolated DATABASE. Proceed?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-3" title="Terminate Account">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>

@@ -47,23 +47,23 @@
                         </td>
                         <td><span class="text-muted small fw-medium">{{ date('d M, Y', strtotime($fee->date)) }}</span></td>
                         <td class="text-center">
-                            <div class="dropdown">
-                                <button class="btn btn-sm btn-light border dropdown-toggle px-3" type="button" data-bs-toggle="dropdown">
-                                    Action
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
-                                    <li><a class="dropdown-item py-2" href="{{ route('coaching.fees.show', $fee) }}"><i class="fas fa-file-invoice text-primary me-2"></i> View Invoice</a></li>
-                                    <li><a class="dropdown-item py-2" href="{{ route('coaching.fees.download', $fee) }}"><i class="fas fa-file-pdf text-danger me-2"></i> Download PDF</a></li>
-                                    <li><a class="dropdown-item py-2" href="{{ route('coaching.fees.edit', $fee) }}"><i class="fas fa-edit text-warning me-2"></i> Update Record</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <form action="{{ route('coaching.fees.destroy', $fee) }}" method="POST" onsubmit="return confirm('Delete this record?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="dropdown-item py-2 text-danger"><i class="fas fa-trash me-2"></i> Remove</button>
-                                        </form>
-                                    </li>
-                                </ul>
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="{{ route('coaching.fees.show', $fee) }}" class="btn btn-sm btn-outline-primary rounded-3" title="View Invoice">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ route('coaching.fees.download', $fee) }}" class="btn btn-sm btn-outline-danger rounded-3" title="Download PDF">
+                                    <i class="fas fa-file-pdf"></i>
+                                </a>
+                                <a href="{{ route('coaching.fees.edit', $fee) }}" class="btn btn-sm btn-outline-warning rounded-3" title="Update Record">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form action="{{ route('coaching.fees.destroy', $fee) }}" method="POST" onsubmit="return confirm('Delete this record?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-3" title="Remove Record">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>

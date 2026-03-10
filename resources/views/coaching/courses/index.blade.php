@@ -32,21 +32,17 @@
                         <td><span class="small text-muted">{{ Str::limit($course->description ?? 'No description available.', 50) }}</span></td>
                         <td><span class="fw-bold text-success fs-5">₹{{ number_format($course->amount, 2) }}</span></td>
                         <td class="text-center">
-                            <div class="dropdown">
-                                <button class="btn btn-sm btn-light border dropdown-toggle px-3" type="button" data-bs-toggle="dropdown">
-                                    Manage
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
-                                    <li><a class="dropdown-item py-2" href="{{ route('coaching.courses.edit', $course) }}"><i class="fas fa-edit text-warning me-2"></i> Edit Course</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <form action="{{ route('coaching.courses.destroy', $course) }}" method="POST" onsubmit="return confirm('Are you sure?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="dropdown-item py-2 text-danger"><i class="fas fa-trash me-2"></i> Delete</button>
-                                        </form>
-                                    </li>
-                                </ul>
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="{{ route('coaching.courses.edit', $course) }}" class="btn btn-sm btn-outline-warning rounded-3" title="Edit Course">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form action="{{ route('coaching.courses.destroy', $course) }}" method="POST" onsubmit="return confirm('Are you sure?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-3" title="Delete Course">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>

@@ -50,23 +50,19 @@
                         </td>
                         <td class="text-muted small">{{ $user->created_at->format('M d, Y') }}</td>
                         <td class="text-end">
-                            <div class="dropdown">
-                                <button class="btn btn-light btn-sm rounded-3 shadow-sm border-0" type="button" data-bs-toggle="dropdown">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-4 p-2">
-                                    <li><a class="dropdown-item rounded-3 py-2" href="{{ route('admin.users.edit', $user) }}"><i class="fas fa-edit me-2 text-primary"></i> Edit</a></li>
-                                    @if($user->id !== auth()->id())
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('{{ $user->role === 'coaching_admin' ? 'WARNING: Deleting this Coaching Admin will also PERMANENTLY DELETE their Institute and Database. Proceed?' : 'Are you sure you want to delete this user?' }}');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="dropdown-item rounded-3 py-2 text-danger"><i class="fas fa-trash-alt me-2"></i> Delete</button>
-                                        </form>
-                                    </li>
-                                    @endif
-                                </ul>
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-outline-warning rounded-3" title="Edit User">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                @if($user->id !== auth()->id())
+                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('{{ $user->role === 'coaching_admin' ? 'WARNING: Deleting this Coaching Admin will also PERMANENTLY DELETE their Institute and Database. Proceed?' : 'Are you sure you want to delete this user?' }}');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-3" title="Delete User">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                                @endif
                             </div>
                         </td>
                     </tr>

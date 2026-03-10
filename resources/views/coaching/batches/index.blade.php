@@ -53,21 +53,17 @@
                             </div>
                         </td>
                         <td class="text-center">
-                            <div class="dropdown">
-                                <button class="btn btn-sm btn-light border dropdown-toggle px-3" type="button" data-bs-toggle="dropdown">
-                                    Manage
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
-                                    <li><a class="dropdown-item py-2" href="{{ route('coaching.batches.edit', $batch) }}"><i class="fas fa-edit text-warning me-2"></i> Edit Batch</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <form action="{{ route('coaching.batches.destroy', $batch) }}" method="POST" onsubmit="return confirm('Delete this batch?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="dropdown-item py-2 text-danger"><i class="fas fa-trash me-2"></i> Delete</button>
-                                        </form>
-                                    </li>
-                                </ul>
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="{{ route('coaching.batches.edit', $batch) }}" class="btn btn-sm btn-outline-warning rounded-3" title="Edit Batch">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form action="{{ route('coaching.batches.destroy', $batch) }}" method="POST" onsubmit="return confirm('Delete this batch?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-3" title="Delete Batch">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
