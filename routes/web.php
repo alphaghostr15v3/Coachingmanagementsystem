@@ -62,6 +62,11 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
     Route::get('/notices', [\App\Http\Controllers\Teacher\DashboardController::class, 'notices'])->name('notices');
     Route::get('/students', [\App\Http\Controllers\Teacher\DashboardController::class, 'students'])->name('students');
     Route::resource('attendance', \App\Http\Controllers\Teacher\AttendanceController::class);
+    
+    // Teacher Marks Routes
+    Route::get('marks', [\App\Http\Controllers\Teacher\MarkController::class, 'index'])->name('marks.index');
+    Route::get('marks/create', [\App\Http\Controllers\Teacher\MarkController::class, 'create'])->name('marks.create');
+    Route::post('marks', [\App\Http\Controllers\Teacher\MarkController::class, 'store'])->name('marks.store');
 });
 
 // Student Panel Routes

@@ -43,12 +43,12 @@
                         </td>
                         <td class="pe-4 text-center">
                             <div class="d-flex justify-content-center gap-2">
-                                <button type="button" class="btn btn-sm btn-outline-primary rounded-3" title="View Details" disabled>
+                                <a href="{{ route('teacher.marks.index', ['exam_id' => $exam->id, 'batch_id' => $exam->batch_id]) }}" class="btn btn-sm btn-outline-primary rounded-3" title="View Results">
                                     <i class="fas fa-eye"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary rounded-3" title="Manage Marks" disabled>
+                                </a>
+                                <a href="{{ route('teacher.marks.create', ['exam_id' => $exam->id, 'batch_id' => $exam->batch_id]) }}" class="btn btn-sm btn-outline-secondary rounded-3" title="Manage Marks">
                                     <i class="fas fa-edit"></i>
-                                </button>
+                                </a>
                             </div>
                         </td>
                     </tr>
