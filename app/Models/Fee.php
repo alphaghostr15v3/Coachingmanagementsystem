@@ -13,6 +13,13 @@ class Fee extends Model
         'amount',
         'status',
         'date',
+        'cgst_rate',
+        'cgst_amount',
+        'sgst_rate',
+        'sgst_amount',
+        'igst_rate',
+        'igst_amount',
+        'total_amount',
     ];
 
     public function student()

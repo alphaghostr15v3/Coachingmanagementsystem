@@ -19,7 +19,7 @@
                     <tr>
                         <th class="text-secondary small text-uppercase">#</th>
                         <th class="text-secondary small text-uppercase">Student</th>
-                        <th class="text-secondary small text-uppercase">Amount Collected</th>
+                        <th class="text-secondary small text-uppercase">Total Amount</th>
                         <th class="text-secondary small text-uppercase">Status</th>
                         <th class="text-secondary small text-uppercase">Payment Date</th>
                         <th class="text-center text-secondary small text-uppercase">Actions</th>
@@ -30,7 +30,10 @@
                     <tr>
                         <td class="text-secondary">{{ $loop->iteration }}</td>
                         <td><span class="fw-bold text-dark">{{ $fee->student->name }}</span></td>
-                        <td><span class="fw-bold fs-5 text-dark">₹{{ number_format($fee->amount, 2) }}</span></td>
+                        <td>
+                            <span class="fw-bold fs-5 text-dark">₹{{ number_format($fee->total_amount, 2) }}</span>
+                            <div class="text-muted small" style="font-size: 0.75rem;">Base: ₹{{ number_format($fee->amount, 2) }}</div>
+                        </td>
                         <td>
                             @if($fee->status === 'paid')
                                 <span class="badge bg-soft-success text-success border border-success border-opacity-25 px-3 py-2 rounded-pill">
@@ -49,6 +52,8 @@
                                     Action
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
+                                    <li><a class="dropdown-item py-2" href="{{ route('coaching.fees.show', $fee) }}"><i class="fas fa-file-invoice text-primary me-2"></i> View Invoice</a></li>
+                                    <li><a class="dropdown-item py-2" href="{{ route('coaching.fees.download', $fee) }}"><i class="fas fa-file-pdf text-danger me-2"></i> Download PDF</a></li>
                                     <li><a class="dropdown-item py-2" href="{{ route('coaching.fees.edit', $fee) }}"><i class="fas fa-edit text-warning me-2"></i> Update Record</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li>

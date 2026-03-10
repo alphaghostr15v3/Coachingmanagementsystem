@@ -43,6 +43,7 @@ Route::middleware(['auth', 'role:coaching_admin'])->prefix('coaching')->name('co
     Route::resource('courses', \App\Http\Controllers\CoachingAdmin\CourseController::class);
     Route::resource('batches', \App\Http\Controllers\CoachingAdmin\BatchController::class);
     Route::resource('fees', \App\Http\Controllers\CoachingAdmin\FeeController::class);
+    Route::get('fees/{fee}/download', [\App\Http\Controllers\CoachingAdmin\FeeController::class, 'downloadInvoice'])->name('fees.download');
     Route::resource('attendance', \App\Http\Controllers\CoachingAdmin\AttendanceController::class);
     Route::resource('exams', \App\Http\Controllers\CoachingAdmin\ExamController::class);
     Route::resource('notices', \App\Http\Controllers\CoachingAdmin\NoticeController::class);
