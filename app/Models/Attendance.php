@@ -12,6 +12,7 @@ class Attendance extends Model
 
     protected $fillable = [
         'student_id',
+        'batch_id',
         'date',
         'status',
     ];
@@ -19,5 +20,10 @@ class Attendance extends Model
     public function student()
     {
         return $this->belongsTo(Student::class);
+    }
+
+    public function batch()
+    {
+        return $this->belongsTo(Batch::class);
     }
 }

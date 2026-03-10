@@ -60,6 +60,7 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
     Route::get('/batches', [\App\Http\Controllers\Teacher\DashboardController::class, 'batches'])->name('batches');
     Route::get('/exams', [\App\Http\Controllers\Teacher\DashboardController::class, 'exams'])->name('exams');
     Route::get('/notices', [\App\Http\Controllers\Teacher\DashboardController::class, 'notices'])->name('notices');
+    Route::get('/students', [\App\Http\Controllers\Teacher\DashboardController::class, 'students'])->name('students');
     Route::resource('attendance', \App\Http\Controllers\Teacher\AttendanceController::class);
 });
 

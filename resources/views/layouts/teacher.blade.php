@@ -116,6 +116,9 @@
             <a href="{{ route('teacher.batches') }}" class="{{ request()->routeIs('teacher.batches*') ? 'active' : '' }}">
                 <i class="fas fa-layer-group"></i> Assigned Batches
             </a>
+            <a href="{{ route('teacher.students') }}" class="{{ request()->routeIs('teacher.students*') ? 'active' : '' }}">
+                <i class="fas fa-users"></i> My Students
+            </a>
             <a href="{{ route('teacher.attendance.index') }}" class="{{ request()->routeIs('teacher.attendance.*') ? 'active' : '' }}">
                 <i class="fas fa-calendar-check"></i> Mark Attendance
             </a>

@@ -40,4 +40,30 @@ class DashboardController extends Controller
         $notices = Notice::latest()->get();
         return view('teacher.notices.index', compact('notices'));
     }
+
+    public function students(Request $request)
+    {
+        $teacher = \App\Models\Teacher::where('email', auth()->user()->email)->first();
+        
+        if (!$teacher) {
+            return view('teacher.students.index', ['students' => [], 'batches' => [], 'selectedBatch' => null]);
+        }
+
+        $batches = $teacher->batches;
+        $batchIds = $batches->pluck('id')->toArray();
+
+        $selectedBatchId = $request->batch_id;
+        
+        $query = \App\Models\Student::whereHas('batches', function($q) use ($batchIds, $selectedBatchId) {
+            $q->whereIn('batches.id', $batchIds);
+            if ($selectedBatchId) {
+                $q->where('batches.id', $selectedBatchId);
+            }
+        });
+
+        $students = $query->with('batches')->get();
+        $selectedBatch = $selectedBatchId ? \App\Models\Batch::find($selectedBatchId) : null;
+
+        return view('teacher.students.index', compact('students', 'batches', 'selectedBatch'));
+    }
 }

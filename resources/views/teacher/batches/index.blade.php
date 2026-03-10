@@ -27,7 +27,7 @@
                 <a href="{{ route('teacher.attendance.create', ['batch_id' => $batch->id]) }}" class="btn btn-primary rounded-pill fw-bold">
                     <i class="fas fa-calendar-plus me-2"></i> Mark Attendance
                 </a>
-                <a href="#" class="btn btn-light rounded-pill fw-bold text-secondary border">
+                <a href="{{ route('teacher.students', ['batch_id' => $batch->id]) }}" class="btn btn-light rounded-pill fw-bold text-secondary border">
                     <i class="fas fa-users me-2"></i> Student List
                 </a>
             </div>

@@ -38,6 +38,12 @@ class AttendanceController extends Controller
             );
         }
 
-        return redirect()->route('teacher.dashboard')->with('success', 'Attendance marked successfully.');
+        return redirect()->route('teacher.attendance.index')->with('success', 'Attendance marked successfully.');
+    }
+
+    public function destroy(Attendance $attendance)
+    {
+        $attendance->delete();
+        return back()->with('success', 'Attendance record deleted.');
     }
 }
