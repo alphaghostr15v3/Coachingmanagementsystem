@@ -156,9 +156,10 @@
             <div class="coaching-info">
                 <div class="coaching-name">{{ auth()->user()->coaching->coaching_name ?? 'Coaching System' }}</div>
                 @php
-                    $displayGst = auth()->user()->coaching->gst_number ?? $fee->institute_gst_number;
+                    $coaching = auth()->user()->coaching;
+                    $displayGst = $coaching ? $coaching->gst_number : $fee->institute_gst_number;
                 @endphp
-                @if($displayGst)
+                @if(!empty(trim($displayGst)))
                     <div class="header-meta">GSTIN: <strong>{{ $displayGst }}</strong></div>
                 @endif
                 <div class="header-meta">Date: {{ \Carbon\Carbon::parse($fee->date)->format('d M, Y') }}</div>
@@ -193,14 +194,18 @@
                     <div class="details-label">Payment Details:</div>
                     <div class="details-text">Payment Method: <span style="color: #1a1c1e; font-weight: 500;">Offline/Cash</span></div>
                     <div class="details-text">Currency: <span style="color: #1a1c1e; font-weight: bold;">INR (&#8377;)</span></div>
-                    @if($fee->gst_type)
+                    @php
+                        $hasTax = ($fee->cgst_amount + $fee->sgst_amount + $fee->igst_amount) > 0;
+                    @endphp
+                    @if($hasTax && $fee->gst_type)
                         <div class="details-text" style="margin-top: 5px;">
                              GST Type: 
                             <span class="gst-badge {{ $fee->gst_type == 'inter' ? 'gst-badge-inter' : '' }}">
                                 {{ $fee->gst_type == 'intra' ? 'Intra-State (CGST+SGST)' : 'Inter-State (IGST)' }}
                             </span>
                             @php
-                                $displayState = auth()->user()->coaching->state ?? $fee->institute_state;
+                                $coaching = auth()->user()->coaching;
+                                $displayState = $coaching ? $coaching->state : $fee->institute_state;
                             @endphp
                             @if($displayState) <span style="margin-left: 5px;">| Inst: <strong>{{ $displayState }}</strong></span> @endif
                         </div>

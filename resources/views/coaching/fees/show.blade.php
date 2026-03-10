@@ -37,9 +37,11 @@
                 <h4 class="fw-bold mb-1">{{ auth()->user()->coaching->coaching_name ?? 'Coaching System' }}</h4>
                 <p class="text-white text-opacity-75 mb-0 small">
                     @php
-                        $displayGst = auth()->user()->coaching->gst_number ?? $fee->institute_gst_number;
+                        $coaching = auth()->user()->coaching;
+                        // If coaching exists, strictly use its gst_number (even if null). Otherwise fallback to fee for students.
+                        $displayGst = $coaching ? $coaching->gst_number : $fee->institute_gst_number;
                     @endphp
-                    @if($displayGst)
+                    @if(!empty(trim($displayGst)))
                         GSTIN: <strong>{{ $displayGst }}</strong><br>
                     @endif
                     Date: {{ \Carbon\Carbon::parse($fee->date)->format('d M, Y') }}<br>
@@ -65,14 +67,20 @@
                 <p class="text-secondary fw-bold text-uppercase mb-3" style="font-size: 0.7rem; letter-spacing: 1px;">Payment Details:</p>
                 <p class="text-muted small mb-1">Payment Method: <span class="text-dark fw-medium">Offline/Cash</span></p>
                 <p class="text-muted small mb-1">Currency: <span class="text-dark fw-medium">INR (₹)</span></p>
-                @if($fee->gst_type)
+                @php
+                    $hasTax = ($fee->cgst_amount + $fee->sgst_amount + $fee->igst_amount) > 0;
+                @endphp
+                @if($hasTax && $fee->gst_type)
                 <p class="text-muted small">
                     GST Type: 
                         @if($fee->gst_type === 'inter')
                             <span class="badge bg-warning text-dark">Inter-State (IGST)</span>
+                        @else
+                            <span class="badge bg-success">Intra-State (CGST+SGST)</span>
                         @endif
                         @php
-                            $displayState = auth()->user()->coaching->state ?? $fee->institute_state;
+                            $coaching = auth()->user()->coaching;
+                            $displayState = $coaching ? $coaching->state : $fee->institute_state;
                         @endphp
                         @if($displayState) &nbsp;| Institute: <strong>{{ $displayState }}</strong> @endif
                     </p>
