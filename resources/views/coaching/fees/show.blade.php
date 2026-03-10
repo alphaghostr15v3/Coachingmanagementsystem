@@ -36,8 +36,11 @@
             <div class="col-md-6 text-md-end">
                 <h4 class="fw-bold mb-1">{{ auth()->user()->coaching->coaching_name ?? 'Coaching System' }}</h4>
                 <p class="text-white text-opacity-75 mb-0 small">
-                    @if($fee->institute_gst_number)
-                        GSTIN: <strong>{{ $fee->institute_gst_number }}</strong><br>
+                    @php
+                        $displayGst = auth()->user()->coaching->gst_number ?? $fee->institute_gst_number;
+                    @endphp
+                    @if($displayGst)
+                        GSTIN: <strong>{{ $displayGst }}</strong><br>
                     @endif
                     Date: {{ \Carbon\Carbon::parse($fee->date)->format('d M, Y') }}<br>
                     Status: <span class="badge {{ $fee->status === 'paid' ? 'bg-success' : 'bg-danger' }} text-uppercase ms-1 px-2 py-1" style="font-size: 0.65rem;">{{ $fee->status }}</span>
@@ -65,13 +68,14 @@
                 @if($fee->gst_type)
                 <p class="text-muted small">
                     GST Type: 
-                    @if($fee->gst_type === 'intra')
-                        <span class="badge bg-success">Intra-State (CGST+SGST)</span>
-                    @elseif($fee->gst_type === 'inter')
-                        <span class="badge bg-warning text-dark">Inter-State (IGST)</span>
-                    @endif
-                    @if($fee->institute_state) &nbsp;| Institute: <strong>{{ $fee->institute_state }}</strong> @endif
-                </p>
+                        @if($fee->gst_type === 'inter')
+                            <span class="badge bg-warning text-dark">Inter-State (IGST)</span>
+                        @endif
+                        @php
+                            $displayState = auth()->user()->coaching->state ?? $fee->institute_state;
+                        @endphp
+                        @if($displayState) &nbsp;| Institute: <strong>{{ $displayState }}</strong> @endif
+                    </p>
                 @endif
             </div>
         </div>

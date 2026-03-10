@@ -155,8 +155,11 @@
         <div class="header-right">
             <div class="coaching-info">
                 <div class="coaching-name">{{ auth()->user()->coaching->coaching_name ?? 'Coaching System' }}</div>
-                @if($fee->institute_gst_number)
-                    <div class="header-meta">GSTIN: <strong>{{ $fee->institute_gst_number }}</strong></div>
+                @php
+                    $displayGst = auth()->user()->coaching->gst_number ?? $fee->institute_gst_number;
+                @endphp
+                @if($displayGst)
+                    <div class="header-meta">GSTIN: <strong>{{ $displayGst }}</strong></div>
                 @endif
                 <div class="header-meta">Date: {{ \Carbon\Carbon::parse($fee->date)->format('d M, Y') }}</div>
                 <div class="header-meta" style="margin-top: 5px;">
@@ -192,11 +195,14 @@
                     <div class="details-text">Currency: <span style="color: #1a1c1e; font-weight: bold;">INR (&#8377;)</span></div>
                     @if($fee->gst_type)
                         <div class="details-text" style="margin-top: 5px;">
-                            GST Type: 
+                             GST Type: 
                             <span class="gst-badge {{ $fee->gst_type == 'inter' ? 'gst-badge-inter' : '' }}">
                                 {{ $fee->gst_type == 'intra' ? 'Intra-State (CGST+SGST)' : 'Inter-State (IGST)' }}
                             </span>
-                            @if($fee->institute_state) <span style="margin-left: 5px;">| Inst: <strong>{{ $fee->institute_state }}</strong></span> @endif
+                            @php
+                                $displayState = auth()->user()->coaching->state ?? $fee->institute_state;
+                            @endphp
+                            @if($displayState) <span style="margin-left: 5px;">| Inst: <strong>{{ $displayState }}</strong></span> @endif
                         </div>
                     @endif
                 </td>
