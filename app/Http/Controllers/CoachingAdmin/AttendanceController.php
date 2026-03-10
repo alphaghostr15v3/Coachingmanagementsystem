@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CoachingAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
