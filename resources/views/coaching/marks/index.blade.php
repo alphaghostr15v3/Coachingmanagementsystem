@@ -45,7 +45,7 @@
 <div class="card border-0 shadow-sm animate__animated animate__fadeInUp">
     <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
         <h5 class="fw-bold m-0">Student List</h5>
-        <a href="{{ route('marks.create', ['exam_id' => request('exam_id'), 'batch_id' => request('batch_id')]) }}" class="btn btn-sm btn-success px-3 rounded-pill">
+        <a href="{{ route('coaching.marks.create', ['exam_id' => request('exam_id'), 'batch_id' => request('batch_id')]) }}" class="btn btn-sm btn-success px-3 rounded-pill">
             <i class="fas fa-plus me-1"></i> Update/Enter Marks
         </a>
     </div>

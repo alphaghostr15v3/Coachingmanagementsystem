@@ -31,7 +31,14 @@ class DashboardController extends Controller
 
     public function exams()
     {
-        $exams = Exam::with(['course', 'batch'])->latest()->get();
+        $teacher = \App\Models\Teacher::where('email', auth()->user()->email)->first();
+        $batchIds = $teacher ? $teacher->batches()->pluck('id')->toArray() : [];
+        
+        $exams = Exam::whereIn('batch_id', $batchIds)
+            ->with(['course', 'batch'])
+            ->latest()
+            ->get();
+            
         return view('teacher.exams.index', compact('exams'));
     }
 
