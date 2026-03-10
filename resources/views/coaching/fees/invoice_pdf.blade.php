@@ -88,6 +88,15 @@
                 <span class="label">Payment Details:</span>
                 <p class="value-text">Payment Method: <strong>Offline/Cash</strong></p>
                 <p class="value-text">Currency: <strong>INR (&#8377;)</strong></p>
+                @if($fee->gst_type)
+                <p class="value-text" style="margin-top: 5px;">
+                    GST Type: 
+                    <span style="display: inline-block; background: {{ $fee->gst_type == 'intra' ? '#10b981' : '#f59e0b' }}; color: white; padding: 1px 8px; border-radius: 3px; font-size: 9px; font-weight: bold;">
+                        {{ $fee->gst_type == 'intra' ? 'Intra-State (CGST+SGST)' : 'Inter-State (IGST)' }}
+                    </span>
+                    @if($fee->institute_state) | Inst: {{ $fee->institute_state }} @endif
+                </p>
+                @endif
             </div>
         </div>
 
@@ -124,11 +133,6 @@
                 <div class="summary-row">
                     <span class="summary-label">Subtotal (Base):</span>
                     <span class="summary-value">&#8377;{{ number_format($fee->amount, 2) }}</span>
-                </div>
-
-                <div class="summary-row">
-                    <span class="summary-label">GST Type:</span>
-                    <span class="summary-value summary-value-light" style="text-transform: capitalize;">{{ $fee->gst_type == 'intra' ? 'Intra-State (CGST + SGST)' : 'Inter-State (IGST)' }}</span>
                 </div>
 
                 @if($fee->cgst_amount > 0)
