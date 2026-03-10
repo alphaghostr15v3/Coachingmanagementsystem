@@ -34,6 +34,19 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
+        // Update coaching state if coaching_admin
+        if ($request->user()->role === 'coaching_admin' && $request->has('state')) {
+            $coaching = $request->user()->coaching;
+            if (!$coaching) {
+                // Fallback to email search if coaching_id is missing (though we fixed this)
+                $coaching = \App\Models\Coaching::where('email', $request->user()->email)->first();
+            }
+            
+            if ($coaching) {
+                $coaching->update(['state' => $request->state]);
+            }
+        }
+
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 

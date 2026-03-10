@@ -30,6 +30,7 @@ class CoachingController extends Controller
             'owner_name' => 'required|string|max:255',
             'email' => 'required|email|unique:coachings,email',
             'mobile' => 'nullable|string|max:20',
+            'state' => 'nullable|string|max:100',
             'password' => 'required|string|min:8',
             'subscription_plan' => 'nullable|string|max:100',
         ]);
@@ -41,6 +42,7 @@ class CoachingController extends Controller
             'owner_name' => $request->owner_name,
             'email' => $request->email,
             'mobile' => $request->mobile,
+            'state' => $request->state,
             'database_name' => $dbName,
             'status' => 'active',
             'subscription_plan' => $request->subscription_plan,
@@ -56,7 +58,8 @@ class CoachingController extends Controller
                 'name' => $request->owner_name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'role' => 'coaching_admin'
+                'role' => 'coaching_admin',
+                'coaching_id' => $coaching->id
             ]);
 
         } catch (\Exception $e) {
@@ -87,10 +90,11 @@ class CoachingController extends Controller
             'owner_name' => 'required|string|max:255',
             'email' => 'required|email|unique:coachings,email,'.$coaching->id,
             'mobile' => 'nullable|string|max:20',
+            'state' => 'nullable|string|max:100',
             'subscription_plan' => 'nullable|string|max:100',
         ]);
 
-        $coaching->update($request->only('coaching_name', 'owner_name', 'email', 'mobile', 'subscription_plan'));
+        $coaching->update($request->only('coaching_name', 'owner_name', 'email', 'mobile', 'state', 'subscription_plan'));
 
         // Also update user email if exists
         $user = User::where('email', $request->email)->first();

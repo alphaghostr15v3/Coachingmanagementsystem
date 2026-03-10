@@ -66,6 +66,7 @@
         </div>
         <div class="header-right">
             <div class="coaching-name">{{ auth()->user()->coaching->coaching_name ?? 'Coaching System' }}</div>
+            <div class="header-meta">State: {{ $fee->institute_state ?? 'N/A' }}</div>
             <div class="header-meta">Date: {{ \Carbon\Carbon::parse($fee->date)->format('d M, Y') }}</div>
             <div class="status-badge {{ $fee->status !== 'paid' ? 'status-unpaid' : '' }}">{{ $fee->status }}</div>
         </div>
@@ -76,6 +77,7 @@
             <div class="details-col-left">
                 <span class="label">Invoice To:</span>
                 <p class="value-bold">{{ $fee->student->name }}</p>
+                <p class="value-text">State: {{ $fee->student_state ?? 'N/A' }}</p>
                 <p class="value-text">Student ID: #STU{{ str_pad($fee->student_id, 4, '0', STR_PAD_LEFT) }}</p>
                 <p class="value-text">Email: {{ $fee->student->email ?? 'N/A' }}</p>
             </div>
@@ -119,6 +121,11 @@
                 <div class="summary-row">
                     <span class="summary-label">Subtotal (Base):</span>
                     <span class="summary-value">&#8377;{{ number_format($fee->amount, 2) }}</span>
+                </div>
+
+                <div class="summary-row">
+                    <span class="summary-label">GST Type:</span>
+                    <span class="summary-value summary-value-light" style="text-transform: capitalize;">{{ $fee->gst_type == 'intra' ? 'Intra-State (CGST + SGST)' : 'Inter-State (IGST)' }}</span>
                 </div>
 
                 @if($fee->cgst_amount > 0)

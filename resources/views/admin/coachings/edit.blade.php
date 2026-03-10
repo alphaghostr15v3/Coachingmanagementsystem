@@ -46,7 +46,7 @@
                         </div>
                     </div>
 
-                    <div class="row g-4 mb-5">
+                    <div class="row g-4 mb-4">
                         <div class="col-md-6">
                             <label for="mobile" class="form-label fw-bold small text-uppercase text-secondary">Contact Number <span class="text-danger">*</span></label>
                             <input type="text" name="mobile" id="mobile" class="form-control form-control-lg border-0 bg-light rounded-4 @error('mobile') is-invalid @enderror" value="{{ old('mobile', $coaching->mobile) }}" required>
@@ -55,16 +55,29 @@
                             @enderror
                         </div>
                         <div class="col-md-6">
-                            <label for="subscription_plan" class="form-label fw-bold small text-uppercase text-secondary">Subscription Tier <span class="text-danger">*</span></label>
-                            <select name="subscription_plan" id="subscription_plan" class="form-select form-select-lg border-0 bg-light rounded-4 @error('subscription_plan') is-invalid @enderror" required>
-                                <option value="starter" {{ old('subscription_plan', $coaching->subscription_plan) == 'starter' ? 'selected' : '' }}>Starter Plan (Free)</option>
-                                <option value="pro" {{ old('subscription_plan', $coaching->subscription_plan) == 'pro' ? 'selected' : '' }}>Institutional Pro (Paid)</option>
-                                <option value="enterprise" {{ old('subscription_plan', $coaching->subscription_plan) == 'enterprise' ? 'selected' : '' }}>Enterprise Edge (Full-scale)</option>
+                            <label for="state" class="form-label fw-bold small text-uppercase text-secondary">Institute State <span class="text-danger">*</span></label>
+                            <select name="state" id="state" class="form-select form-select-lg border-0 bg-light rounded-4 @error('state') is-invalid @enderror" required>
+                                <option value="">Select State</option>
+                                @foreach(['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman and Nicobar Islands','Chandigarh','Dadra and Nagar Haveli and Daman and Diu','Delhi','Jammu and Kashmir','Ladakh','Lakshadweep','Puducherry'] as $st)
+                                    <option value="{{ $st }}" {{ old('state', $coaching->state) == $st ? 'selected' : '' }}>{{ $st }}</option>
+                                @endforeach
                             </select>
-                            @error('subscription_plan')
+                            @error('state')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="subscription_plan" class="form-label fw-bold small text-uppercase text-secondary">Subscription Tier <span class="text-danger">*</span></label>
+                        <select name="subscription_plan" id="subscription_plan" class="form-select form-select-lg border-0 bg-light rounded-4 @error('subscription_plan') is-invalid @enderror" required>
+                            <option value="starter" {{ old('subscription_plan', $coaching->subscription_plan) == 'starter' ? 'selected' : '' }}>Starter Plan (Free)</option>
+                            <option value="pro" {{ old('subscription_plan', $coaching->subscription_plan) == 'pro' ? 'selected' : '' }}>Institutional Pro (Paid)</option>
+                            <option value="enterprise" {{ old('subscription_plan', $coaching->subscription_plan) == 'enterprise' ? 'selected' : '' }}>Enterprise Edge (Full-scale)</option>
+                        </select>
+                        @error('subscription_plan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="d-flex justify-content-end gap-3 pt-3 border-top">

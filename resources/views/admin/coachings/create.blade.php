@@ -45,7 +45,7 @@
                         </div>
                     </div>
 
-                    <div class="row g-4 mb-5">
+                    <div class="row g-4 mb-4">
                         <div class="col-md-6">
                             <label for="mobile" class="form-label fw-bold small text-uppercase text-secondary">Contact Number <span class="text-danger">*</span></label>
                             <input type="text" name="mobile" id="mobile" class="form-control form-control-lg border-0 bg-light rounded-4 @error('mobile') is-invalid @enderror" value="{{ old('mobile') }}" required placeholder="10-digit mobile number">
@@ -54,12 +54,25 @@
                             @enderror
                         </div>
                         <div class="col-md-6">
-                            <label for="password" class="form-label fw-bold small text-uppercase text-secondary">Admin Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" id="password" class="form-control form-control-lg border-0 bg-light rounded-4 @error('password') is-invalid @enderror" required placeholder="Minimum 8 characters">
-                            @error('password')
+                            <label for="state" class="form-label fw-bold small text-uppercase text-secondary">Institute State <span class="text-danger">*</span></label>
+                            <select name="state" id="state" class="form-select form-select-lg border-0 bg-light rounded-4 @error('state') is-invalid @enderror" required>
+                                <option value="">Select State</option>
+                                @foreach(['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman and Nicobar Islands','Chandigarh','Dadra and Nagar Haveli and Daman and Diu','Delhi','Jammu and Kashmir','Ladakh','Lakshadweep','Puducherry'] as $st)
+                                    <option value="{{ $st }}" {{ old('state') == $st ? 'selected' : '' }}>{{ $st }}</option>
+                                @endforeach
+                            </select>
+                            @error('state')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="password" class="form-label fw-bold small text-uppercase text-secondary">Admin Password <span class="text-danger">*</span></label>
+                        <input type="password" name="password" id="password" class="form-control form-control-lg border-0 bg-light rounded-4 @error('password') is-invalid @enderror" required placeholder="Minimum 8 characters">
+                        @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-5">

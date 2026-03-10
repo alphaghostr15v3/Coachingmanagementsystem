@@ -51,11 +51,25 @@
                 <h4 class="fw-bold mb-1" style="color: #1a1c1e;">{{ $fee->student->name }}</h4>
                 <p class="text-muted small mb-1">Student ID: #STU{{ str_pad($fee->student_id, 4, '0', STR_PAD_LEFT) }}</p>
                 <p class="text-muted small">Email: {{ $fee->student->email ?? 'N/A' }}</p>
+                @if($fee->student_state)
+                <p class="text-muted small">State: <span class="fw-medium text-dark">{{ $fee->student_state }}</span></p>
+                @endif
             </div>
             <div class="col-md-6 text-md-end">
                 <p class="text-secondary fw-bold text-uppercase mb-3" style="font-size: 0.7rem; letter-spacing: 1px;">Payment Details:</p>
                 <p class="text-muted small mb-1">Payment Method: <span class="text-dark fw-medium">Offline/Cash</span></p>
-                <p class="text-muted small">Currency: <span class="text-dark fw-medium">INR (₹)</span></p>
+                <p class="text-muted small mb-1">Currency: <span class="text-dark fw-medium">INR (₹)</span></p>
+                @if($fee->gst_type)
+                <p class="text-muted small">
+                    GST Type: 
+                    @if($fee->gst_type === 'intra')
+                        <span class="badge bg-success">Intra-State (CGST+SGST)</span>
+                    @elseif($fee->gst_type === 'inter')
+                        <span class="badge bg-warning text-dark">Inter-State (IGST)</span>
+                    @endif
+                    @if($fee->institute_state) &nbsp;| Institute: <strong>{{ $fee->institute_state }}</strong> @endif
+                </p>
+                @endif
             </div>
         </div>
 

@@ -11,6 +11,7 @@ class Coaching extends Model
         'owner_name',
         'email',
         'mobile',
+        'state',
         'database_name',
         'status',
         'subscription_plan',

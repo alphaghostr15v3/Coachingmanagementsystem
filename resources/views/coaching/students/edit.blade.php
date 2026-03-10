@@ -60,12 +60,28 @@
                         </div>
                     </div>
 
-                    <div class="mb-5">
-                        <label for="address" class="form-label fw-bold small text-uppercase text-secondary">Residential Address</label>
-                        <textarea name="address" id="address" rows="4" class="form-control border-0 bg-light rounded-4 @error('address') is-invalid @enderror">{{ old('address', $student->address) }}</textarea>
-                        @error('address')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                    <div class="row g-4 mb-5">
+                        <div class="col-md-8">
+                            <label for="address" class="form-label fw-bold small text-uppercase text-secondary">Residential Address</label>
+                            <textarea name="address" id="address" rows="4" class="form-control border-0 bg-light rounded-4 @error('address') is-invalid @enderror">{{ old('address', $student->address) }}</textarea>
+                            @error('address')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-4">
+                            <label for="state" class="form-label fw-bold small text-uppercase text-secondary">
+                                State <span class="text-muted fw-normal" style="font-size:0.7rem">(for GST)</span>
+                            </label>
+                            <select name="state" id="state" class="form-select form-select-lg border-0 bg-light rounded-4 @error('state') is-invalid @enderror">
+                                <option value="">Select State</option>
+                                @foreach(['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman and Nicobar Islands','Chandigarh','Dadra and Nagar Haveli and Daman and Diu','Delhi','Jammu and Kashmir','Ladakh','Lakshadweep','Puducherry'] as $st)
+                                    <option value="{{ $st }}" {{ old('state', $student->state) == $st ? 'selected' : '' }}>{{ $st }}</option>
+                                @endforeach
+                            </select>
+                            @error('state')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
 
                     <div class="d-flex justify-content-end gap-3">

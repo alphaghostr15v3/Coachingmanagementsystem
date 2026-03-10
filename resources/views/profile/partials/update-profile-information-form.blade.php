@@ -47,6 +47,22 @@
             @endif
         </div>
 
+        @if($user->role === 'coaching_admin')
+            @php
+                $coaching = $user->coaching ?? \App\Models\Coaching::where('email', $user->email)->first();
+            @endphp
+            <div>
+                <x-input-label for="state" :value="__('Institute State (for GST)')" />
+                <select id="state" name="state" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                    <option value="">Select State</option>
+                    @foreach(['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman and Nicobar Islands','Chandigarh','Dadra and Nagar Haveli and Daman and Diu','Delhi','Jammu and Kashmir','Ladakh','Lakshadweep','Puducherry'] as $st)
+                        <option value="{{ $st }}" {{ old('state', $coaching->state ?? '') == $st ? 'selected' : '' }}>{{ $st }}</option>
+                    @endforeach
+                </select>
+                <x-input-error class="mt-2" :messages="$errors->get('state')" />
+            </div>
+        @endif
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 

@@ -25,7 +25,8 @@ class FeeController extends Controller
     public function create()
     {
         $students = Student::all();
-        return view('coaching.fees.create', compact('students'));
+        $instituteState = auth()->user()->coaching->state ?? '';
+        return view('coaching.fees.create', compact('students', 'instituteState'));
     }
 
     /**
@@ -34,13 +35,13 @@ class FeeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'student_id' => 'required|exists:tenant.students,id',
-            'amount'     => 'required|numeric|min:0',
-            'status'     => 'required|in:paid,unpaid',
-            'date'       => 'required|date',
-            'cgst_rate'  => 'nullable|numeric',
-            'sgst_rate'  => 'nullable|numeric',
-            'igst_rate'  => 'nullable|numeric',
+            'student_id'   => 'required|exists:tenant.students,id',
+            'amount'       => 'required|numeric|min:0',
+            'status'       => 'required|in:paid,unpaid',
+            'date'         => 'required|date',
+            'cgst_rate'    => 'nullable|numeric',
+            'sgst_rate'    => 'nullable|numeric',
+            'igst_rate'    => 'nullable|numeric',
             'total_amount' => 'required|numeric',
         ]);
 
@@ -53,18 +54,28 @@ class FeeController extends Controller
         $igstAmt   = round($base * $igstRate / 100, 2);
         $total     = $request->input('total_amount', $base + $cgstAmt + $sgstAmt + $igstAmt);
 
+        // Determine GST type based on states
+        $student        = Student::find($request->student_id);
+        $studentState   = $student->state ?? '';
+        $instituteState = auth()->user()->coaching->state ?? '';
+        $gstType        = ($studentState && $instituteState && strtolower($studentState) === strtolower($instituteState))
+                            ? 'intra' : 'inter';
+
         Fee::create([
-            'student_id'  => $request->student_id,
-            'amount'      => $base,
-            'status'      => $request->status,
-            'date'        => $request->date,
-            'cgst_rate'   => $cgstRate,
-            'cgst_amount' => $cgstAmt,
-            'sgst_rate'   => $sgstRate,
-            'sgst_amount' => $sgstAmt,
-            'igst_rate'   => $igstRate,
-            'igst_amount' => $igstAmt,
-            'total_amount' => $total,
+            'student_id'     => $request->student_id,
+            'amount'         => $base,
+            'status'         => $request->status,
+            'date'           => $request->date,
+            'cgst_rate'      => $cgstRate,
+            'cgst_amount'    => $cgstAmt,
+            'sgst_rate'      => $sgstRate,
+            'sgst_amount'    => $sgstAmt,
+            'igst_rate'      => $igstRate,
+            'igst_amount'    => $igstAmt,
+            'total_amount'   => $total,
+            'gst_type'       => $gstType,
+            'student_state'  => $studentState,
+            'institute_state'=> $instituteState,
         ]);
 
         return redirect()->route('coaching.fees.index')->with('success', 'Fee record added successfully.');
@@ -84,7 +95,8 @@ class FeeController extends Controller
     public function edit(Fee $fee)
     {
         $students = Student::all();
-        return view('coaching.fees.edit', compact('fee', 'students'));
+        $instituteState = auth()->user()->coaching->state ?? '';
+        return view('coaching.fees.edit', compact('fee', 'students', 'instituteState'));
     }
 
     /**
@@ -112,18 +124,28 @@ class FeeController extends Controller
         $igstAmt   = round($base * $igstRate / 100, 2);
         $total     = $request->input('total_amount', $base + $cgstAmt + $sgstAmt + $igstAmt);
 
+        // Determine GST type based on states
+        $student        = Student::find($request->student_id);
+        $studentState   = $student->state ?? '';
+        $instituteState = auth()->user()->coaching->state ?? '';
+        $gstType        = ($studentState && $instituteState && strtolower($studentState) === strtolower($instituteState))
+                            ? 'intra' : 'inter';
+
         $fee->update([
-            'student_id'  => $request->student_id,
-            'amount'      => $base,
-            'status'      => $request->status,
-            'date'        => $request->date,
-            'cgst_rate'   => $cgstRate,
-            'cgst_amount' => $cgstAmt,
-            'sgst_rate'   => $sgstRate,
-            'sgst_amount' => $sgstAmt,
-            'igst_rate'   => $igstRate,
-            'igst_amount' => $igstAmt,
-            'total_amount' => $total,
+            'student_id'     => $request->student_id,
+            'amount'         => $base,
+            'status'         => $request->status,
+            'date'           => $request->date,
+            'cgst_rate'      => $cgstRate,
+            'cgst_amount'    => $cgstAmt,
+            'sgst_rate'      => $sgstRate,
+            'sgst_amount'    => $sgstAmt,
+            'igst_rate'      => $igstRate,
+            'igst_amount'    => $igstAmt,
+            'total_amount'   => $total,
+            'gst_type'       => $gstType,
+            'student_state'  => $studentState,
+            'institute_state'=> $instituteState,
         ]);
 
         return redirect()->route('coaching.fees.index')->with('success', 'Fee record updated successfully.');
@@ -145,7 +167,7 @@ class FeeController extends Controller
     {
         $fee->load('student');
         $pdf = Pdf::loadView('coaching.fees.invoice_pdf', compact('fee'));
-        
+
         $filename = 'Invoice-' . str_pad($fee->id, 6, '0', STR_PAD_LEFT) . '.pdf';
         return $pdf->download($filename);
     }

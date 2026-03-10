@@ -20,6 +20,9 @@ class Fee extends Model
         'igst_rate',
         'igst_amount',
         'total_amount',
+        'gst_type',
+        'student_state',
+        'institute_state',
     ];
 
     public function student()
