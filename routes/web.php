@@ -74,6 +74,7 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
     Route::get('/dashboard', [\App\Http\Controllers\Student\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/attendance', [\App\Http\Controllers\Student\DashboardController::class, 'attendance'])->name('attendance');
     Route::get('/fees', [\App\Http\Controllers\Student\FeeViewController::class, 'index'])->name('fees');
+    Route::get('/fees/{fee}/download', [\App\Http\Controllers\Student\FeeViewController::class, 'downloadReceipt'])->name('fees.download');
     Route::get('/marks', [\App\Http\Controllers\Student\DashboardController::class, 'marks'])->name('marks');
     Route::get('/notices', [\App\Http\Controllers\Student\DashboardController::class, 'notices'])->name('notices');
 });

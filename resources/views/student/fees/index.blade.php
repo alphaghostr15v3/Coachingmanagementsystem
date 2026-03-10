@@ -19,12 +19,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- Assuming we find fees by student email/id --}}
-                    @php
-                        $user = auth()->user();
-                        $student = \App\Models\Student::where('email', $user->email)->first();
-                        $fees = $student ? \App\Models\Fee::where('student_id', $student->id)->latest()->get() : [];
-                    @endphp
+                    {{-- Using $fees variable passed from FeeViewController --}}
                     @forelse($fees as $fee)
                     <tr>
                         <td class="fw-bold">{{ date('d M, Y', strtotime($fee->created_at)) }}</td>
@@ -33,9 +28,9 @@
                             <span class="badge bg-soft-success text-success px-3 py-2 rounded-pill">Paid</span>
                         </td>
                         <td>
-                            <button class="btn btn-sm btn-outline-secondary rounded-pill fw-bold">
+                            <a href="{{ route('student.fees.download', $fee->id) }}" class="btn btn-sm btn-outline-secondary rounded-pill fw-bold">
                                 <i class="fas fa-download me-1"></i> PDF
-                            </button>
+                            </a>
                         </td>
                     </tr>
                     @empty
