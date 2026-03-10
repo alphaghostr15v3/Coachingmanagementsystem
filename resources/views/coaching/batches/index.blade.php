@@ -35,9 +35,21 @@
                             </div>
                         </td>
                         <td>
-                            <div class="d-flex align-items-center text-muted small">
-                                <i class="far fa-clock me-2 text-warning"></i>
-                                {{ $batch->timing ?? 'TBA' }}
+                            <div class="small">
+                                <div class="mb-1">
+                                    <i class="far fa-calendar-alt me-2 text-primary"></i>
+                                    <span class="text-dark">{{ $batch->start_date ? \Carbon\Carbon::parse($batch->start_date)->format('M d, Y') : 'N/A' }}</span>
+                                </div>
+                                <div class="mb-1">
+                                    <i class="far fa-clock me-2 text-warning"></i>
+                                    <span class="text-dark">{{ $batch->class_time ? \Carbon\Carbon::parse($batch->class_time)->format('h:i A') : 'N/A' }}</span>
+                                </div>
+                                @if($batch->timing)
+                                <div class="text-muted opacity-75">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    {{ $batch->timing }}
+                                </div>
+                                @endif
                             </div>
                         </td>
                         <td class="text-center">

@@ -48,7 +48,7 @@ class StudentController extends Controller
         \App\Models\User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt('password123'),
+            'password' => bcrypt('student@123'),
             'role' => 'student',
             'coaching_id' => $coachingId,
         ]);

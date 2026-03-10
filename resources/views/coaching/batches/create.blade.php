@@ -47,15 +47,37 @@
 
                     <div class="mb-4">
                         <label for="name" class="form-label fw-bold small text-uppercase text-secondary">Batch Name <span class="text-danger">*</span></label>
-                        <input type="text" name="name" id="name" class="form-control form-control-lg border-0 bg-light rounded-4 @error('name') is-invalid @enderror" value="{{ old('name') }}" required placeholder="e.g. Morning A1">
+                        <select name="name" id="name" class="form-select form-select-lg border-0 bg-light rounded-4 @error('name') is-invalid @enderror" required>
+                            <option value="">Select Batch Time</option>
+                            <option value="Morning" {{ old('name') == 'Morning' ? 'selected' : '' }}>Morning</option>
+                            <option value="Evening" {{ old('name') == 'Evening' ? 'selected' : '' }}>Evening</option>
+                            <option value="Night" {{ old('name') == 'Night' ? 'selected' : '' }}>Night</option>
+                        </select>
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
+                    <div class="row g-4 mb-5">
+                        <div class="col-md-6">
+                            <label for="start_date" class="form-label fw-bold small text-uppercase text-secondary">Start Date</label>
+                            <input type="date" name="start_date" id="start_date" class="form-control form-control-lg border-0 bg-light rounded-4 @error('start_date') is-invalid @enderror" value="{{ old('start_date') }}">
+                            @error('start_date')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label for="class_time" class="form-label fw-bold small text-uppercase text-secondary">Class Time</label>
+                            <input type="time" name="class_time" id="class_time" class="form-control form-control-lg border-0 bg-light rounded-4 @error('class_time') is-invalid @enderror" value="{{ old('class_time') }}">
+                            @error('class_time')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
                     <div class="mb-5">
-                        <label for="timing" class="form-label fw-bold small text-uppercase text-secondary">Class Timing / Schedule</label>
-                        <input type="text" name="timing" id="timing" class="form-control form-control-lg border-0 bg-light rounded-4 @error('timing') is-invalid @enderror" value="{{ old('timing') }}" placeholder="e.g. Mon-Fri, 9:00 AM - 11:00 AM">
+                        <label for="timing" class="form-label fw-bold small text-uppercase text-secondary">Schedule Notes (Optional)</label>
+                        <input type="text" name="timing" id="timing" class="form-control form-control-lg border-0 bg-light rounded-4 @error('timing') is-invalid @enderror" value="{{ old('timing') }}" placeholder="e.g. Mon-Fri, or Room 101">
                         @error('timing')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

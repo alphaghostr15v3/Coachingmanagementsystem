@@ -39,6 +39,8 @@ class BatchController extends Controller
             'teacher_id' => 'nullable|exists:tenant.teachers,id',
             'name' => 'required|string|max:255',
             'timing' => 'nullable|string|max:255',
+            'start_date' => 'nullable|date',
+            'class_time' => 'nullable',
         ]);
 
         Batch::create($request->all());
@@ -74,6 +76,8 @@ class BatchController extends Controller
             'teacher_id' => 'nullable|exists:tenant.teachers,id',
             'name' => 'required|string|max:255',
             'timing' => 'nullable|string|max:255',
+            'start_date' => 'nullable|date',
+            'class_time' => 'nullable',
         ]);
 
         $batch->update($request->all());

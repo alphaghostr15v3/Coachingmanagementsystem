@@ -86,6 +86,10 @@
                 </p>
                 <hr class="bg-white">
                 <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-key me-2"></i>
+                    <span class="small">Default password: <strong>student@123</strong></span>
+                </div>
+                <div class="d-flex align-items-center mb-2">
                     <i class="fas fa-check-circle me-2"></i>
                     <span class="small">Unique Student ID will be generated</span>
                 </div>

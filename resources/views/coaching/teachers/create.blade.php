@@ -61,6 +61,28 @@
                 </form>
             </div>
         </div>
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm bg-gradient-primary text-white animate__animated animate__fadeInRight">
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-3"><i class="fas fa-info-circle me-2"></i> Registration Tip</h5>
+                <p class="small opacity-75">
+                    Provide accurate contact details to ensure the faculty member can receive login credentials and system notifications.
+                </p>
+                <hr class="bg-white">
+                <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-key me-2"></i>
+                    <span class="small">Default password: <strong>teacher@123</strong></span>
+                </div>
+                <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <span class="small">Faculty account will be created</span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <span class="small">Access to teacher panel granted</span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
