@@ -12,6 +12,8 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $connection = 'mysql';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -51,5 +53,10 @@ class User extends Authenticatable
     public function coaching()
     {
         return $this->belongsTo(Coaching::class);
+    }
+
+    public function salarySlips()
+    {
+        return $this->hasMany(SalarySlip::class, 'teacher_id');
     }
 }

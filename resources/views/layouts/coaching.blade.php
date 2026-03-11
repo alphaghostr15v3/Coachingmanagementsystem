@@ -211,6 +211,9 @@
                 <a href="{{ route('coaching.fees.index') }}" class="{{ request()->routeIs('coaching.fees.*') ? 'active' : '' }}">
                     <i class="fas fa-wallet"></i> Fees & Revenue
                 </a>
+                <a href="{{ route('coaching.salary-slips.index') }}" class="{{ request()->routeIs('coaching.salary-slips.*') ? 'active' : '' }}">
+                    <i class="fas fa-file-invoice-dollar"></i> Salary Slips
+                </a>
                 <a href="{{ route('coaching.attendance.index') }}" class="{{ request()->routeIs('coaching.attendance.*') ? 'active' : '' }}">
                     <i class="fas fa-clipboard-check"></i> Attendance
                 </a>

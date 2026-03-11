@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card border-0 shadow-sm h-100 p-4">
             <div class="d-flex align-items-center mb-3">
                 <div class="bg-soft-primary p-3 rounded-4 text-primary me-3">
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card border-0 shadow-sm h-100 p-4">
             <div class="d-flex align-items-center mb-3">
                 <div class="bg-soft-info p-3 rounded-4 text-info me-3">
@@ -42,10 +42,25 @@
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card border-0 shadow-sm h-100 p-4">
             <div class="d-flex align-items-center mb-3">
                 <div class="bg-soft-success p-3 rounded-4 text-success me-3">
+                    <i class="fas fa-file-invoice-dollar fs-4"></i>
+                </div>
+                <div>
+                    <h6 class="text-secondary small fw-bold text-uppercase mb-0">Salary Slips</h6>
+                    <h3 class="fw-bold mb-0">{{ $salarySlipCount }}</h3>
+                </div>
+            </div>
+            <a href="{{ route('teacher.salary-slips.index') }}" class="btn btn-light btn-sm rounded-pill w-100 mt-2 fw-bold text-success border-0">View Slips</a>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100 p-4">
+            <div class="d-flex align-items-center mb-3">
+                <div class="bg-soft-warning p-3 rounded-4 text-warning me-3">
                     <i class="fas fa-calendar-check fs-4"></i>
                 </div>
                 <div>
@@ -53,7 +68,7 @@
                     <h3 class="fw-bold mb-0">Marked</h3>
                 </div>
             </div>
-            <a href="{{ route('teacher.attendance.index') }}" class="btn btn-light btn-sm rounded-pill w-100 mt-2 fw-bold text-success border-0">Update Now</a>
+            <a href="{{ route('teacher.attendance.index') }}" class="btn btn-light btn-sm rounded-pill w-100 mt-2 fw-bold text-warning border-0">Update Now</a>
         </div>
     </div>
 

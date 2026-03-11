@@ -156,6 +156,9 @@
             <a href="{{ route('teacher.exams') }}" class="{{ request()->routeIs('teacher.exams*') ? 'active' : '' }}">
                 <i class="fas fa-file-invoice"></i> Conduct Exam
             </a>
+            <a href="{{ route('teacher.salary-slips.index') }}" class="{{ request()->routeIs('teacher.salary-slips.*') ? 'active' : '' }}">
+                <i class="fas fa-file-invoice-dollar"></i> My Salary Slips
+            </a>
             <hr class="text-secondary opacity-25 mx-3 my-4">
             <a href="{{ route('teacher.notices') }}">
                 <i class="fas fa-bullhorn"></i> View Notices

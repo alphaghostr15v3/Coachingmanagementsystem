@@ -47,6 +47,8 @@ Route::middleware(['auth', 'role:coaching_admin'])->prefix('coaching')->name('co
     Route::resource('attendance', \App\Http\Controllers\CoachingAdmin\AttendanceController::class);
     Route::resource('exams', \App\Http\Controllers\CoachingAdmin\ExamController::class);
     Route::resource('notices', \App\Http\Controllers\CoachingAdmin\NoticeController::class);
+    Route::resource('salary-slips', \App\Http\Controllers\Coaching\SalarySlipController::class);
+    Route::get('salary-slips/{salarySlip}/download', [\App\Http\Controllers\Coaching\SalarySlipController::class, 'download'])->name('salary-slips.download');
     
     // Marks routes
     Route::get('marks', [\App\Http\Controllers\CoachingAdmin\MarkController::class, 'index'])->name('marks.index');
@@ -68,6 +70,11 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
     Route::get('marks', [\App\Http\Controllers\Teacher\MarkController::class, 'index'])->name('marks.index');
     Route::get('marks/create', [\App\Http\Controllers\Teacher\MarkController::class, 'create'])->name('marks.create');
     Route::post('marks', [\App\Http\Controllers\Teacher\MarkController::class, 'store'])->name('marks.store');
+
+    // Salary Slips
+    Route::get('salary-slips', [\App\Http\Controllers\Teacher\SalarySlipController::class, 'index'])->name('salary-slips.index');
+    Route::get('salary-slips/{salarySlip}', [\App\Http\Controllers\Teacher\SalarySlipController::class, 'show'])->name('salary-slips.show');
+    Route::get('salary-slips/{salarySlip}/download', [\App\Http\Controllers\Teacher\SalarySlipController::class, 'download'])->name('salary-slips.download');
 });
 
 // Student Panel Routes

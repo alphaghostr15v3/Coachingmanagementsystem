@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Coaching extends Model
 {
+    protected $connection = 'mysql';
+
     protected $fillable = [
         'coaching_name',
         'owner_name',
