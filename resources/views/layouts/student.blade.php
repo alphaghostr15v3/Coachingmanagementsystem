@@ -100,10 +100,41 @@
             border: 1px solid var(--glass-border);
             border-radius: 20px; 
         }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            backdrop-filter: blur(3px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.show {
+            display: block;
+            opacity: 1;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar { 
+                transform: translateX(-100%); 
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .main-wrapper { margin-left: 0; }
+            .sidebar.mobile-show { transform: translateX(0); }
+        }
     </style>
 </head>
 <body>
-    <div class="sidebar">
+    <!-- Mobile Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <div class="sidebar" id="sidebar">
         <div class="nav-brand">
             <i class="fas fa-user-graduate me-2 text-info"></i>
             Student Portal
@@ -131,7 +162,12 @@
 
     <div class="main-wrapper">
         <div class="topbar">
-            <h5 class="m-0 fw-bold">{{ $currentCoaching->coaching_name ?? 'Coaching Center' }}</h5>
+            <div class="d-flex align-items-center">
+                <button class="btn d-lg-none me-3" onclick="toggleSidebar()">
+                    <i class="fas fa-bars fs-4"></i>
+                </button>
+                <h5 class="m-0 fw-bold">{{ $currentCoaching->coaching_name ?? 'Coaching Center' }}</h5>
+            </div>
             
             <div class="dropdown">
                 <button class="btn d-flex align-items-center dropdown-toggle border-0" type="button" data-bs-toggle="dropdown">
@@ -160,6 +196,21 @@
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('mobile-show');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (overlay.classList.contains('show')) {
+                overlay.classList.remove('show');
+                setTimeout(() => overlay.style.display = 'none', 300);
+            } else {
+                overlay.style.display = 'block';
+                setTimeout(() => overlay.classList.add('show'), 10);
+            }
+        }
+    </script>
+
     @stack('scripts')
 </body>
 </html>

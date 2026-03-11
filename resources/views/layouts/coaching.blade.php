@@ -153,6 +153,25 @@
             font-weight: 600;
         }
 
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            backdrop-filter: blur(3px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.show {
+            display: block;
+            opacity: 1;
+        }
+
         /* Responsive */
         @media (max-width: 992px) {
             .sidebar { transform: translateX(-100%); }
@@ -163,8 +182,11 @@
 </head>
 <body>
     <div class="container-fluid p-0">
+        <!-- Mobile Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
         <!-- Sidebar -->
-        <div class="sidebar animate__animated animate__fadeInLeft" id="sidebar">
+        <div class="sidebar" id="sidebar">
             <div class="nav-brand">
                 <i class="fas fa-graduation-cap me-2"></i>
                 <span class="d-inline-block">{{ $currentCoaching->coaching_name ?? 'Coaching' }}</span>
@@ -211,7 +233,7 @@
             <!-- Topbar -->
             <div class="topbar">
                 <div class="d-flex align-items-center">
-                    <button class="btn d-md-none me-3" onclick="toggleSidebar()">
+                    <button class="btn d-lg-none me-3" onclick="toggleSidebar()">
                         <i class="fas fa-bars fs-4"></i>
                     </button>
                     <h5 class="m-0 fw-bold animate__animated animate__fadeIn">Coaching Portal</h5>
@@ -274,6 +296,14 @@
     <script>
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('mobile-show');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (overlay.classList.contains('show')) {
+                overlay.classList.remove('show');
+                setTimeout(() => overlay.style.display = 'none', 300);
+            } else {
+                overlay.style.display = 'block';
+                setTimeout(() => overlay.classList.add('show'), 10);
+            }
         }
 
         // Auto-close alerts

@@ -154,16 +154,42 @@
         .bg-rose { background: linear-gradient(135deg, #f43f5e 0%, #9f1239 100%); }
         .bg-amber { background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); }
 
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            backdrop-filter: blur(3px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.show {
+            display: block;
+            opacity: 1;
+        }
+
         @media (max-width: 992px) {
-            .sidebar { transform: translateX(-100%); }
+            .sidebar { 
+                transform: translateX(-100%); 
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
             .main-wrapper { margin-left: 0; }
+            .sidebar.mobile-show { transform: translateX(0); }
         }
     </style>
 </head>
 <body>
     <div class="container-fluid p-0">
+        <!-- Mobile Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
         <!-- Sidebar -->
-        <div class="sidebar animate__animated animate__fadeInLeft">
+        <div class="sidebar" id="sidebar">
             <div class="nav-brand">
                 <i class="fas fa-shield-alt text-primary me-2"></i>
                 <span>Super Admin</span>
@@ -191,7 +217,12 @@
         <div class="main-wrapper">
             <!-- Topbar -->
             <div class="topbar">
-                <h5 class="m-0 fw-bold animate__animated animate__fadeIn">Central Control Panel</h5>
+                <div class="d-flex align-items-center">
+                    <button class="btn d-lg-none me-3" onclick="toggleSidebar()">
+                        <i class="fas fa-bars fs-4"></i>
+                    </button>
+                    <h5 class="m-0 fw-bold animate__animated animate__fadeIn">Central Control Panel</h5>
+                </div>
                 
                 <div class="dropdown">
                     <button class="btn d-flex align-items-center dropdown-toggle border-0" type="button" data-bs-toggle="dropdown">
@@ -237,6 +268,25 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('mobile-show');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (overlay.classList.contains('show')) {
+                overlay.classList.remove('show');
+                setTimeout(() => overlay.style.display = 'none', 300);
+            } else {
+                overlay.style.display = 'block';
+                setTimeout(() => overlay.classList.add('show'), 10);
+            }
+        }
+
+        // Auto-close alerts
+        setTimeout(function() {
+            $('.alert').fadeOut('slow');
+        }, 5000);
+    </script>
     
     @stack('scripts')
 </body>
