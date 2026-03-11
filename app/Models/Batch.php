@@ -14,7 +14,11 @@ class Batch extends Model
         'timing',
         'teacher_id',
         'start_date',
+        'end_date',
         'class_time',
+        'start_time',
+        'end_time',
+        'capacity',
     ];
 
     public function course()

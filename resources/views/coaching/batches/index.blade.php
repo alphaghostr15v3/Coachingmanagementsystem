@@ -38,12 +38,29 @@
                             <div class="small">
                                 <div class="mb-1">
                                     <i class="far fa-calendar-alt me-2 text-primary"></i>
-                                    <span class="text-dark">{{ $batch->start_date ? \Carbon\Carbon::parse($batch->start_date)->format('M d, Y') : 'N/A' }}</span>
+                                    <span class="text-dark">
+                                        {{ $batch->start_date ? \Carbon\Carbon::parse($batch->start_date)->format('M d, Y') : 'N/A' }} 
+                                        @if($batch->end_date)
+                                            - {{ \Carbon\Carbon::parse($batch->end_date)->format('M d, Y') }}
+                                        @endif
+                                    </span>
                                 </div>
                                 <div class="mb-1">
                                     <i class="far fa-clock me-2 text-warning"></i>
-                                    <span class="text-dark">{{ $batch->class_time ? \Carbon\Carbon::parse($batch->class_time)->format('h:i A') : 'N/A' }}</span>
+                                    <span class="text-dark">
+                                        @if($batch->start_time && $batch->end_time)
+                                            {{ \Carbon\Carbon::parse($batch->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($batch->end_time)->format('h:i A') }}
+                                        @else
+                                            {{ $batch->class_time ? \Carbon\Carbon::parse($batch->class_time)->format('h:i A') : 'N/A' }}
+                                        @endif
+                                    </span>
                                 </div>
+                                @if($batch->capacity)
+                                <div class="mb-1 text-muted opacity-75">
+                                    <i class="fas fa-users me-2"></i>
+                                    Capacity: {{ $batch->capacity }}
+                                </div>
+                                @endif
                                 @if($batch->timing)
                                 <div class="text-muted opacity-75">
                                     <i class="fas fa-info-circle me-2"></i>

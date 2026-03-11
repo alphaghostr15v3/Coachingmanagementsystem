@@ -40,7 +40,11 @@ class BatchController extends Controller
             'name' => 'required|string|max:255',
             'timing' => 'nullable|string|max:255',
             'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
             'class_time' => 'nullable',
+            'start_time' => 'nullable',
+            'end_time' => 'nullable|after:start_time',
+            'capacity' => 'nullable|integer|min:1',
         ]);
 
         Batch::create($request->all());
@@ -77,7 +81,11 @@ class BatchController extends Controller
             'name' => 'required|string|max:255',
             'timing' => 'nullable|string|max:255',
             'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
             'class_time' => 'nullable',
+            'start_time' => 'nullable',
+            'end_time' => 'nullable|after:start_time',
+            'capacity' => 'nullable|integer|min:1',
         ]);
 
         $batch->update($request->all());

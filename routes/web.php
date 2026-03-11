@@ -61,6 +61,7 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
     Route::get('/exams', [\App\Http\Controllers\Teacher\DashboardController::class, 'exams'])->name('exams');
     Route::get('/notices', [\App\Http\Controllers\Teacher\DashboardController::class, 'notices'])->name('notices');
     Route::get('/students', [\App\Http\Controllers\Teacher\DashboardController::class, 'students'])->name('students');
+    Route::get('/students/{student}', [\App\Http\Controllers\Teacher\DashboardController::class, 'showStudent'])->name('students.show');
     Route::resource('attendance', \App\Http\Controllers\Teacher\AttendanceController::class);
     
     // Teacher Marks Routes

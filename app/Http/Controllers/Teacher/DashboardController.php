@@ -73,4 +73,22 @@ class DashboardController extends Controller
 
         return view('teacher.students.index', compact('students', 'batches', 'selectedBatch'));
     }
+
+    public function showStudent(\App\Models\Student $student)
+    {
+        $teacher = \App\Models\Teacher::where('email', auth()->user()->email)->first();
+        if (!$teacher) {
+            abort(403);
+        }
+
+        // Verify that the student belongs to one of the teacher's batches
+        $batchIds = $teacher->batches->pluck('id')->toArray();
+        $isAssigned = $student->batches()->whereIn('batches.id', $batchIds)->exists();
+
+        if (!$isAssigned) {
+            abort(403);
+        }
+
+        return view('teacher.students.show', compact('student'));
+    }
 }

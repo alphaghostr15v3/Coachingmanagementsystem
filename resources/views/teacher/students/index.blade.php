@@ -78,9 +78,9 @@
                                    class="btn btn-sm btn-outline-primary rounded-3" title="Mark Attendance">
                                     <i class="fas fa-calendar-check"></i>
                                 </a>
-                                <button type="button" class="btn btn-sm btn-outline-secondary rounded-3" title="Student Profile" disabled>
+                                <a href="{{ route('teacher.students.show', $student) }}" class="btn btn-sm btn-outline-secondary rounded-3" title="Student Profile">
                                     <i class="fas fa-eye"></i>
-                                </button>
+                                </a>
                             </div>
                         </td>
                     </tr>

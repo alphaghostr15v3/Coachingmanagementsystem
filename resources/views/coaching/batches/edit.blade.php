@@ -57,7 +57,7 @@
                         @enderror
                     </div>
 
-                    <div class="row g-4 mb-5">
+                    <div class="row g-4 mb-4">
                         <div class="col-md-6">
                             <label for="start_date" class="form-label fw-bold small text-uppercase text-secondary">Start Date</label>
                             <input type="date" name="start_date" id="start_date" class="form-control form-control-lg border-0 bg-light rounded-4 @error('start_date') is-invalid @enderror" value="{{ old('start_date', $batch->start_date) }}">
@@ -66,9 +66,33 @@
                             @enderror
                         </div>
                         <div class="col-md-6">
-                            <label for="class_time" class="form-label fw-bold small text-uppercase text-secondary">Class Time</label>
-                            <input type="time" name="class_time" id="class_time" class="form-control form-control-lg border-0 bg-light rounded-4 @error('class_time') is-invalid @enderror" value="{{ old('class_time', $batch->class_time) }}">
-                            @error('class_time')
+                            <label for="end_date" class="form-label fw-bold small text-uppercase text-secondary">End Date</label>
+                            <input type="date" name="end_date" id="end_date" class="form-control form-control-lg border-0 bg-light rounded-4 @error('end_date') is-invalid @enderror" value="{{ old('end_date', $batch->end_date) }}">
+                            @error('end_date')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-4">
+                            <label for="start_time" class="form-label fw-bold small text-uppercase text-secondary">Start Time</label>
+                            <input type="time" name="start_time" id="start_time" class="form-control form-control-lg border-0 bg-light rounded-4 @error('start_time') is-invalid @enderror" value="{{ old('start_time', $batch->start_time) }}">
+                            @error('start_time')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-4">
+                            <label for="end_time" class="form-label fw-bold small text-uppercase text-secondary">End Time</label>
+                            <input type="time" name="end_time" id="end_time" class="form-control form-control-lg border-0 bg-light rounded-4 @error('end_time') is-invalid @enderror" value="{{ old('end_time', $batch->end_time) }}">
+                            @error('end_time')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-4">
+                            <label for="capacity" class="form-label fw-bold small text-uppercase text-secondary">Capacity</label>
+                            <input type="number" name="capacity" id="capacity" class="form-control form-control-lg border-0 bg-light rounded-4 @error('capacity') is-invalid @enderror" value="{{ old('capacity', $batch->capacity) }}" placeholder="e.g. 50">
+                            @error('capacity')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
