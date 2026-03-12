@@ -13,7 +13,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = Teacher::latest()->get();
+        $teachers = Teacher::with(['department', 'designation'])->latest()->get();
         return view('coaching.teachers.index', compact('teachers'));
     }
 
@@ -22,7 +22,9 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        return view('coaching.teachers.create');
+        $departments = \App\Models\Department::all();
+        $designations = \App\Models\Designation::all();
+        return view('coaching.teachers.create', compact('departments', 'designations'));
     }
 
     /**
@@ -35,6 +37,13 @@ class TeacherController extends Controller
             'email' => 'required|email|max:255|unique:mysql.users,email',
             'phone' => 'nullable|string|max:20',
             'subject' => 'nullable|string|max:255',
+            'department_id' => 'nullable|exists:tenant.departments,id',
+            'designation_id' => 'nullable|exists:tenant.designations,id',
+            'qualification' => 'nullable|string|max:255',
+            'experience' => 'nullable|string|max:255',
+            'joining_date' => 'nullable|date',
+            'staff_type' => 'required|string|in:Teaching,Non-Teaching',
+            'status' => 'required|string|in:Active,Inactive',
         ]);
 
         $coachingId = auth()->user()->coaching_id;
@@ -69,7 +78,9 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
-        return view('coaching.teachers.edit', compact('teacher'));
+        $departments = \App\Models\Department::all();
+        $designations = \App\Models\Designation::all();
+        return view('coaching.teachers.edit', compact('teacher', 'departments', 'designations'));
     }
 
     /**
@@ -82,6 +93,13 @@ class TeacherController extends Controller
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:20',
             'subject' => 'nullable|string|max:255',
+            'department_id' => 'nullable|exists:tenant.departments,id',
+            'designation_id' => 'nullable|exists:tenant.designations,id',
+            'qualification' => 'nullable|string|max:255',
+            'experience' => 'nullable|string|max:255',
+            'joining_date' => 'nullable|date',
+            'staff_type' => 'required|string|in:Teaching,Non-Teaching',
+            'status' => 'required|string|in:Active,Inactive',
         ]);
 
         $teacher->update($request->all());

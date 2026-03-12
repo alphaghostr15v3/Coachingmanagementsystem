@@ -3,12 +3,20 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4 animate__animated animate__fadeIn">
     <div>
-        <h2 class="fw-bold mb-1">Teacher Directory</h2>
-        <p class="text-muted small">Manage faculty profiles and specializations.</p>
+        <h2 class="fw-bold mb-1">Faculty Directory</h2>
+        <p class="text-muted small">Manage faculty profiles, departments, and designations.</p>
     </div>
-    <a href="{{ route('coaching.teachers.create') }}" class="btn btn-primary shadow-sm px-4">
-        <i class="fas fa-plus me-2"></i> Add New Teacher
-    </a>
+    <div class="d-flex gap-2">
+        <a href="{{ route('coaching.departments.index') }}" class="btn btn-outline-primary rounded-pill px-4 shadow-sm">
+            <i class="fas fa-sitemap me-2"></i> Departments
+        </a>
+        <a href="{{ route('coaching.designations.index') }}" class="btn btn-outline-primary rounded-pill px-4 shadow-sm">
+            <i class="fas fa-id-badge me-2"></i> Designations
+        </a>
+        <a href="{{ route('coaching.teachers.create') }}" class="btn btn-primary rounded-pill shadow-sm px-4">
+            <i class="fas fa-plus me-2"></i> Add Faculty Member
+        </a>
+    </div>
 </div>
 
 <div class="card border-0 shadow-sm animate__animated animate__fadeInUp">
@@ -18,9 +26,10 @@
                 <thead>
                     <tr>
                         <th class="text-secondary small text-uppercase">#</th>
-                        <th class="text-secondary small text-uppercase">Teacher Detail</th>
-                        <th class="text-secondary small text-uppercase">Specialization</th>
-                        <th class="text-secondary small text-uppercase">Contact</th>
+                        <th class="text-secondary small text-uppercase">Faculty Detail</th>
+                        <th class="text-secondary small text-uppercase">Role & Dept</th>
+                        <th class="text-secondary small text-uppercase">Staff Type</th>
+                        <th class="text-secondary small text-uppercase">Status</th>
                         <th class="text-center text-secondary small text-uppercase">Actions</th>
                     </tr>
                 </thead>
@@ -33,13 +42,25 @@
                                 <div class="avatar-sm bg-soft-info text-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
                                     <i class="fas fa-user-tie"></i>
                                 </div>
-                                <span class="fw-bold">{{ $teacher->name }}</span>
+                                <div>
+                                    <span class="fw-bold d-block">{{ $teacher->name }}</span>
+                                    <small class="text-muted">{{ $teacher->email }}</small>
+                                </div>
                             </div>
                         </td>
-                        <td><span class="badge bg-soft-info text-info border border-info px-3 py-2 rounded-pill">{{ $teacher->subject ?? 'General' }}</span></td>
                         <td>
-                            <div class="small fw-medium">{{ $teacher->email ?? 'N/A' }}</div>
-                            <div class="small text-muted">{{ $teacher->phone ?? 'N/A' }}</div>
+                            <div class="fw-bold small">{{ $teacher->designation->title ?? 'Faculty' }}</div>
+                            <div class="small text-info">{{ $teacher->department->name ?? $teacher->subject ?? 'General' }}</div>
+                        </td>
+                        <td>
+                            <span class="badge {{ $teacher->staff_type == 'Teaching' ? 'bg-soft-primary text-primary' : 'bg-soft-secondary text-secondary' }} border px-3 py-1 rounded-pill small">
+                                {{ $teacher->staff_type }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge {{ $teacher->status == 'Active' ? 'bg-soft-success text-success' : 'bg-soft-danger text-danger' }} border px-3 py-1 rounded-pill small">
+                                {{ $teacher->status }}
+                            </span>
                         </td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-2">

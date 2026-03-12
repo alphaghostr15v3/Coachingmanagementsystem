@@ -13,7 +13,24 @@ class Teacher extends Model
         'email',
         'phone',
         'subject',
+        'department_id',
+        'designation_id',
+        'qualification',
+        'experience',
+        'joining_date',
+        'staff_type',
+        'status',
     ];
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    public function designation()
+    {
+        return $this->belongsTo(Designation::class);
+    }
 
     public function batches()
     {

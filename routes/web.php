@@ -40,6 +40,8 @@ Route::middleware(['auth', 'role:coaching_admin'])->prefix('coaching')->name('co
     Route::get('/dashboard', [\App\Http\Controllers\CoachingAdmin\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('students', \App\Http\Controllers\CoachingAdmin\StudentController::class);
     Route::resource('teachers', \App\Http\Controllers\CoachingAdmin\TeacherController::class);
+    Route::resource('departments', \App\Http\Controllers\CoachingAdmin\DepartmentController::class);
+    Route::resource('designations', \App\Http\Controllers\CoachingAdmin\DesignationController::class);
     Route::resource('courses', \App\Http\Controllers\CoachingAdmin\CourseController::class);
     Route::resource('batches', \App\Http\Controllers\CoachingAdmin\BatchController::class);
     Route::resource('fees', \App\Http\Controllers\CoachingAdmin\FeeController::class);
