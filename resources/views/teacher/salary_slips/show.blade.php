@@ -24,8 +24,8 @@
                     <!-- Header -->
                     <div class="text-center border-bottom border-2 border-dark pb-4 mb-4">
                         <h2 class="fw-bold mb-1 text-uppercase letter-spacing-1">{{ $currentCoaching->coaching_name ?? 'Coaching Center' }}</h2>
-                        <p class="mb-0 text-muted">{{ $currentCoaching->address ?? 'Address Line 1, City, State ZIP' }}</p>
-                        <p class="mb-0 text-muted">Phone: {{ $currentCoaching->phone ?? 'N/A' }} | Email: {{ $currentCoaching->email ?? 'N/A' }}</p>
+                        <p class="mb-0 text-muted">{{ $currentCoaching->address ?? 'Address Not Set' }}</p>
+                        <p class="mb-0 text-muted">Phone: {{ $currentCoaching->mobile ?? 'N/A' }} | Email: {{ $currentCoaching->email ?? 'N/A' }}</p>
                         <h4 class="mt-4 fw-bold text-decoration-underline text-uppercase bg-light d-inline-block px-4 py-2 rounded">Payslip</h4>
                     </div>
 

@@ -28,13 +28,13 @@ class CoachingController extends Controller
         $request->validate([
             'coaching_name' => 'required|string|max:255',
             'address' => 'nullable|string',
-            'owner_name' => 'required|string|max:255',
+            'owner_name' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
             'email' => 'required|email|unique:coachings,email',
-            'mobile' => 'nullable|string|max:20',
-            'state' => 'nullable|string|max:100',
-            'gst_number' => 'nullable|string|max:15',
+            'mobile' => 'required|string|regex:/^[0-9]{10}$/',
+            'state' => 'required|string|max:100',
+            'gst_number' => 'nullable|string|regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/',
             'password' => 'required|string|min:8',
-            'subscription_plan' => 'nullable|string|max:100',
+            'subscription_plan' => 'required|string|max:100',
         ]);
 
         $dbName = 'coaching_' . Str::slug($request->coaching_name) . '_' . time();
@@ -92,12 +92,12 @@ class CoachingController extends Controller
         $request->validate([
             'coaching_name' => 'required|string|max:255',
             'address' => 'nullable|string',
-            'owner_name' => 'required|string|max:255',
+            'owner_name' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
             'email' => 'required|email|unique:coachings,email,'.$coaching->id,
-            'mobile' => 'nullable|string|max:20',
-            'state' => 'nullable|string|max:100',
-            'gst_number' => 'nullable|string|max:15',
-            'subscription_plan' => 'nullable|string|max:100',
+            'mobile' => 'required|string|regex:/^[0-9]{10}$/',
+            'state' => 'required|string|max:100',
+            'gst_number' => 'nullable|string|regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/',
+            'subscription_plan' => 'required|string|max:100',
         ]);
 
         $coaching->update($request->only('coaching_name', 'address', 'owner_name', 'email', 'mobile', 'state', 'gst_number', 'subscription_plan'));

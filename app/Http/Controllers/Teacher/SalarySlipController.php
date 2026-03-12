@@ -5,15 +5,22 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SalarySlip;
+use App\Models\Teacher;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class SalarySlipController extends Controller
 {
     public function index()
     {
-        $slips = SalarySlip::where('teacher_id', auth()->id())
-            ->latest()
-            ->get();
+        $teacher = Teacher::where('email', auth()->user()->email)->first();
+        
+        if (!$teacher) {
+            $slips = collect();
+        } else {
+            $slips = SalarySlip::where('teacher_id', $teacher->id)
+                ->latest()
+                ->get();
+        }
             
         $currentCoaching = auth()->user()->coaching ?? \App\Models\Coaching::first();
         
@@ -22,8 +29,10 @@ class SalarySlipController extends Controller
 
     public function show(SalarySlip $salarySlip)
     {
+        $teacher = Teacher::where('email', auth()->user()->email)->first();
+
         // Security check: ensure the slip belongs to this teacher
-        if ($salarySlip->teacher_id !== auth()->id()) {
+        if (!$teacher || $salarySlip->teacher_id !== $teacher->id) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -33,8 +42,10 @@ class SalarySlipController extends Controller
 
     public function download(SalarySlip $salarySlip)
     {
+        $teacher = Teacher::where('email', auth()->user()->email)->first();
+
         // Security check: ensure the slip belongs to this teacher
-        if ($salarySlip->teacher_id !== auth()->id()) {
+        if (!$teacher || $salarySlip->teacher_id !== $teacher->id) {
             abort(403, 'Unauthorized action.');
         }
 

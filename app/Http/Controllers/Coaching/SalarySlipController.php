@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\SalarySlip;
+use App\Models\Teacher;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -20,7 +21,7 @@ class SalarySlipController extends Controller
 
     public function create()
     {
-        $teachers = User::where('role', 'teacher')->get();
+        $teachers = Teacher::all();
         $currentCoaching = auth()->user()->coaching ?? \App\Models\Coaching::first();
         return view('coaching.salary_slips.create', compact('teachers', 'currentCoaching'));
     }
@@ -28,7 +29,7 @@ class SalarySlipController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'teacher_id' => 'required|exists:users,id',
+            'teacher_id' => 'required|exists:tenant.teachers,id',
             'month' => 'required|string',
             'year' => 'required|integer',
             'basic_salary' => 'required|numeric|min:0',

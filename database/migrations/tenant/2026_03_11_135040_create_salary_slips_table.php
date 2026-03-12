@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('salary_slips', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('teacher_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('teacher_id')->constrained('teachers')->onDelete('cascade');
             $table->string('month');
             $table->integer('year');
             $table->decimal('basic_salary', 10, 2)->default(0);

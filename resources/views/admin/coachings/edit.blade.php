@@ -40,7 +40,7 @@
                     <div class="row g-4 mb-4">
                         <div class="col-md-6">
                             <label for="owner_name" class="form-label fw-bold small text-uppercase text-secondary">Owner/Administrator Name <span class="text-danger">*</span></label>
-                            <input type="text" name="owner_name" id="owner_name" class="form-control form-control-lg border-0 bg-light rounded-4 @error('owner_name') is-invalid @enderror" value="{{ old('owner_name', $coaching->owner_name) }}" required>
+                            <input type="text" name="owner_name" id="owner_name" class="form-control form-control-lg border-0 bg-light rounded-4 @error('owner_name') is-invalid @enderror" value="{{ old('owner_name', $coaching->owner_name) }}" required pattern="[a-zA-Z\s]+" title="Name should only contain letters and spaces">
                             @error('owner_name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -57,7 +57,7 @@
                     <div class="row g-4 mb-4">
                         <div class="col-md-4">
                             <label for="mobile" class="form-label fw-bold small text-uppercase text-secondary">Contact Number <span class="text-danger">*</span></label>
-                            <input type="text" name="mobile" id="mobile" class="form-control form-control-lg border-0 bg-light rounded-4 @error('mobile') is-invalid @enderror" value="{{ old('mobile', $coaching->mobile) }}" required>
+                            <input type="text" name="mobile" id="mobile" class="form-control form-control-lg border-0 bg-light rounded-4 @error('mobile') is-invalid @enderror" value="{{ old('mobile', $coaching->mobile) }}" required maxlength="10" minlength="10" pattern="[0-9]{10}" title="Please enter a valid 10-digit mobile number">
                             @error('mobile')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="gst_number" class="form-label fw-bold small text-uppercase text-secondary">GST Number</label>
-                            <input type="text" name="gst_number" id="gst_number" class="form-control form-control-lg border-0 bg-light rounded-4 @error('gst_number') is-invalid @enderror" value="{{ old('gst_number', $coaching->gst_number) }}" placeholder="GSTIN">
+                            <input type="text" name="gst_number" id="gst_number" class="form-control form-control-lg border-0 bg-light rounded-4 @error('gst_number') is-invalid @enderror" value="{{ old('gst_number', $coaching->gst_number) }}" placeholder="GSTIN" pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$" title="Invalid GST format. (e.g. 27AAAAA0000A1Z5)">
                             @error('gst_number')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
