@@ -19,4 +19,14 @@ class Teacher extends Model
     {
         return $this->hasMany(Batch::class);
     }
+
+    public function attendances()
+    {
+        return $this->hasMany(TeacherAttendance::class);
+    }
+
+    public function salarySlips()
+    {
+        return $this->hasMany(SalarySlip::class);
+    }
 }

@@ -153,6 +153,9 @@
             <a href="{{ route('teacher.attendance.index') }}" class="{{ request()->routeIs('teacher.attendance.*') ? 'active' : '' }}">
                 <i class="fas fa-calendar-check"></i> Mark Attendance
             </a>
+            <a href="{{ route('teacher.my-attendance') }}" class="{{ request()->routeIs('teacher.my-attendance') ? 'active' : '' }}">
+                <i class="fas fa-user-check"></i> My Attendance
+            </a>
             <a href="{{ route('teacher.exams') }}" class="{{ request()->routeIs('teacher.exams*') ? 'active' : '' }}">
                 <i class="fas fa-file-invoice"></i> Conduct Exam
             </a>

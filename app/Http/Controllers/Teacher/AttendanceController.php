@@ -5,11 +5,28 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\Batch;
 use App\Models\Student;
+use App\Models\Teacher;
+use App\Models\TeacherAttendance;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
+    public function myAttendance()
+    {
+        $teacher = Teacher::where('email', auth()->user()->email)->first();
+        
+        if (!$teacher) {
+            $attendances = collect();
+        } else {
+            $attendances = TeacherAttendance::where('teacher_id', $teacher->id)
+                ->latest('date')
+                ->get();
+        }
+
+        return view('teacher.attendance.my_attendance', compact('attendances'));
+    }
+
     public function index()
     {
         $attendances = Attendance::with(['student', 'batch'])->latest()->take(100)->get();

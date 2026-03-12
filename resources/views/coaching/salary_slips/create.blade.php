@@ -274,12 +274,42 @@
         $('#netSalaryDisp').text('₹' + net.toFixed(2));
     }
 
+    function fetchAttendanceCount() {
+        const teacherId = $('#teacher_id').val();
+        const month = $('#month').val();
+        const year = $('#year').val();
+
+        if (teacherId && month && year) {
+            $.ajax({
+                url: "{{ route('coaching.salary-slips.attendance-count') }}",
+                type: "GET",
+                data: {
+                    teacher_id: teacherId,
+                    month: month,
+                    year: year
+                },
+                success: function(response) {
+                    if (response.count !== undefined) {
+                        $('#total_days').val(response.count);
+                        calculateSalary();
+                    }
+                },
+                error: function(xhr) {
+                    console.error('Error fetching attendance count:', xhr.responseText);
+                }
+            });
+        }
+    }
+
     function bindCalc() {
         $('.salary-calc, .salary-day-calc').off('input').on('input', calculateSalary);
+        $('#teacher_id, #month, #year').on('change', fetchAttendanceCount);
     }
 
     $(document).ready(function() {
         bindCalc();
+        // Initial fetch if values are pre-filled
+        fetchAttendanceCount();
     });
 </script>
 @endpush

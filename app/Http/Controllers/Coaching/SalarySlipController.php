@@ -7,11 +7,38 @@ use Illuminate\Http\Request;
 
 use App\Models\SalarySlip;
 use App\Models\Teacher;
+use App\Models\TeacherAttendance;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class SalarySlipController extends Controller
 {
+    public function getAttendanceCount(Request $request)
+    {
+        $teacherId = $request->teacher_id;
+        $monthName = $request->month;
+        $year = $request->year;
+
+        if (!$teacherId || !$monthName || !$year) {
+            return response()->json(['count' => 0]);
+        }
+
+        try {
+            $month = Carbon::parse($monthName)->month;
+            
+            $count = TeacherAttendance::where('teacher_id', $teacherId)
+                ->whereYear('date', $year)
+                ->whereMonth('date', $month)
+                ->where('status', 'present')
+                ->count();
+
+            return response()->json(['count' => $count]);
+        } catch (\Exception $e) {
+            return response()->json(['count' => 0, 'error' => $e->getMessage()]);
+        }
+    }
+
     public function index()
     {
         $slips = SalarySlip::with('teacher')->latest()->get();

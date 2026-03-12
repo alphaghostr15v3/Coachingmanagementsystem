@@ -104,18 +104,18 @@
                                 @endif
                             </td>
                             <td>
-                                <div class="d-flex border-0 shadow-none">
-                                    <a href="{{ route('coaching.salary-slips.show', $slip->id) }}" class="btn btn-sm btn-primary rounded-pill px-3 me-1" title="View Slip">
-                                        <i class="fas fa-eye me-1"></i> View
+                                <div class="d-flex align-items-center">
+                                    <a href="{{ route('coaching.salary-slips.show', $slip->id) }}" class="btn btn-sm btn-primary rounded-pill px-3 me-2 shadow-sm d-flex align-items-center" style="min-width: 85px; height: 32px;">
+                                        <i class="fas fa-eye me-1 small"></i> View
                                     </a>
-                                    <a href="{{ route('coaching.salary-slips.download', $slip->id) }}" class="btn btn-sm btn-outline-danger rounded-pill px-3 me-1" title="Download PDF">
-                                        <i class="fas fa-file-pdf me-1"></i> PDF
+                                    <a href="{{ route('coaching.salary-slips.download', $slip->id) }}" class="btn btn-sm btn-info text-white rounded-pill px-3 me-2 shadow-sm d-flex align-items-center" style="min-width: 85px; height: 32px;">
+                                        <i class="fas fa-file-pdf me-1 small"></i> PDF
                                     </a>
-                                    <form action="{{ route('coaching.salary-slips.destroy', $slip->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this salary slip?');" class="d-inline">
+                                    <form action="{{ route('coaching.salary-slips.destroy', $slip->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this salary slip?');" class="m-0">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger rounded-pill px-3" title="Delete Slip">
-                                            <i class="fas fa-trash me-1"></i> Delete
+                                        <button type="submit" class="btn btn-sm btn-danger rounded-pill px-3 shadow-sm d-flex align-items-center" style="min-width: 95px; height: 32px;">
+                                            <i class="fas fa-trash me-1 small"></i> Delete
                                         </button>
                                     </form>
                                 </div>

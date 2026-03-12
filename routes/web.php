@@ -45,8 +45,10 @@ Route::middleware(['auth', 'role:coaching_admin'])->prefix('coaching')->name('co
     Route::resource('fees', \App\Http\Controllers\CoachingAdmin\FeeController::class);
     Route::get('fees/{fee}/download', [\App\Http\Controllers\CoachingAdmin\FeeController::class, 'downloadInvoice'])->name('fees.download');
     Route::resource('attendance', \App\Http\Controllers\CoachingAdmin\AttendanceController::class);
+    Route::resource('teacher-attendance', \App\Http\Controllers\CoachingAdmin\TeacherAttendanceController::class);
     Route::resource('exams', \App\Http\Controllers\CoachingAdmin\ExamController::class);
     Route::resource('notices', \App\Http\Controllers\CoachingAdmin\NoticeController::class);
+    Route::get('salary-slips/attendance-count', [\App\Http\Controllers\Coaching\SalarySlipController::class, 'getAttendanceCount'])->name('salary-slips.attendance-count');
     Route::resource('salary-slips', \App\Http\Controllers\Coaching\SalarySlipController::class);
     Route::get('salary-slips/{salarySlip}/download', [\App\Http\Controllers\Coaching\SalarySlipController::class, 'download'])->name('salary-slips.download');
     
@@ -65,6 +67,7 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
     Route::get('/students', [\App\Http\Controllers\Teacher\DashboardController::class, 'students'])->name('students');
     Route::get('/students/{student}', [\App\Http\Controllers\Teacher\DashboardController::class, 'showStudent'])->name('students.show');
     Route::resource('attendance', \App\Http\Controllers\Teacher\AttendanceController::class);
+    Route::get('my-attendance', [\App\Http\Controllers\Teacher\AttendanceController::class, 'myAttendance'])->name('my-attendance');
     
     // Teacher Marks Routes
     Route::get('marks', [\App\Http\Controllers\Teacher\MarkController::class, 'index'])->name('marks.index');

@@ -217,6 +217,9 @@
                 <a href="{{ route('coaching.attendance.index') }}" class="{{ request()->routeIs('coaching.attendance.*') ? 'active' : '' }}">
                     <i class="fas fa-clipboard-check"></i> Attendance
                 </a>
+                <a href="{{ route('coaching.teacher-attendance.index') }}" class="{{ request()->routeIs('coaching.teacher-attendance.*') ? 'active' : '' }}">
+                    <i class="fas fa-user-check"></i> Teacher Attendance
+                </a>
                 
                 <div class="small text-uppercase text-secondary fw-bold mt-4 mb-2 ps-3" style="font-size: 0.65rem; padding-left: 18px !important; opacity: 0.5;">Academic Control</div>
                 
