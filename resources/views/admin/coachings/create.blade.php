@@ -28,6 +28,14 @@
                         @enderror
                     </div>
 
+                    <div class="mb-4">
+                        <label for="address" class="form-label fw-bold small text-uppercase text-secondary">Institute Address</label>
+                        <textarea name="address" id="address" class="form-control form-control-lg border-0 bg-light rounded-4 @error('address') is-invalid @enderror" placeholder="Complete address of the institute">{{ old('address') }}</textarea>
+                        @error('address')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <div class="row g-4 mb-4">
                         <div class="col-md-6">
                             <label for="owner_name" class="form-label fw-bold small text-uppercase text-secondary">Owner/Administrator Name <span class="text-danger">*</span></label>

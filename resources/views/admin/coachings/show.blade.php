@@ -19,6 +19,10 @@
                         <td>{{ $coaching->coaching_name }}</td>
                     </tr>
                     <tr>
+                        <th>Address:</th>
+                        <td>{{ $coaching->address ?? 'N/A' }}</td>
+                    </tr>
+                    <tr>
                         <th>Owner Name:</th>
                         <td>{{ $coaching->owner_name }}</td>
                     </tr>

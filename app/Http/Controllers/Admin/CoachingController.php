@@ -27,6 +27,7 @@ class CoachingController extends Controller
     {
         $request->validate([
             'coaching_name' => 'required|string|max:255',
+            'address' => 'nullable|string',
             'owner_name' => 'required|string|max:255',
             'email' => 'required|email|unique:coachings,email',
             'mobile' => 'nullable|string|max:20',
@@ -40,6 +41,7 @@ class CoachingController extends Controller
 
         $coaching = Coaching::create([
             'coaching_name' => $request->coaching_name,
+            'address' => $request->address,
             'owner_name' => $request->owner_name,
             'email' => $request->email,
             'mobile' => $request->mobile,
@@ -89,6 +91,7 @@ class CoachingController extends Controller
     {
         $request->validate([
             'coaching_name' => 'required|string|max:255',
+            'address' => 'nullable|string',
             'owner_name' => 'required|string|max:255',
             'email' => 'required|email|unique:coachings,email,'.$coaching->id,
             'mobile' => 'nullable|string|max:20',
@@ -97,7 +100,7 @@ class CoachingController extends Controller
             'subscription_plan' => 'nullable|string|max:100',
         ]);
 
-        $coaching->update($request->only('coaching_name', 'owner_name', 'email', 'mobile', 'state', 'gst_number', 'subscription_plan'));
+        $coaching->update($request->only('coaching_name', 'address', 'owner_name', 'email', 'mobile', 'state', 'gst_number', 'subscription_plan'));
 
         // Also update user email if exists
         $user = User::where('email', $request->email)->first();

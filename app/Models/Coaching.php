@@ -10,6 +10,7 @@ class Coaching extends Model
 
     protected $fillable = [
         'coaching_name',
+        'address',
         'owner_name',
         'email',
         'mobile',
