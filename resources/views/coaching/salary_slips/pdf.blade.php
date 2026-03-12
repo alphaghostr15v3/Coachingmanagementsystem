@@ -5,7 +5,7 @@
     <title>Salary Slip - {{ $salarySlip->month }} {{ $salarySlip->year }}</title>
     <style>
         body {
-            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-family: 'DejaVu Sans', sans-serif;
             font-size: 14px;
             color: #333;
             line-height: 1.5;
@@ -188,6 +188,14 @@
                         <td>Basic Salary</td>
                         <td class="text-right" style="font-weight: bold;">{{ number_format($salarySlip->basic_salary, 2) }}</td>
                     </tr>
+                    @if($salarySlip->total_days > 0 && $salarySlip->per_day_pay > 0)
+                    <tr>
+                        <td style="font-size: 11px; color: #666; padding-top: 0; padding-left: 20px;">
+                            Calculation: {{ $salarySlip->total_days }} days &times; ₹{{ number_format($salarySlip->per_day_pay, 2) }} / day
+                        </td>
+                        <td style="padding-top: 0;"></td>
+                    </tr>
+                    @endif
                     @php $totalEarnings = 0; @endphp
                     @if(is_array($salarySlip->earnings))
                         @foreach($salarySlip->earnings as $earning)

@@ -13,6 +13,8 @@ class SalarySlip extends Model
         'month',
         'year',
         'basic_salary',
+        'total_days',
+        'per_day_pay',
         'earnings',
         'deductions',
         'net_salary',

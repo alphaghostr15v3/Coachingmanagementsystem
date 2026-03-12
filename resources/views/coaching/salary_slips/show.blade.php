@@ -91,8 +91,16 @@
                                     <tbody>
                                         <tr>
                                             <td>Basic Salary</td>
-                                            <td class="text-end fw-bold">{{ number_format($salarySlip->basic_salary, 2) }}</td>
+                                            <td class="text-end fw-bold">₹{{ number_format($salarySlip->basic_salary, 2) }}</td>
                                         </tr>
+                                        @if($salarySlip->total_days > 0 && $salarySlip->per_day_pay > 0)
+                                        <tr>
+                                            <td class="ps-4 py-0 small text-muted">
+                                                <i class="fas fa-info-circle me-1"></i> Calculation: {{ $salarySlip->total_days }} days × ₹{{ number_format($salarySlip->per_day_pay, 2) }} /day
+                                            </td>
+                                            <td class="py-0"></td>
+                                        </tr>
+                                        @endif
                                         @php $totalEarnings = 0; @endphp
                                         @if(is_array($salarySlip->earnings))
                                             @foreach($salarySlip->earnings as $earning)

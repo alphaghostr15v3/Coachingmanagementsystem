@@ -40,7 +40,7 @@
                         <!-- Salary Details -->
                         <h5 class="mb-4 text-primary fw-bold border-bottom pb-2 mt-5">2. Salary Structure</h5>
                         <div class="row mb-4">
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label for="month" class="form-label fw-bold">Salary Month <span class="text-danger">*</span></label>
                                 <select name="month" id="month" class="form-select" required>
                                     @php
@@ -52,7 +52,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label for="year" class="form-label fw-bold">Salary Year <span class="text-danger">*</span></label>
                                 <select name="year" id="year" class="form-select" required>
                                     @php $currentYear = date('Y'); @endphp
@@ -61,7 +61,15 @@
                                     @endfor
                                 </select>
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-2 mb-3">
+                                <label for="total_days" class="form-label fw-bold">Total Days</label>
+                                <input type="number" name="total_days" id="total_days" class="form-control salary-day-calc" placeholder="0">
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <label for="per_day_pay" class="form-label fw-bold">Per Day Pay (₹)</label>
+                                <input type="number" step="0.01" name="per_day_pay" id="per_day_pay" class="form-control salary-day-calc" placeholder="0.00">
+                            </div>
+                            <div class="col-md-2 mb-3">
                                 <label for="basic_salary" class="form-label fw-bold">Basic Salary (₹) <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light border-end-0"><i class="fas fa-rupee-sign text-muted"></i></span>
@@ -240,6 +248,14 @@
     }
 
     function calculateSalary() {
+        let totalDays = parseFloat($('#total_days').val()) || 0;
+        let perDayPay = parseFloat($('#per_day_pay').val()) || 0;
+        
+        if (totalDays > 0 && perDayPay > 0) {
+            let calculatedBasic = totalDays * perDayPay;
+            $('#basic_salary').val(calculatedBasic.toFixed(2));
+        }
+
         let basic = parseFloat($('#basic_salary').val()) || 0;
         
         let totalEarnings = 0;
@@ -259,7 +275,7 @@
     }
 
     function bindCalc() {
-        $('.salary-calc').off('input').on('input', calculateSalary);
+        $('.salary-calc, .salary-day-calc').off('input').on('input', calculateSalary);
     }
 
     $(document).ready(function() {
