@@ -9,7 +9,7 @@
             <li class="breadcrumb-item active">Add Teacher</li>
         </ol>
     </nav>
-    <h2 class="fw-bold">Register New Faculty</h2>
+    <h2 class="fw-bold">Register New Teacher</h2>
 </div>
 
 <div class="row">
@@ -20,7 +20,7 @@
                     @csrf
                     <div class="row g-4 mb-4">
                         <div class="col-md-4">
-                            <label for="name" class="form-label fw-bold small text-uppercase text-secondary">Faculty Name <span class="text-danger">*</span></label>
+                            <label for="name" class="form-label fw-bold small text-uppercase text-secondary">Teacher Name <span class="text-danger">*</span></label>
                             <input type="text" name="name" id="name" class="form-control form-control-lg border-0 bg-light rounded-4 @error('name') is-invalid @enderror" value="{{ old('name') }}" required placeholder="e.g. Prof. Robert Fox">
                             @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
@@ -77,14 +77,7 @@
                             <label for="joining_date" class="form-label fw-bold small text-uppercase text-secondary">Joining Date</label>
                             <input type="date" name="joining_date" id="joining_date" class="form-control form-control-lg border-0 bg-light rounded-4" value="{{ old('joining_date', date('Y-m-d')) }}">
                         </div>
-                        <div class="col-md-4">
-                            <label for="staff_type" class="form-label fw-bold small text-uppercase text-secondary">Staff Type <span class="text-danger">*</span></label>
-                            <select name="staff_type" id="staff_type" class="form-select form-select-lg border-0 bg-light rounded-4" required>
-                                <option value="Teaching" {{ old('staff_type') == 'Teaching' ? 'selected' : '' }}>Teaching</option>
-                                <option value="Non-Teaching" {{ old('staff_type') == 'Non-Teaching' ? 'selected' : '' }}>Non-Teaching</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="status" class="form-label fw-bold small text-uppercase text-secondary">Status <span class="text-danger">*</span></label>
                             <select name="status" id="status" class="form-select form-select-lg border-0 bg-light rounded-4" required>
                                 <option value="Active" {{ old('status') == 'Active' ? 'selected' : '' }}>Active</option>
@@ -96,7 +89,7 @@
                     <div class="d-flex justify-content-end gap-3 mt-5">
                         <a href="{{ route('coaching.teachers.index') }}" class="btn btn-light px-4 py-2 rounded-4 fw-bold border">Cancel</a>
                         <button type="submit" class="btn btn-primary px-5 py-2 rounded-4 fw-bold shadow">
-                            <i class="fas fa-save me-2"></i> Save Faculty Profile
+                            <i class="fas fa-save me-2"></i> Save Teacher Profile
                         </button>
                     </div>
                 </form>
@@ -107,7 +100,7 @@
             <div class="card-body p-4">
                 <h5 class="fw-bold mb-3"><i class="fas fa-info-circle me-2"></i> Registration Tip</h5>
                 <p class="small opacity-75">
-                    Provide accurate contact details to ensure the faculty member can receive login credentials and system notifications.
+                    Provide accurate contact details to ensure the teacher can receive login credentials and system notifications.
                 </p>
                 <hr class="bg-white">
                 <div class="d-flex align-items-center mb-2">
@@ -116,7 +109,7 @@
                 </div>
                 <div class="d-flex align-items-center mb-2">
                     <i class="fas fa-check-circle me-2"></i>
-                    <span class="small">Faculty account will be created</span>
+                    <span class="small">Teacher account will be created</span>
                 </div>
                 <div class="d-flex align-items-center">
                     <i class="fas fa-check-circle me-2"></i>

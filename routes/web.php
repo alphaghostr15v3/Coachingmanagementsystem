@@ -15,6 +15,8 @@ Route::get('/dashboard', function () {
         return redirect()->route('coaching.dashboard');
     } elseif ($role === 'teacher') {
         return redirect()->route('teacher.dashboard');
+    } elseif ($role === 'faculty') {
+        return redirect()->route('faculty.dashboard');
     } elseif ($role === 'student') {
         return redirect()->route('student.dashboard');
     }
@@ -40,6 +42,7 @@ Route::middleware(['auth', 'role:coaching_admin'])->prefix('coaching')->name('co
     Route::get('/dashboard', [\App\Http\Controllers\CoachingAdmin\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('students', \App\Http\Controllers\CoachingAdmin\StudentController::class);
     Route::resource('teachers', \App\Http\Controllers\CoachingAdmin\TeacherController::class);
+    Route::resource('faculties', \App\Http\Controllers\CoachingAdmin\FacultyController::class);
     Route::resource('departments', \App\Http\Controllers\CoachingAdmin\DepartmentController::class);
     Route::resource('designations', \App\Http\Controllers\CoachingAdmin\DesignationController::class);
     Route::resource('courses', \App\Http\Controllers\CoachingAdmin\CourseController::class);
@@ -48,6 +51,7 @@ Route::middleware(['auth', 'role:coaching_admin'])->prefix('coaching')->name('co
     Route::get('fees/{fee}/download', [\App\Http\Controllers\CoachingAdmin\FeeController::class, 'downloadInvoice'])->name('fees.download');
     Route::resource('attendance', \App\Http\Controllers\CoachingAdmin\AttendanceController::class);
     Route::resource('teacher-attendance', \App\Http\Controllers\CoachingAdmin\TeacherAttendanceController::class);
+    Route::resource('faculty-attendance', \App\Http\Controllers\CoachingAdmin\FacultyAttendanceController::class);
     Route::resource('exams', \App\Http\Controllers\CoachingAdmin\ExamController::class);
     Route::resource('notices', \App\Http\Controllers\CoachingAdmin\NoticeController::class);
     Route::get('salary-slips/attendance-count', [\App\Http\Controllers\Coaching\SalarySlipController::class, 'getAttendanceCount'])->name('salary-slips.attendance-count');
@@ -91,5 +95,16 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
     Route::get('/marks', [\App\Http\Controllers\Student\DashboardController::class, 'marks'])->name('marks');
     Route::get('/notices', [\App\Http\Controllers\Student\DashboardController::class, 'notices'])->name('notices');
 });
+
+// Faculty Panel Routes
+Route::middleware(['auth', 'role:faculty'])->prefix('faculty')->name('faculty.')->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\Faculty\DashboardController::class, 'index'])->name('dashboard');
+    
+    // Salary Slips
+    Route::get('salary-slips', [\App\Http\Controllers\Faculty\SalarySlipController::class, 'index'])->name('salary-slips.index');
+    Route::get('salary-slips/{salarySlip}', [\App\Http\Controllers\Faculty\SalarySlipController::class, 'show'])->name('salary-slips.show');
+    Route::get('salary-slips/{salarySlip}/download', [\App\Http\Controllers\Faculty\SalarySlipController::class, 'download'])->name('salary-slips.download');
+});
+
 
 require __DIR__.'/auth.php';

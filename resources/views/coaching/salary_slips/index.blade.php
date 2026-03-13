@@ -81,8 +81,8 @@
                                         <i class="fas fa-user-tie"></i>
                                     </div>
                                     <div>
-                                        <h6 class="mb-0">{{ $slip->teacher->name }}</h6>
-                                        <small class="text-muted">{{ $slip->teacher->email }}</small>
+                                        <h6 class="mb-0">{{ $slip->teacher->name ?? $slip->faculty->name ?? 'N/A' }}</h6>
+                                        <small class="text-muted">{{ $slip->teacher->email ?? $slip->faculty->email ?? 'N/A' }}</small>
                                     </div>
                                 </div>
                             </td>

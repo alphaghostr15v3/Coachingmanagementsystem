@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\CoachingAdmin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Teacher;
+use App\Models\Faculty;
 use Illuminate\Http\Request;
 
-class TeacherController extends Controller
+class FacultyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $teachers = Teacher::with(['department', 'designation'])->latest()->get();
-        return view('coaching.teachers.index', compact('teachers'));
+        $faculties = Faculty::with(['department', 'designation'])->latest()->get();
+        return view('coaching.faculties.index', compact('faculties'));
     }
 
     /**
@@ -24,7 +24,7 @@ class TeacherController extends Controller
     {
         $departments = \App\Models\Department::all();
         $designations = \App\Models\Designation::all();
-        return view('coaching.teachers.create', compact('departments', 'designations'));
+        return view('coaching.faculties.create', compact('departments', 'designations'));
     }
 
     /**
@@ -36,7 +36,6 @@ class TeacherController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:mysql.users,email',
             'phone' => 'nullable|string|max:20',
-            'subject' => 'nullable|string|max:255',
             'department_id' => 'nullable|exists:tenant.departments,id',
             'designation_id' => 'nullable|exists:tenant.designations,id',
             'qualification' => 'nullable|string|max:255',
@@ -54,46 +53,43 @@ class TeacherController extends Controller
         \App\Models\User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt('teacher@123'),
-            'role' => 'teacher',
+            'password' => bcrypt('faculty@123'),
+            'role' => 'faculty',
             'coaching_id' => $coachingId,
         ]);
 
-        $data = $request->all();
-        $data['staff_type'] = 'Teaching';
-        Teacher::create($data);
+        Faculty::create($request->all());
 
-        return redirect()->route('coaching.teachers.index')->with('success', 'Teacher added successfully.');
+        return redirect()->route('coaching.faculties.index')->with('success', 'Faculty added successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Teacher $teacher)
+    public function show(Faculty $faculty)
     {
-        return view('coaching.teachers.show', compact('teacher'));
+        return view('coaching.faculties.show', compact('faculty'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Teacher $teacher)
+    public function edit(Faculty $faculty)
     {
         $departments = \App\Models\Department::all();
         $designations = \App\Models\Designation::all();
-        return view('coaching.teachers.edit', compact('teacher', 'departments', 'designations'));
+        return view('coaching.faculties.edit', compact('faculty', 'departments', 'designations'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Teacher $teacher)
+    public function update(Request $request, Faculty $faculty)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:20',
-            'subject' => 'nullable|string|max:255',
             'department_id' => 'nullable|exists:tenant.departments,id',
             'designation_id' => 'nullable|exists:tenant.designations,id',
             'qualification' => 'nullable|string|max:255',
@@ -102,22 +98,17 @@ class TeacherController extends Controller
             'status' => 'required|string|in:Active,Inactive',
         ]);
 
-        $data = $request->all();
-        $data['staff_type'] = 'Teaching';
-        $teacher->update($data);
+        $faculty->update($request->all());
 
-        return redirect()->route('coaching.teachers.index')->with('success', 'Teacher updated successfully.');
+        return redirect()->route('coaching.faculties.index')->with('success', 'Faculty updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Teacher $teacher)
+    public function destroy(Faculty $faculty)
     {
-        if ($teacher->email) {
-            \App\Models\User::where('email', $teacher->email)->delete();
-        }
-        $teacher->delete();
-        return back()->with('success', 'Teacher removed successfully.');
+        $faculty->delete();
+        return back()->with('success', 'Faculty removed successfully.');
     }
 }

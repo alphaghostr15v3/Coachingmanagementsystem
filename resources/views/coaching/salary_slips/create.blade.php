@@ -23,11 +23,11 @@
                         <h5 class="mb-4 text-primary fw-bold border-bottom pb-2">1. Employee Details</h5>
                         <div class="row mb-4">
                             <div class="col-md-6 mb-3">
-                                <label for="teacher_id" class="form-label fw-bold">Select Teacher <span class="text-danger">*</span></label>
+                                <label for="teacher_id" class="form-label fw-bold">Select Teacher</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-light border-end-0"><i class="fas fa-user-tie text-muted"></i></span>
-                                    <select name="teacher_id" id="teacher_id" class="form-select border-start-0" required>
-                                        <option value="" selected disabled>Choose a teacher...</option>
+                                    <span class="input-group-text bg-light border-end-0"><i class="fas fa-chalkboard-teacher text-muted"></i></span>
+                                    <select name="teacher_id" id="teacher_id" class="form-select border-start-0 employee-select">
+                                        <option value="" selected>Choose a teacher...</option>
                                         @foreach($teachers as $teacher)
                                             <option value="{{ $teacher->id }}">{{ $teacher->name }} ({{ $teacher->email }})</option>
                                         @endforeach
@@ -35,6 +35,22 @@
                                 </div>
                                 @error('teacher_id')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
                             </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="faculty_id" class="form-label fw-bold">Select Faculty</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="fas fa-user-tie text-muted"></i></span>
+                                    <select name="faculty_id" id="faculty_id" class="form-select border-start-0 employee-select">
+                                        <option value="" selected>Choose a faculty member...</option>
+                                        @foreach($faculties as $faculty)
+                                            <option value="{{ $faculty->id }}">{{ $faculty->name }} ({{ $faculty->email }})</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @error('faculty_id')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
+                            </div>
+                        </div>
+                        <div class="alert alert-info border-0 rounded-4 py-2 small mb-4">
+                            <i class="fas fa-info-circle me-2"></i> Please select either a Teacher <strong>or</strong> a Faculty member to generate the slip.
                         </div>
 
                         <!-- Salary Details -->
@@ -276,15 +292,17 @@
 
     function fetchAttendanceCount() {
         const teacherId = $('#teacher_id').val();
+        const facultyId = $('#faculty_id').val();
         const month = $('#month').val();
         const year = $('#year').val();
 
-        if (teacherId && month && year) {
+        if ((teacherId || facultyId) && month && year) {
             $.ajax({
                 url: "{{ route('coaching.salary-slips.attendance-count') }}",
                 type: "GET",
                 data: {
                     teacher_id: teacherId,
+                    faculty_id: facultyId,
                     month: month,
                     year: year
                 },
@@ -303,7 +321,17 @@
 
     function bindCalc() {
         $('.salary-calc, .salary-day-calc').off('input').on('input', calculateSalary);
-        $('#teacher_id, #month, #year').on('change', fetchAttendanceCount);
+        
+        $('.employee-select').on('change', function() {
+            const currentId = $(this).attr('id');
+            if ($(this).val()) {
+                // Clear the other select
+                $('.employee-select').not(this).val('');
+            }
+            fetchAttendanceCount();
+        });
+        
+        $('#month, #year').on('change', fetchAttendanceCount);
     }
 
     $(document).ready(function() {

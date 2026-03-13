@@ -26,7 +26,7 @@ class TenantContextMiddleware
                 if ($coaching && is_null($user->coaching_id)) {
                     $user->update(['coaching_id' => $coaching->id]);
                 }
-            } elseif (in_array($user->role, ['teacher', 'student'])) {
+            } elseif (in_array($user->role, ['teacher', 'student', 'faculty'])) {
                 if ($user->coaching_id) {
                     $coaching = \App\Models\Coaching::find($user->coaching_id);
                 } else {
@@ -46,7 +46,7 @@ class TenantContextMiddleware
                 }
             } else {
                 // Critical failure: Coaching record not found even if coaching_id was set
-                if (in_array($user->role, ['coaching_admin', 'teacher', 'student'])) {
+                if (in_array($user->role, ['coaching_admin', 'teacher', 'student', 'faculty'])) {
                     auth()->logout();
                     return redirect()->route('login')->withErrors(['email' => 'Assigned coaching data not found.']);
                 }

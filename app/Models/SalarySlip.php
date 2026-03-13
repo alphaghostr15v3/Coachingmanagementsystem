@@ -10,6 +10,7 @@ class SalarySlip extends Model
 
     protected $fillable = [
         'teacher_id',
+        'faculty_id',
         'month',
         'year',
         'basic_salary',
@@ -32,5 +33,10 @@ class SalarySlip extends Model
     public function teacher()
     {
         return $this->belongsTo(Teacher::class, 'teacher_id');
+    }
+
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class, 'faculty_id');
     }
 }

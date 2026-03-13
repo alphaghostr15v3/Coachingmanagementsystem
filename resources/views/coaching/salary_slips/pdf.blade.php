@@ -152,13 +152,13 @@
             <td>
                 <table class="detail-table">
                     <tr><th>Employee Name</th></tr>
-                    <tr><td style="font-weight: bold;">{{ $salarySlip->teacher->name }}</td></tr>
+                    <tr><td style="font-weight: bold;">{{ $salarySlip->teacher->name ?? $salarySlip->faculty->name ?? 'N/A' }}</td></tr>
                     <tr><th>Email</th></tr>
-                    <tr><td>{{ $salarySlip->teacher->email }}</td></tr>
+                    <tr><td>{{ $salarySlip->teacher->email ?? $salarySlip->faculty->email ?? 'N/A' }}</td></tr>
                     <tr><th>Designation</th></tr>
-                    <tr><td>Teacher / Faculty</td></tr>
+                    <tr><td>{{ $salarySlip->teacher_id ? 'Teacher' : 'Faculty' }}</td></tr>
                     <tr><th>Employee ID</th></tr>
-                    <tr><td>#{{ str_pad($salarySlip->teacher->id, 4, '0', STR_PAD_LEFT) }}</td></tr>
+                    <tr><td>#{{ str_pad($salarySlip->teacher_id ?? $salarySlip->faculty_id, 4, '0', STR_PAD_LEFT) }}</td></tr>
                 </table>
             </td>
             <td style="padding-left: 20px; border-left: 1px solid #eee;">

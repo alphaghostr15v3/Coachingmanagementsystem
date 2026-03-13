@@ -200,7 +200,10 @@
                     <i class="fas fa-user-graduate"></i> Students
                 </a>
                 <a href="{{ route('coaching.teachers.index') }}" class="{{ request()->routeIs('coaching.teachers.*') ? 'active' : '' }}">
-                    <i class="fas fa-chalkboard-teacher"></i> Faculty Management
+                    <i class="fas fa-chalkboard-teacher"></i> Teacher Management
+                </a>
+                <a href="{{ route('coaching.faculties.index') }}" class="{{ request()->routeIs('coaching.faculties.*') ? 'active' : '' }}">
+                    <i class="fas fa-user-tie"></i> Faculty Management
                 </a>
                 <a href="{{ route('coaching.courses.index') }}" class="{{ request()->routeIs('coaching.courses.*') ? 'active' : '' }}">
                     <i class="fas fa-book-open"></i> Courses
@@ -215,10 +218,13 @@
                     <i class="fas fa-file-invoice-dollar"></i> Salary Slips
                 </a>
                 <a href="{{ route('coaching.attendance.index') }}" class="{{ request()->routeIs('coaching.attendance.*') ? 'active' : '' }}">
-                    <i class="fas fa-clipboard-check"></i> Attendance
+                    <i class="fas fa-clipboard-check"></i> Student Attendance
                 </a>
                 <a href="{{ route('coaching.teacher-attendance.index') }}" class="{{ request()->routeIs('coaching.teacher-attendance.*') ? 'active' : '' }}">
-                    <i class="fas fa-user-check"></i> Faculty Attendance
+                    <i class="fas fa-user-check"></i> Teacher Attendance
+                </a>
+                <a href="{{ route('coaching.faculty-attendance.index') }}" class="{{ request()->routeIs('coaching.faculty-attendance.*') ? 'active' : '' }}">
+                    <i class="fas fa-user-clock"></i> Faculty Attendance
                 </a>
                 
                 <div class="small text-uppercase text-secondary fw-bold mt-4 mb-2 ps-3" style="font-size: 0.65rem; padding-left: 18px !important; opacity: 0.5;">Academic Control</div>

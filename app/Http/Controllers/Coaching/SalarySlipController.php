@@ -17,21 +17,30 @@ class SalarySlipController extends Controller
     public function getAttendanceCount(Request $request)
     {
         $teacherId = $request->teacher_id;
+        $facultyId = $request->faculty_id;
         $monthName = $request->month;
         $year = $request->year;
 
-        if (!$teacherId || !$monthName || !$year) {
+        if ((!$teacherId && !$facultyId) || !$monthName || !$year) {
             return response()->json(['count' => 0]);
         }
 
         try {
             $month = Carbon::parse($monthName)->month;
             
-            $count = TeacherAttendance::where('teacher_id', $teacherId)
-                ->whereYear('date', $year)
-                ->whereMonth('date', $month)
-                ->where('status', 'present')
-                ->count();
+            if ($teacherId) {
+                $count = TeacherAttendance::where('teacher_id', $teacherId)
+                    ->whereYear('date', $year)
+                    ->whereMonth('date', $month)
+                    ->where('status', 'present')
+                    ->count();
+            } else {
+                $count = \App\Models\FacultyAttendance::where('faculty_id', $facultyId)
+                    ->whereYear('date', $year)
+                    ->whereMonth('date', $month)
+                    ->where('status', 'present')
+                    ->count();
+            }
 
             return response()->json(['count' => $count]);
         } catch (\Exception $e) {
@@ -41,7 +50,7 @@ class SalarySlipController extends Controller
 
     public function index()
     {
-        $slips = SalarySlip::with('teacher')->latest()->get();
+        $slips = SalarySlip::with(['teacher', 'faculty'])->latest()->get();
         $currentCoaching = auth()->user()->coaching ?? \App\Models\Coaching::first();
         return view('coaching.salary_slips.index', compact('slips', 'currentCoaching'));
     }
@@ -49,14 +58,16 @@ class SalarySlipController extends Controller
     public function create()
     {
         $teachers = Teacher::all();
+        $faculties = \App\Models\Faculty::all();
         $currentCoaching = auth()->user()->coaching ?? \App\Models\Coaching::first();
-        return view('coaching.salary_slips.create', compact('teachers', 'currentCoaching'));
+        return view('coaching.salary_slips.create', compact('teachers', 'faculties', 'currentCoaching'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'teacher_id' => 'required|exists:tenant.teachers,id',
+            'teacher_id' => 'required_without:faculty_id|nullable|exists:tenant.teachers,id',
+            'faculty_id' => 'required_without:teacher_id|nullable|exists:tenant.faculties,id',
             'month' => 'required|string',
             'year' => 'required|integer',
             'basic_salary' => 'required|numeric|min:0',
@@ -109,7 +120,8 @@ class SalarySlipController extends Controller
         $netSalary = $basic + $totalEarnings - $totalDeductions;
 
         SalarySlip::create([
-            'teacher_id' => $validated['teacher_id'],
+            'teacher_id' => $validated['teacher_id'] ?? null,
+            'faculty_id' => $validated['faculty_id'] ?? null,
             'month' => $validated['month'],
             'year' => $validated['year'],
             'basic_salary' => $basic,
@@ -128,19 +140,20 @@ class SalarySlipController extends Controller
 
     public function show(SalarySlip $salarySlip)
     {
-        $salarySlip->load('teacher');
+        $salarySlip->load(['teacher', 'faculty']);
         $currentCoaching = auth()->user()->coaching ?? \App\Models\Coaching::first();
         return view('coaching.salary_slips.show', compact('salarySlip', 'currentCoaching'));
     }
 
     public function download(SalarySlip $salarySlip)
     {
-        $salarySlip->load('teacher');
+        $salarySlip->load(['teacher', 'faculty']);
         $currentCoaching = auth()->user()->coaching ?? \App\Models\Coaching::first();
         
         $pdf = Pdf::loadView('coaching.salary_slips.pdf', compact('salarySlip', 'currentCoaching'));
         
-        $filename = 'Salary_Slip_' . $salarySlip->month . '_' . $salarySlip->year . '_' . str_replace(' ', '_', $salarySlip->teacher->name) . '.pdf';
+        $name = $salarySlip->teacher ? $salarySlip->teacher->name : ($salarySlip->faculty ? $salarySlip->faculty->name : 'Employee');
+        $filename = 'Salary_Slip_' . $salarySlip->month . '_' . $salarySlip->year . '_' . str_replace(' ', '_', $name) . '.pdf';
         
         return $pdf->download($filename);
     }
