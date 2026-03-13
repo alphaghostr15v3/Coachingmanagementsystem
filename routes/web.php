@@ -99,6 +99,8 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
 // Faculty Panel Routes
 Route::middleware(['auth', 'role:faculty'])->prefix('faculty')->name('faculty.')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Faculty\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/attendance', [\App\Http\Controllers\Faculty\DashboardController::class, 'attendance'])->name('attendance');
+    Route::get('/notices', [\App\Http\Controllers\Faculty\DashboardController::class, 'notices'])->name('notices');
     
     // Salary Slips
     Route::get('salary-slips', [\App\Http\Controllers\Faculty\SalarySlipController::class, 'index'])->name('salary-slips.index');

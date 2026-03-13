@@ -119,14 +119,14 @@
             <a href="{{ route('faculty.dashboard') }}" class="{{ request()->routeIs('faculty.dashboard') ? 'active' : '' }}">
                 <i class="fas fa-th-large"></i> Dashboard
             </a>
-            <a href="#" class="">
+            <a href="{{ route('faculty.attendance') }}" class="{{ request()->routeIs('faculty.attendance') ? 'active' : '' }}">
                 <i class="fas fa-calendar-alt"></i> My Attendance
             </a>
             <a href="{{ route('faculty.salary-slips.index') }}" class="{{ request()->routeIs('faculty.salary-slips.*') ? 'active' : '' }}">
                 <i class="fas fa-file-invoice-dollar"></i> Salary Slips
             </a>
             <hr class="text-secondary opacity-25 mx-3 my-4">
-            <a href="#">
+            <a href="{{ route('faculty.notices') }}" class="{{ request()->routeIs('faculty.notices') ? 'active' : '' }}">
                 <i class="fas fa-bullhorn"></i> Notices
             </a>
         </div>

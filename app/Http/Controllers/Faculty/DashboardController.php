@@ -30,4 +30,26 @@ class DashboardController extends Controller
 
         return view('faculty.dashboard', compact('faculty', 'attendanceCount', 'latestSalary'));
     }
+
+    public function attendance()
+    {
+        $user = auth()->user();
+        $faculty = Faculty::where('email', $user->email)->first();
+        
+        if (!$faculty) {
+            $attendances = collect();
+        } else {
+            $attendances = FacultyAttendance::where('faculty_id', $faculty->id)
+                ->latest('date')
+                ->get();
+        }
+
+        return view('faculty.attendance.index', compact('attendances'));
+    }
+
+    public function notices()
+    {
+        $notices = \App\Models\Notice::latest()->get();
+        return view('faculty.notices.index', compact('notices'));
+    }
 }
