@@ -27,6 +27,8 @@ class ProfileUpdateRequest extends FormRequest
             ],
             'state' => ['nullable', 'string', 'max:100'],
             'gst_number' => ['nullable', 'string', 'max:15'],
+            'authorized_signatory' => ['nullable', 'string', 'max:255'],
+            'signatory_image' => ['nullable', 'image', 'max:2048'],
         ];
     }
 }

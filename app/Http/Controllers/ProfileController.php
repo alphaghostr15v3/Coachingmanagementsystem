@@ -35,7 +35,7 @@ class ProfileController extends Controller
         $request->user()->save();
 
         // Update coaching state if coaching_admin
-        if ($request->user()->role === 'coaching_admin' && $request->has('state')) {
+        if ($request->user()->role === 'coaching_admin') {
             $coaching = $request->user()->coaching;
             if (!$coaching) {
                 // Fallback to email search if coaching_id is missing (though we fixed this)
@@ -43,10 +43,27 @@ class ProfileController extends Controller
             }
             
             if ($coaching) {
-                $coaching->update([
+                $data = [
                     'state' => $request->state,
                     'gst_number' => $request->gst_number,
-                ]);
+                    'authorized_signatory' => $request->authorized_signatory,
+                ];
+
+                if ($request->hasFile('signatory_image')) {
+                    $file = $request->file('signatory_image');
+                    $filename = time() . '_' . $file->getClientOriginalName();
+                    
+                    // Create directory if it doesn't exist
+                    $path = public_path('uploads/signatories');
+                    if (!file_exists($path)) {
+                        mkdir($path, 0777, true);
+                    }
+                    
+                    $file->move($path, $filename);
+                    $data['signatory_image'] = $filename;
+                }
+
+                $coaching->update($data);
             }
         }
 

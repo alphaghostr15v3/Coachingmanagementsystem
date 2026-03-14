@@ -238,6 +238,12 @@
                 <a href="{{ route('coaching.notices.index') }}" class="{{ request()->routeIs('coaching.notices.*') ? 'active' : '' }}">
                     <i class="fas fa-bullhorn"></i> Notices
                 </a>
+                
+                <div class="small text-uppercase text-secondary fw-bold mt-4 mb-2 ps-3" style="font-size: 0.65rem; padding-left: 18px !important; opacity: 0.5;">Settings</div>
+                
+                <a href="{{ route('coaching.settings.edit') }}" class="{{ request()->routeIs('coaching.settings.edit') ? 'active' : '' }}">
+                    <i class="fas fa-university"></i> Institute Settings
+                </a>
             </div>
         </div>
 
@@ -259,7 +265,8 @@
                         <span class="fw-semibold d-none d-sm-inline">{{ auth()->user()->name }}</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 mt-2">
-                        <li><a class="dropdown-item py-2" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
+                        <li><a class="dropdown-item py-2" href="{{ route('coaching.settings.edit') }}"><i class="fas fa-university me-2"></i> Institute Settings</a></li>
+                        <li><a class="dropdown-item py-2" href="{{ route('profile.edit') }}"><i class="fas fa-user-cog me-2"></i> User Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}">

@@ -19,5 +19,7 @@ class Coaching extends Model
         'database_name',
         'status',
         'subscription_plan',
+        'authorized_signatory',
+        'signatory_image',
     ];
 }

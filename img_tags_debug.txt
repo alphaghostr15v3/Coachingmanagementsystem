@@ -1,0 +1,16 @@
+Total images found: 3
+--- Tag #0 at offset 9231 ---
+Length: 251836
+Start: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAKACAIAAACDr150AACAAElEQVR4nOx9i5rjSMosZM37P/Ea9hMQQEqyy9W36Z6GPWf+dlmWUqkLCQQR//zvf/9baxGRqtJzU9W11nUbZvZvmdm/zX+8+NWt5a5OO7l+m3+5Pe7pt9dd
+End: pBCFRQGyUEXBYiyszhgkAT7YmZ8BS0EgVSz8uJCGJ/2T6fthETICtav13l/9NvufdynE9r5NnOnHu+ApaMnqwXEl71vdXV/w/wUAAP//7nQVcrmOARkAAAAASUVORK5CYII=" style="height: 30px; vertical-align: middle; margin-right: 10px;">
+
+--- Tag #1 at offset 261816 ---
+Length: 68
+Start: <img src="{{ public_path('uploads/signatories/' . $currentCoaching->
+End: <img src="{{ public_path('uploads/signatories/' . $currentCoaching->
+
+--- Tag #2 at offset 263824 ---
+Length: 71
+Start: <img src="{{ $base64 }}" style="max-height: 70px; margin-bottom: 5px;">
+End: <img src="{{ $base64 }}" style="max-height: 70px; margin-bottom: 5px;">
+

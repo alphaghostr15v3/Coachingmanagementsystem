@@ -62,6 +62,10 @@ Route::middleware(['auth', 'role:coaching_admin'])->prefix('coaching')->name('co
     Route::get('marks', [\App\Http\Controllers\CoachingAdmin\MarkController::class, 'index'])->name('marks.index');
     Route::get('marks/create', [\App\Http\Controllers\CoachingAdmin\MarkController::class, 'create'])->name('marks.create');
     Route::post('marks', [\App\Http\Controllers\CoachingAdmin\MarkController::class, 'store'])->name('marks.store');
+
+    // Institute Settings
+    Route::get('settings', [\App\Http\Controllers\CoachingAdmin\SettingController::class, 'edit'])->name('settings.edit');
+    Route::patch('settings', [\App\Http\Controllers\CoachingAdmin\SettingController::class, 'update'])->name('settings.update');
 });
 
 // Teacher Panel Routes

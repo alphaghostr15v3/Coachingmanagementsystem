@@ -243,9 +243,10 @@
                     <div class="details-label">Terms & Conditions</div>
                     <ul class="terms-list">
                         <li>Fees once paid are non-refundable and non-transferable.</li>
-                        <li>This is a computer-generated invoice and doesn't require a signature.</li>
                         <li>Please keep this invoice for future reference.</li>
                     </ul>
+
+
                 </td>
                 <td class="bottom-col" style="width: 40%; padding-left: 5%;">
                     <table class="summary-table">

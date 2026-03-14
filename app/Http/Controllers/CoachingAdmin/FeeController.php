@@ -172,7 +172,8 @@ class FeeController extends Controller
     public function downloadInvoice(Fee $fee)
     {
         $fee->load('student');
-        $pdf = Pdf::loadView('coaching.fees.invoice_pdf', compact('fee'));
+        $currentCoaching = auth()->user()->coaching ?? \App\Models\Coaching::first();
+        $pdf = Pdf::loadView('coaching.fees.invoice_pdf', compact('fee', 'currentCoaching'));
 
         $filename = 'Invoice-' . str_pad($fee->id, 6, '0', STR_PAD_LEFT) . '.pdf';
         return $pdf->download($filename);
