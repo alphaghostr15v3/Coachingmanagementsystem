@@ -47,11 +47,21 @@ class TenantService
      */
     public static function runTenantMigrations()
     {
-        Artisan::call('migrate', [
-            '--database' => 'tenant',
-            '--path' => 'database/migrations/tenant',
-            '--force' => true,
-        ]);
+        // Explicitly set the default connection to 'tenant' before running migrations
+        // This ensures Schema::create() in migrations targets the correct DB
+        $originalConnection = config('database.default');
+        config(['database.default' => 'tenant']);
+
+        try {
+            Artisan::call('migrate', [
+                '--database' => 'tenant',
+                '--path' => 'database/migrations/tenant',
+                '--force' => true,
+            ]);
+        } finally {
+            // Restore the original connection
+            config(['database.default' => $originalConnection]);
+        }
     }
 
     /**

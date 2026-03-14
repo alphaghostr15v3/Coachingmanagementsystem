@@ -256,6 +256,11 @@
                         <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
                     </div>
                 @endif
+                @if(session('error'))
+                    <div class="alert alert-danger border-0 shadow-sm rounded-4 py-3 mb-4 animate__animated animate__fadeInDown" role="alert">
+                        <i class="fas fa-exclamation-circle me-2"></i> {{ session('error') }}
+                    </div>
+                @endif
                 
                 @yield('content')
             </div>
