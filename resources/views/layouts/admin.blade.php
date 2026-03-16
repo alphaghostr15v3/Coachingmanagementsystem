@@ -40,10 +40,27 @@
         .sidebar { 
             width: var(--sidebar-width);
             min-height: 100vh; 
+            max-height: 100vh;
+            overflow-y: auto;
             background: #1e1b4b; /* Deep Indigo */
             padding: 30px 20px;
             position: fixed;
             z-index: 1000;
+        }
+
+        /* Custom Scrollbar */
+        .sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .sidebar .nav-brand {

@@ -35,11 +35,28 @@
         .sidebar { 
             width: var(--sidebar-width);
             min-height: 100vh; 
+            max-height: 100vh;
+            overflow-y: auto;
             background: rgba(30, 41, 59, 0.98);
             backdrop-filter: blur(10px);
             padding: 25px 15px;
             position: fixed;
             z-index: 1000;
+        }
+
+        /* Custom Scrollbar */
+        .sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .sidebar .nav-brand {
