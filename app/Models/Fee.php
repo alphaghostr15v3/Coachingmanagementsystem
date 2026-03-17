@@ -21,6 +21,7 @@ class Fee extends Model
         'igst_amount',
         'total_amount',
         'gst_type',
+        'billing_cycle',
         'student_state',
         'institute_state',
         'institute_gst_number',

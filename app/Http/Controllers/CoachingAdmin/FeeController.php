@@ -42,6 +42,7 @@ class FeeController extends Controller
             'cgst_rate'    => 'nullable|numeric',
             'sgst_rate'    => 'nullable|numeric',
             'igst_rate'    => 'nullable|numeric',
+            'billing_cycle' => 'required|in:monthly,quarterly,half_yearly,annual',
             'total_amount' => 'required|numeric',
         ]);
 
@@ -76,6 +77,7 @@ class FeeController extends Controller
             'igst_amount'          => $igstAmt,
             'total_amount'         => $total,
             'gst_type'             => $gstType,
+            'billing_cycle'        => $request->billing_cycle,
             'student_state'        => $studentState,
             'institute_state'      => $instituteState,
             'institute_gst_number' => $instituteGST,
@@ -115,6 +117,7 @@ class FeeController extends Controller
             'cgst_rate'    => 'nullable|numeric',
             'sgst_rate'    => 'nullable|numeric',
             'igst_rate'    => 'nullable|numeric',
+            'billing_cycle' => 'required|in:monthly,quarterly,half_yearly,annual',
             'total_amount' => 'required|numeric',
         ]);
 
@@ -149,6 +152,7 @@ class FeeController extends Controller
             'igst_amount'          => $igstAmt,
             'total_amount'         => $total,
             'gst_type'             => $gstType,
+            'billing_cycle'        => $request->billing_cycle,
             'student_state'        => $studentState,
             'institute_state'      => $instituteState,
             'institute_gst_number' => $instituteGST,

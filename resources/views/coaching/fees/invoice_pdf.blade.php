@@ -226,7 +226,7 @@
                 <tr>
                     <td>
                         <div class="item-name">Coaching / Tuition Fee</div>
-                        <div class="item-desc">Course: {{ $fee->student->course->name ?? 'Active Course' }}</div>
+                        <div class="item-desc">Course: {{ $fee->student->course->name ?? 'Active Course' }} | Billing: <span style="text-transform: uppercase; font-weight: bold;">{{ $fee->billing_cycle }}</span></div>
                     </td>
                     <td class="text-center text-muted">999293</td>
                     <td class="text-right">

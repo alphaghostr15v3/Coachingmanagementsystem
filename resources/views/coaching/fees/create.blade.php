@@ -49,9 +49,21 @@
                         </div>
                     </div>
 
-                    {{-- Amount & Status --}}
-                    <div class="row g-4 mb-4">
-                        <div class="col-md-6">
+                    {{-- Billing Cycle & Amount --}}
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-5">
+                            <label for="billing_cycle" class="form-label fw-bold small text-uppercase text-secondary">Billing Cycle <span class="text-danger">*</span></label>
+                            <select name="billing_cycle" id="billing_cycle" class="form-select form-select-lg border-0 bg-light rounded-4 @error('billing_cycle') is-invalid @enderror" required>
+                                <option value="monthly" {{ old('billing_cycle') == 'monthly' ? 'selected' : '' }}>Monthly (1 month)</option>
+                                <option value="quarterly" {{ old('billing_cycle') == 'quarterly' ? 'selected' : '' }}>Quarterly (3 months)</option>
+                                <option value="half_yearly" {{ old('billing_cycle') == 'half_yearly' ? 'selected' : '' }}>Half-Yearly (6 months)</option>
+                                <option value="annual" {{ old('billing_cycle') == 'annual' ? 'selected' : '' }}>Annual (12 months)</option>
+                            </select>
+                            @error('billing_cycle')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-7">
                             <label for="amount" class="form-label fw-bold small text-uppercase text-secondary">Base Amount (₹) <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text border-0 bg-light rounded-start-4">₹</span>
@@ -61,7 +73,11 @@
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-6">
+                    </div>
+
+                    {{-- Status --}}
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-12">
                             <label for="status" class="form-label fw-bold small text-uppercase text-secondary">Payment Status <span class="text-danger">*</span></label>
                             <select name="status" id="status" class="form-select form-select-lg border-0 bg-light rounded-4 @error('status') is-invalid @enderror" required>
                                 <option value="paid" {{ old('status') == 'paid' ? 'selected' : '' }}>Full Paid</option>
@@ -179,6 +195,7 @@
                         const gstBanner     = document.getElementById('gst_state_banner');
                         const gstStateMsg   = document.getElementById('gst_state_msg');
                         const studentSelect = document.getElementById('student_id');
+                        const billingCycleSelect = document.getElementById('billing_cycle');
 
                         const gstIntraRadio = document.getElementById('gst_intra');
                         const gstInterRadio = document.getElementById('gst_inter');
@@ -190,7 +207,21 @@
 
                         // --- Calculate and display GST amounts ---
                         function calculateGST() {
-                            const base  = parseFloat(amountInput.value) || 0;
+                            const cycle     = billingCycleSelect.value;
+                            let multiplier = 1;
+                            if (cycle === 'quarterly') multiplier = 3;
+                            else if (cycle === 'half_yearly') multiplier = 6;
+                            else if (cycle === 'annual') multiplier = 12;
+
+                            const selected     = studentSelect.options[studentSelect.selectedIndex];
+                            const courseAmount = parseFloat(selected.dataset.amount) || 0;
+                            const base         = (courseAmount * multiplier) || parseFloat(amountInput.value) || 0;
+                            
+                            // Update amount input if it's based on course
+                            if (courseAmount > 0) {
+                                amountInput.value = base.toFixed(2);
+                            }
+
                             const cr    = parseFloat(cgstRateInput.value) || 0;
                             const sr    = parseFloat(sgstRateInput.value) || 0;
                             const ir    = parseFloat(igstRateInput.value) || 0;
@@ -240,11 +271,6 @@
                             const studentState = (selected.dataset.state || '').trim().toLowerCase();
                             const instState    = INSTITUTE_STATE.trim().toLowerCase();
                             const courseAmount = selected.dataset.amount || '';
-
-                            // Auto-fill amount if course amount exists
-                            if (courseAmount) {
-                                amountInput.value = courseAmount;
-                            }
 
                             gstBanner.classList.remove('d-none', 'alert-info', 'alert-success', 'alert-warning');
 
@@ -322,7 +348,7 @@
                         });
 
                         // --- Listen to rate input changes ---
-                        [amountInput, cgstRateInput, sgstRateInput, igstRateInput].forEach(function(el) {
+                        [amountInput, cgstRateInput, sgstRateInput, igstRateInput, billingCycleSelect].forEach(function(el) {
                             el.addEventListener('input', calculateGST);
                         });
 

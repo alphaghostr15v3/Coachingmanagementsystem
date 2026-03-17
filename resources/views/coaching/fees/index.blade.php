@@ -16,12 +16,12 @@
         <div class="table-responsive">
             <table class="table table-hover align-middle" id="feesTable">
                 <thead>
-                    <tr>
                         <th class="text-secondary small text-uppercase">#</th>
                         <th class="text-secondary small text-uppercase">Student</th>
+                        <th class="text-secondary small text-uppercase text-center">Billing Cycle</th>
                         <th class="text-secondary small text-uppercase">Total Amount</th>
                         <th class="text-secondary small text-uppercase">Status</th>
-                        <th class="text-secondary small text-uppercase">Payment Date</th>
+                        <th class="text-secondary small text-uppercase text-center">Payment Date</th>
                         <th class="text-center text-secondary small text-uppercase">Actions</th>
                     </tr>
                 </thead>
@@ -30,6 +30,9 @@
                     <tr>
                         <td class="text-secondary">{{ $loop->iteration }}</td>
                         <td><span class="fw-bold text-dark">{{ $fee->student->name }}</span></td>
+                        <td class="text-center">
+                            <span class="badge bg-light text-dark border text-uppercase" style="font-size: 0.7rem;">{{ $fee->billing_cycle }}</span>
+                        </td>
                         <td>
                             <span class="fw-bold fs-5 text-dark">₹{{ number_format($fee->total_amount, 2) }}</span>
                             <div class="text-muted small" style="font-size: 0.75rem;">Base: ₹{{ number_format($fee->amount, 2) }}</div>
@@ -45,7 +48,7 @@
                                 </span>
                             @endif
                         </td>
-                        <td><span class="text-muted small fw-medium">{{ date('d M, Y', strtotime($fee->date)) }}</span></td>
+                        <td class="text-center"><span class="text-muted small fw-medium">{{ date('d M, Y', strtotime($fee->date)) }}</span></td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-2">
                                 <a href="{{ route('coaching.fees.show', $fee) }}" class="btn btn-sm btn-outline-primary rounded-3" title="View Invoice">
