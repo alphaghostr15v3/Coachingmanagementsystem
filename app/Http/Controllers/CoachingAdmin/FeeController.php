@@ -24,7 +24,7 @@ class FeeController extends Controller
      */
     public function create()
     {
-        $students = Student::all();
+        $students = Student::with('course')->get();
         $instituteState = auth()->user()->coaching->state ?? '';
         return view('coaching.fees.create', compact('students', 'instituteState'));
     }
@@ -97,7 +97,7 @@ class FeeController extends Controller
      */
     public function edit(Fee $fee)
     {
-        $students = Student::all();
+        $students = Student::with('course')->get();
         $instituteState = auth()->user()->coaching->state ?? '';
         return view('coaching.fees.edit', compact('fee', 'students', 'instituteState'));
     }

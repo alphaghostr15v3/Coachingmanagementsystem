@@ -28,9 +28,11 @@
                                 @foreach($students as $student)
                                     <option value="{{ $student->id }}"
                                         data-state="{{ $student->state ?? '' }}"
+                                        data-amount="{{ $student->course->amount ?? '' }}"
                                         {{ old('student_id') == $student->id ? 'selected' : '' }}>
                                         {{ $student->name }}
-                                        @if($student->state) ({{ $student->state }}) @endif
+                                        @if($student->course) ({{ $student->course->name }}) @endif
+                                        @if($student->state) | {{ $student->state }} @endif
                                     </option>
                                 @endforeach
                             </select>
@@ -237,12 +239,19 @@
                             const selected    = this.options[this.selectedIndex];
                             const studentState = (selected.dataset.state || '').trim().toLowerCase();
                             const instState    = INSTITUTE_STATE.trim().toLowerCase();
+                            const courseAmount = selected.dataset.amount || '';
+
+                            // Auto-fill amount if course amount exists
+                            if (courseAmount) {
+                                amountInput.value = courseAmount;
+                            }
 
                             gstBanner.classList.remove('d-none', 'alert-info', 'alert-success', 'alert-warning');
 
                             if (!studentState || !instState) {
                                 gstBanner.classList.add('alert-info');
                                 gstStateMsg.innerHTML = '<strong>Note:</strong> Student or institute state not set — GST type not auto-detected. Please select manually.';
+                                calculateGST();
                                 return;
                             }
 

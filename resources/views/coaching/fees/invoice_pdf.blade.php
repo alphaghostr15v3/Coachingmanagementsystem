@@ -228,7 +228,7 @@
                         <div class="item-name">Coaching / Tuition Fee</div>
                         <div class="item-desc">Course: {{ $fee->student->course->name ?? 'Active Course' }}</div>
                     </td>
-                    <td class="text-center text-muted">9992</td>
+                    <td class="text-center text-muted">999293</td>
                     <td class="text-right">
                         <div class="item-price">&#8377;{{ number_format($fee->amount, 2) }}</div>
                     </td>

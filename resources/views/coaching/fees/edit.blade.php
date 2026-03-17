@@ -35,9 +35,11 @@
                                 @foreach($students as $student)
                                     <option value="{{ $student->id }}"
                                         data-state="{{ $student->state ?? '' }}"
+                                        data-amount="{{ $student->course->amount ?? '' }}"
                                         {{ old('student_id', $fee->student_id) == $student->id ? 'selected' : '' }}>
                                         {{ $student->name }}
-                                        @if($student->state) ({{ $student->state }}) @endif
+                                        @if($student->course) ({{ $student->course->name }}) @endif
+                                        @if($student->state) | {{ $student->state }} @endif
                                     </option>
                                 @endforeach
                             </select>

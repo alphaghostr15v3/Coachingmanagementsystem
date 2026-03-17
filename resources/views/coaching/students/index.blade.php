@@ -19,6 +19,7 @@
                     <tr>
                         <th class="text-secondary small text-uppercase">#</th>
                         <th class="text-secondary small text-uppercase">Student Detail</th>
+                        <th class="text-secondary small text-uppercase">Course</th>
                         <th class="text-secondary small text-uppercase">Contact Info</th>
                         <th class="text-secondary small text-uppercase">Address</th>
                         <th class="text-center text-secondary small text-uppercase">Actions</th>
@@ -35,6 +36,13 @@
                                 </div>
                                 <span class="fw-bold">{{ $student->name }}</span>
                             </div>
+                        </td>
+                        <td>
+                            @if($student->course)
+                                <span class="badge bg-soft-info text-info">{{ $student->course->name }}</span>
+                            @else
+                                <span class="text-muted small">Not Assigned</span>
+                            @endif
                         </td>
                         <td>
                             <div class="small fw-medium">{{ $student->email ?? 'no-email@example.com' }}</div>

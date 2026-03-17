@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CoachingAdmin;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\Models\Batch;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -24,7 +25,8 @@ class StudentController extends Controller
     public function create()
     {
         $batches = Batch::all();
-        return view('coaching.students.create', compact('batches'));
+        $courses = Course::all();
+        return view('coaching.students.create', compact('batches', 'courses'));
     }
 
     /**
@@ -37,6 +39,7 @@ class StudentController extends Controller
             'email' => 'required|email|max:255|unique:mysql.users,email',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
+            'course_id' => 'nullable|exists:tenant.courses,id',
         ]);
 
         $coachingId = auth()->user()->coaching_id;
@@ -76,8 +79,9 @@ class StudentController extends Controller
     public function edit(Student $student)
     {
         $batches = Batch::all();
+        $courses = Course::all();
         $selectedBatches = $student->batches()->pluck('batches.id')->toArray();
-        return view('coaching.students.edit', compact('student', 'batches', 'selectedBatches'));
+        return view('coaching.students.edit', compact('student', 'batches', 'courses', 'selectedBatches'));
     }
 
     /**
@@ -90,6 +94,7 @@ class StudentController extends Controller
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
+            'course_id' => 'nullable|exists:tenant.courses,id',
         ]);
 
         $student->update($request->all());

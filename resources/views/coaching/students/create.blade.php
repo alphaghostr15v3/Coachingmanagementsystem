@@ -19,14 +19,26 @@
                 <form action="{{ route('coaching.students.store') }}" method="POST">
                     @csrf
                     <div class="row g-4 mb-4">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="name" class="form-label fw-bold small text-uppercase text-secondary">Full Name <span class="text-danger">*</span></label>
                             <input type="text" name="name" id="name" class="form-control form-control-lg border-0 bg-light rounded-4 @error('name') is-invalid @enderror" value="{{ old('name') }}" required placeholder="e.g. John Doe">
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <label for="course_id" class="form-label fw-bold small text-uppercase text-secondary">Select Course</label>
+                            <select name="course_id" id="course_id" class="form-select form-select-lg border-0 bg-light rounded-4 @error('course_id') is-invalid @enderror">
+                                <option value="">Select Course</option>
+                                @foreach($courses as $course)
+                                    <option value="{{ $course->id }}" {{ old('course_id') == $course->id ? 'selected' : '' }}>{{ $course->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('course_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-4">
                             <label for="email" class="form-label fw-bold small text-uppercase text-secondary">Email Address</label>
                             <input type="email" name="email" id="email" class="form-control form-control-lg border-0 bg-light rounded-4 @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="example@email.com">
                             @error('email')

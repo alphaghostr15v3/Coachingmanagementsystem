@@ -103,7 +103,7 @@
                             <h6 class="fw-bold mb-1" style="color: #1a1c1e;">Coaching / Tuition Fee</h6>
                             <p class="text-muted small mb-0">Course: {{ $fee->student->course->name ?? 'Active Course' }}</p>
                         </td>
-                        <td class="py-4 text-center align-middle text-muted">9992</td>
+                        <td class="py-4 text-center align-middle text-muted">999293</td>
                         <td class="py-4 text-end align-middle fw-bold" style="font-size: 1.1rem; color: #1a1c1e;">₹{{ number_format($fee->amount, 2) }}</td>
                     </tr>
                 </tbody>
