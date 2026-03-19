@@ -26,7 +26,7 @@
                 </thead>
                 <tbody>
                     @foreach($batches as $batch)
-                    <tr>
+                    <tr class="animate__animated animate__fadeInUp" style="animation-delay: {{ $loop->iteration * 0.05 }}s">
                         <td class="text-secondary">{{ $loop->iteration }}</td>
                         <td><span class="fw-bold text-dark">{{ $batch->name }}</span></td>
                         <td>

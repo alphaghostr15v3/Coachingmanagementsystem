@@ -20,6 +20,7 @@ class Faculty extends Model
         'experience',
         'joining_date',
         'status',
+        'profile_image',
     ];
 
     public function department()

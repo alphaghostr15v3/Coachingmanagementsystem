@@ -92,4 +92,51 @@ class DashboardController extends Controller
 
         return view('teacher.students.show', compact('student'));
     }
+
+    public function profile()
+    {
+        $teacher = \App\Models\Teacher::where('email', auth()->user()->email)->first();
+        return view('teacher.profile', compact('teacher'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+        $teacher = \App\Models\Teacher::where('email', $user->email)->first();
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $data = $request->only(['name', 'phone', 'address']);
+
+        if ($request->hasFile('profile_image')) {
+            $image = $request->file('profile_image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            
+            // Ensure the directory exists
+            $destinationPath = public_path('uploads/teachers');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            
+            $image->move($destinationPath, $imageName);
+            $data['profile_image'] = 'uploads/teachers/' . $imageName;
+            
+            // Delete old image if exists
+            if ($teacher->profile_image && file_exists(public_path($teacher->profile_image))) {
+                @unlink(public_path($teacher->profile_image));
+            }
+        }
+
+        $teacher->update($data);
+        
+        // Also update user name if changed
+        $user->update(['name' => $request->name]);
+
+        return back()->with('success', 'Profile updated successfully.');
+    }
 }

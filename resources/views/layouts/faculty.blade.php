@@ -81,15 +81,24 @@
         .sidebar a:hover { 
             color: #fff; 
             background: rgba(255, 255, 255, 0.05); 
+            transform: translateX(8px);
         }
 
         .sidebar a.active { 
             color: #fff; 
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); 
             box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.3);
+            animation: pulse-faculty 2s infinite;
         }
 
-        .sidebar a i { width: 24px; margin-right: 12px; }
+        .sidebar a i { width: 24px; margin-right: 12px; transition: transform 0.2s; }
+        .sidebar a.active i { transform: scale(1.15); }
+
+        @keyframes pulse-faculty {
+            0% { box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.3); }
+            50% { box-shadow: 0 10px 25px -3px rgba(14, 165, 233, 0.5); }
+            100% { box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.3); }
+        }
 
         .main-wrapper {
             margin-left: var(--sidebar-width);
@@ -116,6 +125,12 @@
             backdrop-filter: blur(8px);
             border: 1px solid var(--glass-border);
             border-radius: 20px; 
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         @media (max-width: 992px) {
@@ -142,6 +157,9 @@
             <a href="{{ route('faculty.salary-slips.index') }}" class="{{ request()->routeIs('faculty.salary-slips.*') ? 'active' : '' }}">
                 <i class="fas fa-file-invoice-dollar"></i> Salary Slips
             </a>
+            <a href="{{ route('faculty.profile') }}" class="{{ request()->routeIs('faculty.profile') ? 'active' : '' }}">
+                <i class="fas fa-user-circle"></i> My Profile
+            </a>
             <hr class="text-secondary opacity-25 mx-3 my-4">
             <a href="{{ route('faculty.notices') }}" class="{{ request()->routeIs('faculty.notices') ? 'active' : '' }}">
                 <i class="fas fa-bullhorn"></i> Notices
@@ -159,13 +177,26 @@
             </div>
             
             <div class="dropdown">
+                @php
+                    $facultyProfile = \App\Models\Faculty::where('email', auth()->user()->email)->first();
+                @endphp
                 <button class="btn d-flex align-items-center dropdown-toggle border-0" type="button" data-bs-toggle="dropdown">
                     <span class="fw-semibold me-2 text-dark">{{ auth()->user()->name }}</span>
-                    <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 35px; height: 35px;">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
+                    @if($facultyProfile && $facultyProfile->profile_image)
+                        <img src="{{ asset($facultyProfile->profile_image) }}" alt="Profile" class="rounded-circle shadow-sm" style="width: 35px; height: 35px; object-fit: cover;">
+                    @else
+                        <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 35px; height: 35px;">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                    @endif
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 mt-2">
+                    <li>
+                        <a class="dropdown-item py-2" href="{{ route('faculty.profile') }}">
+                            <i class="fas fa-user-circle me-2"></i> My Profile
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider opacity-50"></li>
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

@@ -97,17 +97,30 @@
         .sidebar a:hover { 
             color: #fff; 
             background: rgba(255, 255, 255, 0.1); 
-            transform: translateX(5px);
+            transform: translateX(8px);
         }
 
         .sidebar a.active { 
             color: #fff; 
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); 
             box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+            animation: pulse-border 2s infinite;
         }
 
         .sidebar a.active i {
             transform: scale(1.1);
+            animation: bounce-subtle 2s infinite;
+        }
+
+        @keyframes pulse-border {
+            0% { box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3); }
+            50% { box-shadow: 0 10px 25px -3px rgba(99, 102, 241, 0.5); }
+            100% { box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3); }
+        }
+
+        @keyframes bounce-subtle {
+            0%, 100% { transform: scale(1.1) translateY(0); }
+            50% { transform: scale(1.1) translateY(-2px); }
         }
 
         /* Layout */
@@ -147,7 +160,8 @@
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
         /* Utilities */

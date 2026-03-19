@@ -40,6 +40,7 @@ class StudentController extends Controller
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
             'course_id' => 'nullable|exists:tenant.courses,id',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $coachingId = auth()->user()->coaching_id;
@@ -56,7 +57,20 @@ class StudentController extends Controller
             'coaching_id' => $coachingId,
         ]);
 
-        $student = Student::create($request->all());
+        $data = $request->except('batches');
+        
+        if ($request->hasFile('profile_image')) {
+            $image = $request->file('profile_image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/students');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            $image->move($destinationPath, $imageName);
+            $data['profile_image'] = 'uploads/students/' . $imageName;
+        }
+
+        $student = Student::create($data);
         
         if ($request->has('batches')) {
             $student->batches()->sync($request->batches);
@@ -95,9 +109,28 @@ class StudentController extends Controller
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
             'course_id' => 'nullable|exists:tenant.courses,id',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $student->update($request->all());
+        $data = $request->except('batches');
+
+        if ($request->hasFile('profile_image')) {
+            $image = $request->file('profile_image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/students');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            $image->move($destinationPath, $imageName);
+            $data['profile_image'] = 'uploads/students/' . $imageName;
+
+            // Delete old image
+            if ($student->profile_image && file_exists(public_path($student->profile_image))) {
+                @unlink(public_path($student->profile_image));
+            }
+        }
+
+        $student->update($data);
 
         if ($request->has('batches')) {
             $student->batches()->sync($request->batches);
@@ -115,6 +148,9 @@ class StudentController extends Controller
     {
         if ($student->email) {
             \App\Models\User::where('email', $student->email)->delete();
+        }
+        if ($student->profile_image && file_exists(public_path($student->profile_image))) {
+            @unlink(public_path($student->profile_image));
         }
         $student->delete();
         return back()->with('success', 'Student removed successfully.');

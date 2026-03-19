@@ -81,15 +81,24 @@
         .sidebar a:hover { 
             color: #fff; 
             background: rgba(255, 255, 255, 0.05); 
+            transform: translateX(8px);
         }
 
         .sidebar a.active { 
             color: #fff; 
             background: linear-gradient(135deg, var(--student-primary) 0%, var(--student-secondary) 100%); 
             box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.3);
+            animation: pulse-student 2s infinite;
         }
 
-        .sidebar a i { width: 24px; margin-right: 12px; }
+        .sidebar a i { width: 24px; margin-right: 12px; transition: transform 0.2s; }
+        .sidebar a.active i { transform: scale(1.15); }
+
+        @keyframes pulse-student {
+            0% { box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.3); }
+            50% { box-shadow: 0 10px 25px -3px rgba(14, 165, 233, 0.5); }
+            100% { box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.3); }
+        }
 
         .main-wrapper {
             margin-left: var(--sidebar-width);
@@ -116,6 +125,12 @@
             backdrop-filter: blur(8px);
             border: 1px solid var(--glass-border);
             border-radius: 20px; 
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         .sidebar-overlay {

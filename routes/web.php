@@ -88,6 +88,9 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
     Route::get('salary-slips', [\App\Http\Controllers\Teacher\SalarySlipController::class, 'index'])->name('salary-slips.index');
     Route::get('salary-slips/{salarySlip}', [\App\Http\Controllers\Teacher\SalarySlipController::class, 'show'])->name('salary-slips.show');
     Route::get('salary-slips/{salarySlip}/download', [\App\Http\Controllers\Teacher\SalarySlipController::class, 'download'])->name('salary-slips.download');
+
+    Route::get('/profile', [\App\Http\Controllers\Teacher\DashboardController::class, 'profile'])->name('profile');
+    Route::post('/profile', [\App\Http\Controllers\Teacher\DashboardController::class, 'updateProfile'])->name('profile.update');
 });
 
 // Student Panel Routes
@@ -112,6 +115,9 @@ Route::middleware(['auth', 'role:faculty'])->prefix('faculty')->name('faculty.')
     Route::get('salary-slips', [\App\Http\Controllers\Faculty\SalarySlipController::class, 'index'])->name('salary-slips.index');
     Route::get('salary-slips/{salarySlip}', [\App\Http\Controllers\Faculty\SalarySlipController::class, 'show'])->name('salary-slips.show');
     Route::get('salary-slips/{salarySlip}/download', [\App\Http\Controllers\Faculty\SalarySlipController::class, 'download'])->name('salary-slips.download');
+
+    Route::get('/profile', [\App\Http\Controllers\Faculty\DashboardController::class, 'profile'])->name('profile');
+    Route::post('/profile', [\App\Http\Controllers\Faculty\DashboardController::class, 'updateProfile'])->name('profile.update');
 });
 
 

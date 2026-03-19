@@ -9,7 +9,7 @@
 <!-- Metric Cards -->
 <div class="row g-4 mb-5">
     <div class="col-md-3">
-        <div class="card border-0 bg-gradient-primary text-white animate__animated animate__zoomIn">
+        <div class="card border-0 bg-gradient-primary text-white animate__animated animate__zoomIn" style="animation-delay: 0.1s">
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card border-0 bg-gradient-info text-white animate__animated animate__zoomIn" style="animation-delay: 0.1s">
+        <div class="card border-0 bg-gradient-info text-white animate__animated animate__zoomIn" style="animation-delay: 0.2s">
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -39,7 +39,7 @@
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card border-0 bg-gradient-success text-white animate__animated animate__zoomIn" style="animation-delay: 0.2s">
+        <div class="card border-0 bg-gradient-success text-white animate__animated animate__zoomIn" style="animation-delay: 0.3s">
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -54,7 +54,7 @@
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card border-0 bg-gradient-warning text-white animate__animated animate__zoomIn" style="animation-delay: 0.3s">
+        <div class="card border-0 bg-gradient-warning text-white animate__animated animate__zoomIn" style="animation-delay: 0.4s">
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -104,7 +104,7 @@
             </div>
             <div class="card-body p-4">
                 <div class="d-grid gap-3">
-                    <a href="{{ route('coaching.students.create') }}" class="action-btn d-flex align-items-center p-3 text-decoration-none rounded-4 bg-light border transition">
+                    <a href="{{ route('coaching.students.create') }}" class="action-btn d-flex align-items-center p-3 text-decoration-none rounded-4 bg-light border transition animate__animated animate__fadeInRight" style="animation-delay: 0.4s">
                         <div class="icon-box bg-primary text-white rounded-3 me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
                             <i class="fas fa-user-plus"></i>
                         </div>
@@ -114,7 +114,7 @@
                         </div>
                     </a>
                     
-                    <a href="{{ route('coaching.fees.create') }}" class="action-btn d-flex align-items-center p-3 text-decoration-none rounded-4 bg-light border transition">
+                    <a href="{{ route('coaching.fees.create') }}" class="action-btn d-flex align-items-center p-3 text-decoration-none rounded-4 bg-light border transition animate__animated animate__fadeInRight" style="animation-delay: 0.5s">
                         <div class="icon-box bg-success text-white rounded-3 me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
                             <i class="fas fa-receipt"></i>
                         </div>
@@ -124,7 +124,7 @@
                         </div>
                     </a>
                     
-                    <a href="{{ route('coaching.attendance.create') }}" class="action-btn d-flex align-items-center p-3 text-decoration-none rounded-4 bg-light border transition">
+                    <a href="{{ route('coaching.attendance.create') }}" class="action-btn d-flex align-items-center p-3 text-decoration-none rounded-4 bg-light border transition animate__animated animate__fadeInRight" style="animation-delay: 0.6s">
                         <div class="icon-box bg-info text-white rounded-3 me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
                             <i class="fas fa-calendar-check"></i>
                         </div>

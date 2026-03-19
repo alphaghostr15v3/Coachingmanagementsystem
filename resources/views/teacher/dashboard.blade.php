@@ -13,7 +13,7 @@
     </div>
 
     <div class="col-md-3">
-        <div class="card border-0 shadow-sm h-100 p-4">
+        <div class="card border-0 shadow-sm h-100 p-4 animate__animated animate__zoomIn" style="animation-delay: 0.1s">
             <div class="d-flex align-items-center mb-3">
                 <div class="bg-soft-primary p-3 rounded-4 text-primary me-3">
                     <i class="fas fa-layer-group fs-4"></i>
@@ -28,7 +28,7 @@
     </div>
 
     <div class="col-md-3">
-        <div class="card border-0 shadow-sm h-100 p-4">
+        <div class="card border-0 shadow-sm h-100 p-4 animate__animated animate__zoomIn" style="animation-delay: 0.2s">
             <div class="d-flex align-items-center mb-3">
                 <div class="bg-soft-info p-3 rounded-4 text-info me-3">
                     <i class="fas fa-file-invoice fs-4"></i>
@@ -43,7 +43,7 @@
     </div>
 
     <div class="col-md-3">
-        <div class="card border-0 shadow-sm h-100 p-4">
+        <div class="card border-0 shadow-sm h-100 p-4 animate__animated animate__zoomIn" style="animation-delay: 0.3s">
             <div class="d-flex align-items-center mb-3">
                 <div class="bg-soft-success p-3 rounded-4 text-success me-3">
                     <i class="fas fa-file-invoice-dollar fs-4"></i>
@@ -58,7 +58,7 @@
     </div>
 
     <div class="col-md-3">
-        <div class="card border-0 shadow-sm h-100 p-4">
+        <div class="card border-0 shadow-sm h-100 p-4 animate__animated animate__zoomIn" style="animation-delay: 0.4s">
             <div class="d-flex align-items-center mb-3">
                 <div class="bg-soft-warning p-3 rounded-4 text-warning me-3">
                     <i class="fas fa-calendar-check fs-4"></i>

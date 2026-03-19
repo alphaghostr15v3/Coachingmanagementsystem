@@ -27,13 +27,17 @@
                 </thead>
                 <tbody>
                     @foreach($students as $student)
-                    <tr>
+                    <tr class="animate__animated animate__fadeInUp" style="animation-delay: {{ $loop->iteration * 0.05 }}s">
                         <td class="text-secondary">{{ $loop->iteration }}</td>
                         <td>
                             <div class="d-flex align-items-center">
-                                <div class="avatar-sm bg-soft-primary text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                                    {{ substr($student->name, 0, 1) }}
-                                </div>
+                                @if($student->profile_image)
+                                    <img src="{{ asset($student->profile_image) }}" alt="{{ $student->name }}" class="rounded-circle shadow-sm me-3 profile-img-hover" style="width: 40px; height: 40px; object-fit: cover;">
+                                @else
+                                    <div class="avatar-sm bg-soft-primary text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                        {{ substr($student->name, 0, 1) }}
+                                    </div>
+                                @endif
                                 <span class="fw-bold">{{ $student->name }}</span>
                             </div>
                         </td>
@@ -73,6 +77,8 @@
 
 <style>
     .bg-soft-primary { background: rgba(99, 102, 241, 0.1); }
+    .profile-img-hover { transition: transform 0.3s ease; }
+    .profile-img-hover:hover { transform: scale(1.1); }
     #studentsTable_wrapper .dataTables_filter input {
         border-radius: 10px;
         padding: 8px 15px;

@@ -35,13 +35,17 @@
                 </thead>
                 <tbody>
                     @foreach($teachers as $teacher)
-                    <tr>
+                    <tr class="animate__animated animate__fadeInUp" style="animation-delay: {{ $loop->iteration * 0.05 }}s">
                         <td class="text-secondary">{{ $loop->iteration }}</td>
                         <td>
                             <div class="d-flex align-items-center">
-                                <div class="avatar-sm bg-soft-info text-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                                    <i class="fas fa-user-tie"></i>
-                                </div>
+                                @if($teacher->profile_image)
+                                    <img src="{{ asset($teacher->profile_image) }}" alt="{{ $teacher->name }}" class="rounded-circle shadow-sm me-3 profile-img-hover" style="width: 40px; height: 40px; object-fit: cover;">
+                                @else
+                                    <div class="avatar-sm bg-soft-info text-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                @endif
                                 <div>
                                     <span class="fw-bold d-block">{{ $teacher->name }}</span>
                                     <small class="text-muted">{{ $teacher->email }}</small>
@@ -86,6 +90,8 @@
 
 <style>
     .bg-soft-info { background: rgba(13, 202, 240, 0.1); }
+    .profile-img-hover { transition: transform 0.3s ease; }
+    .profile-img-hover:hover { transform: scale(1.1); }
 </style>
 @endsection
 

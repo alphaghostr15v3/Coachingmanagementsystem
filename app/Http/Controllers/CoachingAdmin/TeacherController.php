@@ -43,6 +43,7 @@ class TeacherController extends Controller
             'experience' => 'nullable|string|max:255',
             'joining_date' => 'nullable|date',
             'status' => 'required|string|in:Active,Inactive',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $coachingId = auth()->user()->coaching_id;
@@ -61,6 +62,18 @@ class TeacherController extends Controller
 
         $data = $request->all();
         $data['staff_type'] = 'Teaching';
+
+        if ($request->hasFile('profile_image')) {
+            $image = $request->file('profile_image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/teachers');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            $image->move($destinationPath, $imageName);
+            $data['profile_image'] = 'uploads/teachers/' . $imageName;
+        }
+
         Teacher::create($data);
 
         return redirect()->route('coaching.teachers.index')->with('success', 'Teacher added successfully.');
@@ -100,10 +113,28 @@ class TeacherController extends Controller
             'experience' => 'nullable|string|max:255',
             'joining_date' => 'nullable|date',
             'status' => 'required|string|in:Active,Inactive',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = $request->all();
         $data['staff_type'] = 'Teaching';
+
+        if ($request->hasFile('profile_image')) {
+            $image = $request->file('profile_image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/teachers');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            $image->move($destinationPath, $imageName);
+            $data['profile_image'] = 'uploads/teachers/' . $imageName;
+
+            // Delete old image
+            if ($teacher->profile_image && file_exists(public_path($teacher->profile_image))) {
+                @unlink(public_path($teacher->profile_image));
+            }
+        }
+
         $teacher->update($data);
 
         return redirect()->route('coaching.teachers.index')->with('success', 'Teacher updated successfully.');
@@ -116,6 +147,9 @@ class TeacherController extends Controller
     {
         if ($teacher->email) {
             \App\Models\User::where('email', $teacher->email)->delete();
+        }
+        if ($teacher->profile_image && file_exists(public_path($teacher->profile_image))) {
+            @unlink(public_path($teacher->profile_image));
         }
         $teacher->delete();
         return back()->with('success', 'Teacher removed successfully.');

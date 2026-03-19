@@ -42,6 +42,7 @@ class FacultyController extends Controller
             'experience' => 'nullable|string|max:255',
             'joining_date' => 'nullable|date',
             'status' => 'required|string|in:Active,Inactive',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $coachingId = auth()->user()->coaching_id;
@@ -58,7 +59,22 @@ class FacultyController extends Controller
             'coaching_id' => $coachingId,
         ]);
 
-        Faculty::create($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('profile_image')) {
+            $image = $request->file('profile_image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/faculties');
+            
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            
+            $image->move($destinationPath, $imageName);
+            $data['profile_image'] = 'uploads/faculties/' . $imageName;
+        }
+
+        Faculty::create($data);
 
         return redirect()->route('coaching.faculties.index')->with('success', 'Faculty added successfully.');
     }
@@ -96,9 +112,30 @@ class FacultyController extends Controller
             'experience' => 'nullable|string|max:255',
             'joining_date' => 'nullable|date',
             'status' => 'required|string|in:Active,Inactive',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $faculty->update($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('profile_image')) {
+            // Delete old image
+            if ($faculty->profile_image && file_exists(public_path($faculty->profile_image))) {
+                @unlink(public_path($faculty->profile_image));
+            }
+
+            $image = $request->file('profile_image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/faculties');
+            
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            
+            $image->move($destinationPath, $imageName);
+            $data['profile_image'] = 'uploads/faculties/' . $imageName;
+        }
+
+        $faculty->update($data);
 
         return redirect()->route('coaching.faculties.index')->with('success', 'Faculty updated successfully.');
     }
@@ -108,6 +145,9 @@ class FacultyController extends Controller
      */
     public function destroy(Faculty $faculty)
     {
+        if ($faculty->profile_image && file_exists(public_path($faculty->profile_image))) {
+            @unlink(public_path($faculty->profile_image));
+        }
         $faculty->delete();
         return back()->with('success', 'Faculty removed successfully.');
     }

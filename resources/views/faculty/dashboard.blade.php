@@ -17,9 +17,9 @@
     </div>
 </div>
 
-<div class="row g-4 animate__animated animate__fadeInUp">
+<div class="row g-4">
     <!-- Profile Card -->
-    <div class="col-lg-4">
+    <div class="col-lg-4 animate__animated animate__fadeInLeft" style="animation-delay: 0.1s">
         <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
             <div class="bg-info p-4 text-center">
                 <div class="bg-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 80px; height: 80px;">
@@ -55,7 +55,7 @@
     <div class="col-lg-8">
         <div class="row g-4 mb-4">
             <div class="col-md-6">
-                <div class="card border-0 shadow-sm rounded-4 bg-white p-4 h-100 transition">
+                <div class="card border-0 shadow-sm rounded-4 bg-white p-4 h-100 transition animate__animated animate__fadeInDown" style="animation-delay: 0.2s">
                     <div class="d-flex align-items-center">
                         <div class="bg-info-soft text-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
                             <i class="fas fa-calendar-check fs-4"></i>
@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card border-0 shadow-sm rounded-4 bg-white p-4 h-100 transition">
+                <div class="card border-0 shadow-sm rounded-4 bg-white p-4 h-100 transition animate__animated animate__fadeInDown" style="animation-delay: 0.3s">
                     <div class="d-flex align-items-center">
                         <div class="bg-success-soft text-success rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
                             <i class="fas fa-calendar-plus fs-4"></i>
@@ -82,7 +82,7 @@
             </div>
         </div>
 
-        <div class="card border-0 shadow-sm rounded-4 bg-white">
+        <div class="card border-0 shadow-sm rounded-4 bg-white animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
             <div class="card-header bg-transparent border-0 p-4 pb-0">
                 <h5 class="fw-bold m-0 text-dark"><i class="fas fa-file-invoice-dollar me-2 text-info"></i> Latest Salary Update</h5>
             </div>

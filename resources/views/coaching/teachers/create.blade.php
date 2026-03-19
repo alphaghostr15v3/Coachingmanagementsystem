@@ -16,20 +16,20 @@
     <div class="col-lg-8">
         <div class="card border-0 shadow-sm animate__animated animate__fadeInUp">
             <div class="card-body p-4 p-md-5">
-                <form action="{{ route('coaching.teachers.store') }}" method="POST">
+                <form action="{{ route('coaching.teachers.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row g-4 mb-4">
-                        <div class="col-md-4">
+                        <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
                             <label for="name" class="form-label fw-bold small text-uppercase text-secondary">Teacher Name <span class="text-danger">*</span></label>
                             <input type="text" name="name" id="name" class="form-control form-control-lg border-0 bg-light rounded-4 @error('name') is-invalid @enderror" value="{{ old('name') }}" required placeholder="e.g. Prof. Robert Fox">
                             @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
                             <label for="email" class="form-label fw-bold small text-uppercase text-secondary">Work Email <span class="text-danger">*</span></label>
                             <input type="email" name="email" id="email" class="form-control form-control-lg border-0 bg-light rounded-4 @error('email') is-invalid @enderror" value="{{ old('email') }}" required placeholder="faculty@coaching.com">
                             @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
                             <label for="phone" class="form-label fw-bold small text-uppercase text-secondary">Contact Number</label>
                             <input type="text" name="phone" id="phone" class="form-control form-control-lg border-0 bg-light rounded-4 @error('phone') is-invalid @enderror" value="{{ old('phone') }}" placeholder="Enter mobile number">
                             @error('phone') <div class="invalid-feedback">{{ $message }}</div> @enderror
@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="row g-4 mb-4">
-                        <div class="col-md-4">
+                        <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
                             <label for="department_id" class="form-label fw-bold small text-uppercase text-secondary">Department</label>
                             <select name="department_id" id="department_id" class="form-select form-select-lg border-0 bg-light rounded-4">
                                 <option value="">Select Department</option>
@@ -46,7 +46,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.5s">
                             <label for="designation_id" class="form-label fw-bold small text-uppercase text-secondary">Designation</label>
                             <select name="designation_id" id="designation_id" class="form-select form-select-lg border-0 bg-light rounded-4">
                                 <option value="">Select Designation</option>
@@ -55,7 +55,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.6s">
                             <label for="subject" class="form-label fw-bold small text-uppercase text-secondary">Primary Subject</label>
                             <input type="text" name="subject" id="subject" class="form-control form-control-lg border-0 bg-light rounded-4 @error('subject') is-invalid @enderror" value="{{ old('subject') }}" placeholder="e.g. Higher Mathematics">
                         </div>
@@ -83,6 +83,12 @@
                                 <option value="Active" {{ old('status') == 'Active' ? 'selected' : '' }}>Active</option>
                                 <option value="Inactive" {{ old('status') == 'Inactive' ? 'selected' : '' }}>Inactive</option>
                             </select>
+                        </div>
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-12 animate__animated animate__fadeInUp" style="animation-delay: 1.1s">
+                            <label for="profile_image" class="form-label fw-bold small text-uppercase text-secondary">Profile Image</label>
+                            <input type="file" name="profile_image" id="profile_image" class="form-control border-0 bg-light rounded-4 @error('profile_image') is-invalid @enderror">
+                            @error('profile_image') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
                     </div>
 

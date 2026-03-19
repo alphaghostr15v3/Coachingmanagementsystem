@@ -18,7 +18,7 @@
             <div class="card-body p-4 p-md-5">
                 <form action="{{ route('coaching.courses.store') }}" method="POST">
                     @csrf
-                    <div class="mb-4">
+                    <div class="mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
                         <label for="name" class="form-label fw-bold small text-uppercase text-secondary">Course Title <span class="text-danger">*</span></label>
                         <input type="text" name="name" id="name" class="form-control form-control-lg border-0 bg-light rounded-4 @error('name') is-invalid @enderror" value="{{ old('name') }}" required placeholder="e.g. Advanced Physics for Class XII">
                         @error('name')
@@ -26,7 +26,7 @@
                         @enderror
                     </div>
 
-                    <div class="row g-4 mb-4">
+                    <div class="row g-4 mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
                         <div class="col-md-6">
                             <label for="amount" class="form-label fw-bold small text-uppercase text-secondary">Course Fee (₹) <span class="text-danger">*</span></label>
                             <div class="input-group">
@@ -39,7 +39,7 @@
                         </div>
                     </div>
 
-                    <div class="mb-5">
+                    <div class="mb-5 animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
                         <label for="description" class="form-label fw-bold small text-uppercase text-secondary">Course Syllabus/Description</label>
                         <textarea name="description" id="description" rows="5" class="form-control border-0 bg-light rounded-4 @error('description') is-invalid @enderror" placeholder="Outline the key topics covered in this course">{{ old('description') }}</textarea>
                         @error('description')

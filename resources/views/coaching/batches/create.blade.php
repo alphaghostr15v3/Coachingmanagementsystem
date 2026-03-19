@@ -19,7 +19,7 @@
                 <form action="{{ route('coaching.batches.store') }}" method="POST">
                     @csrf
                     <div class="row g-4 mb-4">
-                        <div class="col-md-6">
+                        <div class="col-md-6 animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
                             <label for="course_id" class="form-label fw-bold small text-uppercase text-secondary">Associated Course <span class="text-danger">*</span></label>
                             <select name="course_id" id="course_id" class="form-select form-select-lg border-0 bg-light rounded-4 @error('course_id') is-invalid @enderror" required>
                                 <option value="">Select Course</option>
@@ -31,7 +31,7 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
                             <label for="teacher_id" class="form-label fw-bold small text-uppercase text-secondary">Assign Teacher</label>
                             <select name="teacher_id" id="teacher_id" class="form-select form-select-lg border-0 bg-light rounded-4 @error('teacher_id') is-invalid @enderror">
                                 <option value="">Select Teacher (Optional)</option>
@@ -45,7 +45,7 @@
                         </div>
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
                         <label for="name" class="form-label fw-bold small text-uppercase text-secondary">Batch Name <span class="text-danger">*</span></label>
                         <select name="name" id="name" class="form-select form-select-lg border-0 bg-light rounded-4 @error('name') is-invalid @enderror" required>
                             <option value="">Select Batch Time</option>
@@ -99,7 +99,7 @@
                         </div>
                     </div>
 
-                    <div class="mb-5">
+                    <div class="mb-5 animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
                         <label for="timing" class="form-label fw-bold small text-uppercase text-secondary">Schedule Notes (Optional)</label>
                         <input type="text" name="timing" id="timing" class="form-control form-control-lg border-0 bg-light rounded-4 @error('timing') is-invalid @enderror" value="{{ old('timing') }}" placeholder="e.g. Mon-Fri, or Room 101">
                         @error('timing')

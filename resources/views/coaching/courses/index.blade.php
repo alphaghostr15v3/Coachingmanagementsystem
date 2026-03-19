@@ -26,7 +26,7 @@
                 </thead>
                 <tbody>
                     @foreach($courses as $course)
-                    <tr>
+                    <tr class="animate__animated animate__fadeInUp" style="animation-delay: {{ $loop->iteration * 0.05 }}s">
                         <td class="text-secondary">{{ $loop->iteration }}</td>
                         <td><span class="fw-bold text-dark">{{ $course->name }}</span></td>
                         <td><span class="small text-muted">{{ Str::limit($course->description ?? 'No description available.', 50) }}</span></td>

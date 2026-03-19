@@ -34,13 +34,17 @@
                 </thead>
                 <tbody>
                     @foreach($faculties as $faculty)
-                    <tr>
+                    <tr class="animate__animated animate__fadeInUp" style="animation-delay: {{ $loop->iteration * 0.05 }}s">
                         <td class="text-secondary">{{ $loop->iteration }}</td>
                         <td>
                             <div class="d-flex align-items-center">
-                                <div class="avatar-sm bg-soft-info text-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                                    <i class="fas fa-user-tie"></i>
-                                </div>
+                                @if($faculty->profile_image)
+                                    <img src="{{ asset($faculty->profile_image) }}" alt="{{ $faculty->name }}" class="rounded-circle shadow-sm me-3 profile-img-hover" style="width: 40px; height: 40px; object-fit: cover;">
+                                @else
+                                    <div class="avatar-sm bg-soft-info text-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                @endif
                                 <div>
                                     <span class="fw-bold d-block">{{ $faculty->name }}</span>
                                     <small class="text-muted">{{ $faculty->email }}</small>
@@ -80,6 +84,14 @@
 
 <style>
     .bg-soft-info { background: rgba(13, 202, 240, 0.1); }
+    .profile-img-hover { transition: transform 0.3s ease; }
+    .profile-img-hover:hover { transform: scale(1.1); }
+    #facultiesTable_wrapper .dataTables_filter input {
+        border-radius: 10px;
+        padding: 8px 15px;
+        border: 1px solid #e2e8f0;
+        margin-left: 10px;
+    }
 </style>
 @endsection
 

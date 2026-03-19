@@ -13,7 +13,7 @@
     </div>
 
     <div class="col-md-6 col-lg-3">
-        <div class="card border-0 shadow-sm p-4 h-100">
+        <div class="card border-0 shadow-sm p-4 h-100 animate__animated animate__zoomIn" style="animation-delay: 0.1s">
             <h6 class="text-secondary small fw-bold text-uppercase mb-3">Attendance</h6>
             <div class="d-flex align-items-center">
                 <div class="bg-soft-info p-3 rounded-4 text-info me-3">
@@ -28,7 +28,7 @@
     </div>
 
     <div class="col-md-6 col-lg-3">
-        <div class="card border-0 shadow-sm p-4 h-100">
+        <div class="card border-0 shadow-sm p-4 h-100 animate__animated animate__zoomIn" style="animation-delay: 0.2s">
             <h6 class="text-secondary small fw-bold text-uppercase mb-3">Recent Result</h6>
             <div class="d-flex align-items-center">
                 <div class="bg-soft-success p-3 rounded-4 text-success me-3">
