@@ -21,8 +21,12 @@
     <div class="col-lg-4 mb-4">
         <div class="card border-0 shadow-sm text-center animate__animated animate__fadeInLeft h-100">
             <div class="card-body p-4 p-md-5 d-flex flex-column align-items-center justify-content-center">
-                <div class="bg-soft-primary text-primary rounded-circle mb-4 d-flex align-items-center justify-content-center shadow-sm" style="width: 120px; height: 120px; font-size: 3rem;">
-                    {{ strtoupper(substr($student->name, 0, 1)) }}
+                <div class="bg-soft-primary text-primary rounded-circle mb-4 d-flex align-items-center justify-content-center shadow-sm overflow-hidden" style="width: 120px; height: 120px; font-size: 3rem; border: 3px solid rgba(79, 70, 229, 0.2);">
+                    @if($student->profile_image)
+                        <img src="{{ asset($student->profile_image) }}" alt="{{ $student->name }}" class="img-fluid h-100 w-100 object-fit-cover">
+                    @else
+                        {{ strtoupper(substr($student->name, 0, 1)) }}
+                    @endif
                 </div>
                 <h4 class="fw-bold mb-1">{{ $student->name }}</h4>
                 <p class="text-muted mb-4">Student ID: <span class="fw-bold text-dark">#ST{{ str_pad($student->id, 4, '0', STR_PAD_LEFT) }}</span></p>

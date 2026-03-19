@@ -1,10 +1,10 @@
 @extends('layouts.teacher')
 
 @section('content')
-<div class="mb-4 d-flex justify-content-between align-items-center animate__animated animate__fadeIn">
+<div class="mb-4 d-flex justify-content-between align-items-center animate__animated animate__fadeIn" style="position: relative; z-index: 1051;">
     <div>
         <h2 class="fw-bold">My Students</h2>
-        <p class="text-muted">
+        <p class="text-muted text-truncate mb-0">
             @if($selectedBatch)
                 Students in batch: <span class="text-primary fw-bold">{{ $selectedBatch->name }}</span>
             @else
@@ -13,15 +13,20 @@
         </p>
     </div>
     <div class="dropdown">
-        <button class="btn btn-light border rounded-pill px-4 fw-bold dropdown-toggle shadow-sm" type="button" data-bs-toggle="dropdown">
-            <i class="fas fa-filter me-2 text-primary"></i> Filter by Batch
+        <button class="btn btn-white border rounded-pill px-4 fw-bold dropdown-toggle shadow-sm text-dark bg-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-filter me-2 text-primary"></i> 
+            @if($selectedBatch)
+                Batch: {{ $selectedBatch->name }}
+            @else
+                Filter by Batch
+            @endif
         </button>
-        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 mt-2">
-            <li><a class="dropdown-item py-2 {{ !$selectedBatch ? 'fw-bold text-primary' : '' }}" href="{{ route('teacher.students') }}">All Batches</a></li>
-            <li><hr class="dropdown-divider"></li>
+        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 mt-2 bg-white" style="z-index: 1060; min-width: 200px;">
+            <li><a class="dropdown-item py-2 {{ !$selectedBatch ? 'active fw-bold' : '' }}" href="{{ route('teacher.students') }}">All Batches</a></li>
+            <li><hr class="dropdown-divider opacity-50"></li>
             @foreach($batches as $batch)
                 <li>
-                    <a class="dropdown-item py-2 {{ $selectedBatch && $selectedBatch->id == $batch->id ? 'fw-bold text-primary' : '' }}" 
+                    <a class="dropdown-item py-2 {{ $selectedBatch && $selectedBatch->id == $batch->id ? 'active fw-bold' : '' }}" 
                        href="{{ route('teacher.students', ['batch_id' => $batch->id]) }}">
                         {{ $batch->name }}
                     </a>
@@ -48,8 +53,12 @@
                     <tr>
                         <td class="ps-4 py-3">
                             <div class="d-flex align-items-center">
-                                <div class="bg-soft-primary p-3 rounded-circle text-primary me-3 flex-shrink-0" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;">
-                                    <i class="fas fa-user-graduate"></i>
+                                <div class="bg-soft-primary rounded-circle text-primary me-3 flex-shrink-0 overflow-hidden" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(79, 70, 229, 0.2);">
+                                    @if($student->profile_image)
+                                        <img src="{{ asset($student->profile_image) }}" alt="{{ $student->name }}" class="img-fluid h-100 w-100 object-fit-cover">
+                                    @else
+                                        <i class="fas fa-user-graduate"></i>
+                                    @endif
                                 </div>
                                 <div>
                                     <h6 class="fw-bold mb-0 text-dark">{{ $student->name }}</h6>
