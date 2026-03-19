@@ -28,13 +28,13 @@
         .header { 
             background: #1a1c1e; 
             color: white; 
-            padding: 35px 50px; 
+            padding: 25px 40px; 
         }
         .header-left { float: left; width: 50%; }
         .header-right { float: right; width: 45%; text-align: right; }
         
         .invoice-title { 
-            font-size: 40px; 
+            font-size: 32px; 
             font-weight: 900; 
             margin: 0; 
             letter-spacing: -1px; 
@@ -63,7 +63,7 @@
         }
         .status-unpaid { background: #dc3545; }
 
-        .container { padding: 40px 50px; }
+        .container { padding: 20px 40px; }
 
         /* Details Section */
         .details-section { margin-bottom: 35px; width: 100%; border-collapse: collapse; }
@@ -108,7 +108,7 @@
         .item-price { font-size: 14px; font-weight: bold; color: #1a1c1e; }
 
         /* Bottom Section - Table based to prevent overlap */
-        .bottom-section { width: 100%; margin-top: 30px; border-collapse: collapse; }
+        .bottom-section { width: 100%; margin-top: 15px; border-collapse: collapse; }
         .bottom-col { vertical-align: top; }
         
         .terms-list { 
@@ -131,8 +131,8 @@
             padding-top: 12px; 
             margin-top: 10px;
         }
-        .total-label { font-size: 20px; font-weight: bold; text-align: left; vertical-align: bottom; }
-        .total-value { font-size: 28px; font-weight: bold; color: #2563eb; text-align: right; vertical-align: bottom; }
+        .total-label { font-size: 18px; font-weight: bold; text-align: left; vertical-align: bottom; }
+        .total-value { font-size: 24px; font-weight: bold; color: #2563eb; text-align: right; vertical-align: bottom; }
 
         /* Footer */
         .footer { 

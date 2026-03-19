@@ -161,22 +161,53 @@
 
 <style>
     @media print {
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
         /* Hide all layout elements */
         .no-print, .sidebar, .topbar, footer, .btn, .breadcrumb { display: none !important; }
         
         /* Reset layout for full width */
-        .main-wrapper { margin-left: 0 !important; padding: 0 !important; }
+        .main-wrapper { margin-left: 0 !important; padding: 0 !important; width: 100% !important; }
         .main-content { padding: 0 !important; }
         
         /* Invoice styling for paper */
-        body { background: white !important; -webkit-print-color-adjust: exact !important; color-adjust: exact !important; }
-        .card { box-shadow: none !important; border: 1px solid #1a1c1e !important; transform: none !important; margin: 0 !important; }
+        body { background: white !important; -webkit-print-color-adjust: exact !important; color-adjust: exact !important; margin: 0 !important; padding: 0 !important; font-size: 10pt !important; }
+        .card { box-shadow: none !important; border: 1px solid #1a1c1e !important; transform: none !important; margin: 0 !important; page-break-inside: avoid !important; width: 100% !important; }
         .bg-dark { background-color: #1a1c1e !important; color: white !important; -webkit-print-color-adjust: exact !important; }
         [style*="color: #2563eb"] { color: #2563eb !important; -webkit-print-color-adjust: exact !important; }
         
         .container-fluid, .container { max-width: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
-        .card-header { padding: 3rem !important; }
-        .card-body { padding: 3rem !important; }
+        .card-header { padding: 0.75rem 1.5rem !important; }
+        .card-body { padding: 1rem 1.5rem !important; }
+        .mb-5 { margin-bottom: 0.5rem !important; }
+        .pb-5 { padding-bottom: 0.5rem !important; }
+        .pt-5 { padding-top: 0.25rem !important; }
+        .py-4 { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; }
+        .mb-3 { margin-bottom: 0.25rem !important; }
+        .mt-4 { margin-top: 0.5rem !important; }
+        .pt-4 { padding-top: 0.5rem !important; }
+        
+        h1.display-4 { font-size: 1.75rem !important; }
+        h2 { font-size: 1.25rem !important; }
+        h3 { font-size: 1rem !important; }
+        .h4, h4 { font-size: 0.9rem !important; }
+        .row.mb-5 { margin-bottom: 0.5rem !important; }
+        .table-responsive.mb-5 { margin-bottom: 0.5rem !important; }
+        
+        .small { font-size: 0.75rem !important; }
+        p { margin-bottom: 0.25rem !important; }
+        
+        /* Ensure summary and terms stay on one page */
+        .row { page-break-inside: avoid !important; }
+        .card-body > .row:last-of-type { 
+            margin-top: 0.25rem !important;
+            padding-top: 0 !important;
+        }
+        
+        /* Reduce gap in terms list */
+        ul.ps-3 li { margin-bottom: 0.1rem !important; font-size: 8pt !important; }
     }
     .fw-black { font-weight: 900; }
     .letter-spacing-1 { letter-spacing: 1px; }
