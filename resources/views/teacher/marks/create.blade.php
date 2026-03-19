@@ -25,7 +25,18 @@
                         @foreach($students as $student)
                         <tr>
                             <td class="text-secondary">{{ $loop->iteration }}</td>
-                            <td><span class="fw-bold text-dark">{{ $student->name }}</span></td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-soft-primary rounded-circle text-primary me-2 overflow-hidden shadow-none" style="width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(79, 70, 229, 0.2);">
+                                        @if($student->profile_image)
+                                            <img src="{{ asset($student->profile_image) }}" alt="{{ $student->name }}" class="img-fluid h-100 w-100 object-fit-cover">
+                                        @else
+                                            <i class="fas fa-user-graduate"></i>
+                                        @endif
+                                    </div>
+                                    <span class="fw-bold text-dark">{{ $student->name }}</span>
+                                </div>
+                            </td>
                             <td>
                                 <input type="number" 
                                        name="marks[{{ $student->id }}]" 
