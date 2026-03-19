@@ -1,9 +1,30 @@
 @extends('layouts.student')
 
 @section('content')
-<div class="mb-4 animate__animated animate__fadeIn">
-    <h2 class="fw-bold">My Attendance Record</h2>
-    <p class="text-muted">View your daily presence status.</p>
+<div class="d-flex justify-content-between align-items-center mb-4 animate__animated animate__fadeIn">
+    <div>
+        <h2 class="fw-bold">My Attendance Record</h2>
+        <p class="text-muted">View your daily presence status.</p>
+    </div>
+    
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-2">
+            <form action="{{ route('student.attendance') }}" method="GET" class="d-flex gap-2">
+                <select name="month" class="form-select form-select-sm border-0 bg-light" onchange="this.form.submit()">
+                    @for($m=1; $m<=12; $m++)
+                        <option value="{{ sprintf('%02d', $m) }}" {{ $month == sprintf('%02d', $m) ? 'selected' : '' }}>
+                            {{ date('F', mktime(0, 0, 0, $m, 1)) }}
+                        </option>
+                    @endfor
+                </select>
+                <select name="year" class="form-select form-select-sm border-0 bg-light" onchange="this.form.submit()">
+                    @for($y=date('Y'); $y>=date('Y')-5; $y--)
+                        <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>{{ $y }}</option>
+                    @endfor
+                </select>
+            </form>
+        </div>
+    </div>
 </div>
 
 <div class="card border-0 shadow-sm animate__animated animate__fadeInUp">

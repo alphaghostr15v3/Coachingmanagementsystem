@@ -12,19 +12,24 @@ use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
-    public function myAttendance()
+    public function myAttendance(Request $request)
     {
         $teacher = Teacher::where('email', auth()->user()->email)->first();
         
+        $month = $request->get('month', date('m'));
+        $year = $request->get('year', date('Y'));
+
         if (!$teacher) {
             $attendances = collect();
         } else {
             $attendances = TeacherAttendance::where('teacher_id', $teacher->id)
+                ->whereMonth('date', $month)
+                ->whereYear('date', $year)
                 ->latest('date')
                 ->get();
         }
 
-        return view('teacher.attendance.my_attendance', compact('attendances'));
+        return view('teacher.attendance.my_attendance', compact('attendances', 'month', 'year'));
     }
 
     public function index()

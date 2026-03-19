@@ -40,6 +40,12 @@ class TenantContextMiddleware
                 if ($coaching->status === 'active') {
                     \App\Services\TenantService::switchToTenant($coaching);
                     view()->share('currentCoaching', $coaching);
+
+                    // Share role-specific record
+                    if ($user->role === 'student') {
+                        $student = \App\Models\Student::where('email', $user->email)->first();
+                        view()->share('currentStudent', $student);
+                    }
                 } else {
                     auth()->logout();
                     return redirect()->route('login')->withErrors(['email' => 'Your coaching account is deactivated.']);

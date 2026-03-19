@@ -98,6 +98,8 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
     Route::get('/fees/{fee}/download', [\App\Http\Controllers\Student\FeeViewController::class, 'downloadReceipt'])->name('fees.download');
     Route::get('/marks', [\App\Http\Controllers\Student\DashboardController::class, 'marks'])->name('marks');
     Route::get('/notices', [\App\Http\Controllers\Student\DashboardController::class, 'notices'])->name('notices');
+    Route::get('/profile', [\App\Http\Controllers\Student\DashboardController::class, 'profile'])->name('profile');
+    Route::post('/profile', [\App\Http\Controllers\Student\DashboardController::class, 'updateProfile'])->name('profile.update');
 });
 
 // Faculty Panel Routes

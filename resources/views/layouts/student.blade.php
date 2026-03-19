@@ -171,8 +171,11 @@
                 <i class="fas fa-poll-h"></i> Exam Results
             </a>
             <hr class="text-secondary opacity-25 mx-3 my-4">
-            <a href="{{ route('student.notices') }}">
+            <a href="{{ route('student.notices') }}" class="{{ request()->routeIs('student.notices*') ? 'active' : '' }}">
                 <i class="fas fa-bullhorn"></i> Notice Board
+            </a>
+            <a href="{{ route('student.profile') }}" class="{{ request()->routeIs('student.profile*') ? 'active' : '' }}">
+                <i class="fas fa-user-circle"></i> My Profile
             </a>
         </div>
     </div>
@@ -189,11 +192,21 @@
             <div class="dropdown">
                 <button class="btn d-flex align-items-center dropdown-toggle border-0" type="button" data-bs-toggle="dropdown">
                     <span class="fw-semibold me-2">{{ auth()->user()->name }}</span>
-                    <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
-                        <i class="fas fa-student"></i>
-                    </div>
+                    @if(isset($currentStudent) && $currentStudent->profile_image)
+                        <img src="{{ asset($currentStudent->profile_image) }}" alt="{{ auth()->user()->name }}" class="rounded-circle shadow-sm" style="width: 35px; height: 35px; object-fit: cover;">
+                    @else
+                        <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 35px; height: 35px;">
+                            <i class="fas fa-user-graduate small"></i>
+                        </div>
+                    @endif
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 mt-2">
+                    <li>
+                        <a class="dropdown-item py-2" href="{{ route('student.profile') }}">
+                            <i class="fas fa-user-circle me-2 text-primary"></i> My Profile
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider opacity-50"></li>
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

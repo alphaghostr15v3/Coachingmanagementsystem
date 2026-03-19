@@ -15,6 +15,7 @@ class Student extends Model
         'phone',
         'address',
         'state',
+        'profile_image',
     ];
 
     public function batches()
