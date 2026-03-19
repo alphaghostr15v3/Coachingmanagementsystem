@@ -26,6 +26,7 @@ class SettingController extends Controller
             'gst_number' => 'nullable|string|max:20',
             'authorized_signatory' => 'nullable|string|max:255',
             'signatory_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = [
@@ -36,9 +37,29 @@ class SettingController extends Controller
             'authorized_signatory' => $validated['authorized_signatory'],
         ];
 
+        // Handle Profile Image
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            $filename = time() . '_profile_' . $file->getClientOriginalName();
+            
+            $path = public_path('uploads/coachings');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+            
+            $file->move($path, $filename);
+            $data['profile_image'] = 'uploads/coachings/' . $filename;
+            
+            // Delete old image if exists
+            if ($coaching->profile_image && file_exists(public_path($coaching->profile_image))) {
+                @unlink(public_path($coaching->profile_image));
+            }
+        }
+
+        // Handle Signatory Image
         if ($request->hasFile('signatory_image')) {
             $file = $request->file('signatory_image');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $filename = time() . '_sign_' . $file->getClientOriginalName();
             
             $path = public_path('uploads/signatories');
             if (!file_exists($path)) {

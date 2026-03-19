@@ -21,5 +21,6 @@ class Coaching extends Model
         'subscription_plan',
         'authorized_signatory',
         'signatory_image',
+        'profile_image',
     ];
 }

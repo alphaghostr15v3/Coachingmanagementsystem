@@ -22,6 +22,30 @@
                         @csrf
                         @method('PATCH')
 
+                        <div class="row align-items-center mb-5 pb-4 border-bottom">
+                            <div class="col-md-3 text-center">
+                                <div class="position-relative d-inline-block">
+                                    <div class="bg-light rounded-circle shadow-sm d-flex align-items-center justify-content-center overflow-hidden" style="width: 140px; height: 140px; border: 3px solid #6366f1;">
+                                        @if($currentCoaching->profile_image)
+                                            <img src="{{ asset($currentCoaching->profile_image) }}" alt="Coaching Logo" class="img-fluid h-100 w-100 object-fit-cover">
+                                        @else
+                                            <i class="fas fa-university fa-4x text-muted"></i>
+                                        @endif
+                                    </div>
+                                    <label for="profile_image" class="btn btn-primary btn-sm rounded-circle position-absolute bottom-0 end-0 p-2 shadow-sm" style="width: 38px; height: 38px;">
+                                        <i class="fas fa-camera"></i>
+                                        <input type="file" name="profile_image" id="profile_image" class="d-none" accept="image/*">
+                                    </label>
+                                </div>
+                                <p class="text-xs text-muted mt-2 mb-0">Institute Logo / Profile Image</p>
+                            </div>
+                            <div class="col-md-9">
+                                <h4 class="fw-bold mb-1">Branding Management</h4>
+                                <p class="text-muted small">Update your institute's primary identification image. Recommended: 512x512 PNG/JPG.</p>
+                                <div id="logo-file-name" class="small text-primary fw-medium"></div>
+                            </div>
+                        </div>
+
                         <div class="row g-4">
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold">Coaching Name</label>
@@ -105,6 +129,11 @@
     document.querySelector('input[name="signatory_image"]').addEventListener('change', function(e) {
         const fileName = e.target.files[0] ? e.target.files[0].name : '';
         document.getElementById('file-name-display').textContent = fileName ? 'Selected: ' + fileName : '';
+    });
+
+    document.querySelector('input[name="profile_image"]').addEventListener('change', function(e) {
+        const fileName = e.target.files[0] ? e.target.files[0].name : '';
+        document.getElementById('logo-file-name').textContent = fileName ? 'Selected Logo: ' + fileName : '';
     });
 </script>
 @endpush

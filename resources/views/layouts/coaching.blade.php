@@ -290,14 +290,17 @@
                 
                 <div class="dropdown">
                     <button class="btn d-flex align-items-center dropdown-toggle border-0" type="button" data-bs-toggle="dropdown">
-                        <div class="avatar-sm bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 35px; height: 35px;">
-                            <i class="fas fa-user"></i>
+                        <div class="avatar-sm bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2 overflow-hidden" style="width: 35px; height: 35px;">
+                            @if(isset($currentCoaching) && $currentCoaching->profile_image)
+                                <img src="{{ asset($currentCoaching->profile_image) }}" class="img-fluid h-100 w-100 object-fit-cover" alt="Logo">
+                            @else
+                                <i class="fas fa-user"></i>
+                            @endif
                         </div>
                         <span class="fw-semibold d-none d-sm-inline">{{ auth()->user()->name }}</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 mt-2">
                         <li><a class="dropdown-item py-2" href="{{ route('coaching.settings.edit') }}"><i class="fas fa-university me-2"></i> Institute Settings</a></li>
-                        <li><a class="dropdown-item py-2" href="{{ route('profile.edit') }}"><i class="fas fa-user-cog me-2"></i> User Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}">
