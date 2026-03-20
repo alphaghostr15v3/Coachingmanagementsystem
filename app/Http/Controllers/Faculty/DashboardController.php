@@ -27,7 +27,9 @@ class DashboardController extends Controller
             ->latest()
             ->first();
 
-        return view('faculty.dashboard', compact('faculty', 'attendanceCount', 'latestSalary'));
+        $notices = \App\Models\Notice::latest()->take(5)->get();
+
+        return view('faculty.dashboard', compact('faculty', 'attendanceCount', 'latestSalary', 'notices'));
     }
 
     public function attendance(Request $request)

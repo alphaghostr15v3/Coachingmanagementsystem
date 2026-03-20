@@ -112,13 +112,48 @@
                 @endif
             </div>
         </div>
+
+        <div class="card border-0 shadow-sm rounded-4 bg-white mt-4 animate__animated animate__fadeInUp" style="animation-delay: 0.5s">
+            <div class="card-header bg-transparent border-0 p-4 pb-0 d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold m-0 text-dark"><i class="fas fa-bullhorn me-2 text-warning"></i> Recent Announcements</h5>
+                <a href="{{ route('faculty.notices') }}" class="text-info small fw-bold text-decoration-none border-bottom border-info border-2">View All</a>
+            </div>
+            <div class="card-body p-4">
+                @forelse($notices as $notice)
+                    <div class="d-flex mb-4 last-child-mb-0">
+                        <div class="bg-warning-soft text-warning rounded-4 d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 45px; height: 45px;">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                <h6 class="fw-bold mb-0 text-dark">{{ $notice->title }}</h6>
+                                <span class="text-muted small">{{ $notice->created_at->format('d M') }}</span>
+                            </div>
+                            <p class="text-muted small mb-0 text-truncate-2">{{ Str::limit($notice->description, 100) }}</p>
+                        </div>
+                    </div>
+                @empty
+                    <div class="text-center py-4">
+                        <p class="text-muted small mb-0">No recent announcements.</p>
+                    </div>
+                @endif
+            </div>
+        </div>
     </div>
 </div>
 
 <style>
     .bg-info-soft { background: rgba(14, 165, 233, 0.1); }
     .bg-success-soft { background: rgba(16, 185, 129, 0.1); }
+    .bg-warning-soft { background: rgba(245, 158, 11, 0.1); }
     .transition:hover { transform: translateY(-3px); transition: all 0.3s ease; }
     .badge { border: 1px solid currentColor; }
+    .text-truncate-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .last-child-mb-0:last-child { margin-bottom: 0 !important; }
 </style>
 @endsection
