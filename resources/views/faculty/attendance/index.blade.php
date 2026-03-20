@@ -13,9 +13,68 @@
             <h2 class="fw-bold m-0 text-dark">My Attendance History</h2>
             <p class="text-muted small mb-0">Track your daily presence and attendance status.</p>
         </div>
-        <div class="bg-white px-3 py-2 rounded-4 border shadow-sm">
-            <i class="fas fa-calendar-check text-info me-2"></i>
-            <span class="fw-bold text-dark">{{ date('M Y') }}</span>
+        <div class="bg-white px-2 py-2 rounded-4 border shadow-sm">
+            <form action="{{ route('faculty.attendance') }}" method="GET" class="d-flex gap-2">
+                <select name="month" class="form-select form-select-sm border-0 bg-light" onchange="this.form.submit()">
+                    @for($m=1; $m<=12; $m++)
+                        <option value="{{ sprintf('%02d', $m) }}" {{ $month == sprintf('%02d', $m) ? 'selected' : '' }}>
+                            {{ date('F', mktime(0, 0, 0, $m, 1)) }}
+                        </option>
+                    @endfor
+                </select>
+                <select name="year" class="form-select form-select-sm border-0 bg-light" onchange="this.form.submit()">
+                    @for($y=date('Y'); $y>=date('Y')-5; $y--)
+                        <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>{{ $y }}</option>
+                    @endfor
+                </select>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-white border-start border-primary border-4">
+            <div class="card-body p-4 text-center">
+                <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 50px; height: 50px;">
+                    <i class="fas fa-calendar-alt text-primary fa-lg"></i>
+                </div>
+                <h3 class="fw-bold mb-1">{{ $totalAttendance }}</h3>
+                <p class="text-muted small mb-0 text-uppercase tracking-wider">Total Days</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-white border-start border-success border-4">
+            <div class="card-body p-4 text-center">
+                <div class="rounded-circle bg-success-soft d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 50px; height: 50px;">
+                    <i class="fas fa-check-circle text-success fa-lg"></i>
+                </div>
+                <h3 class="fw-bold mb-1 text-success">{{ $presentCount }}</h3>
+                <p class="text-muted small mb-0 text-uppercase tracking-wider">Present</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-white border-start border-danger border-4">
+            <div class="card-body p-4 text-center">
+                <div class="rounded-circle bg-danger-soft d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 50px; height: 50px;">
+                    <i class="fas fa-times-circle text-danger fa-lg"></i>
+                </div>
+                <h3 class="fw-bold mb-1 text-danger">{{ $absentCount }}</h3>
+                <p class="text-muted small mb-0 text-uppercase tracking-wider">Absent</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-white border-start border-warning border-4">
+            <div class="card-body p-4 text-center">
+                <div class="rounded-circle bg-warning-soft d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 50px; height: 50px;">
+                    <i class="fas fa-clock text-warning fa-lg"></i>
+                </div>
+                <h3 class="fw-bold mb-1 text-warning">{{ $lateCount }}</h3>
+                <p class="text-muted small mb-0 text-uppercase tracking-wider">Late</p>
+            </div>
         </div>
     </div>
 </div>

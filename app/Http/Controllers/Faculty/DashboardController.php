@@ -20,31 +20,46 @@ class DashboardController extends Controller
         }
 
         $attendanceCount = FacultyAttendance::where('faculty_id', $faculty->id)
-            ->whereMonth('date', now()->month)
             ->where('status', 'present')
             ->count();
 
-        $latestSalary = SalarySlip::where('teacher_id', $faculty->id) // Note: Need to check if salary slips use teacher_id or generic ID
+        $latestSalary = SalarySlip::where('faculty_id', $faculty->id)
             ->latest()
             ->first();
 
         return view('faculty.dashboard', compact('faculty', 'attendanceCount', 'latestSalary'));
     }
 
-    public function attendance()
+    public function attendance(Request $request)
     {
         $user = auth()->user();
         $faculty = Faculty::where('email', $user->email)->first();
         
+        $month = $request->get('month', date('m'));
+        $year = $request->get('year', date('Y'));
+
         if (!$faculty) {
             $attendances = collect();
+            $presentCount = 0;
+            $absentCount = 0;
+            $lateCount = 0;
+            $totalAttendance = 0;
         } else {
             $attendances = FacultyAttendance::where('faculty_id', $faculty->id)
+                ->whereMonth('date', $month)
+                ->whereYear('date', $year)
                 ->latest('date')
                 ->get();
+            
+            $monthlyAttendance = $attendances; // Since we already filtered for the current month
+                
+            $presentCount = $monthlyAttendance->where('status', 'present')->count();
+            $absentCount = $monthlyAttendance->where('status', 'absent')->count();
+            $lateCount = $monthlyAttendance->where('status', 'late')->count();
+            $totalAttendance = $monthlyAttendance->count();
         }
 
-        return view('faculty.attendance.index', compact('attendances'));
+        return view('faculty.attendance.index', compact('attendances', 'presentCount', 'absentCount', 'lateCount', 'totalAttendance', 'month', 'year'));
     }
 
     public function notices()

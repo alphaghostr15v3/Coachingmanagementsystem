@@ -22,8 +22,12 @@
     <div class="col-lg-4 animate__animated animate__fadeInLeft" style="animation-delay: 0.1s">
         <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
             <div class="bg-info p-4 text-center">
-                <div class="bg-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 80px; height: 80px;">
-                    <i class="fas fa-user-tie fa-3x text-info"></i>
+                <div class="bg-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow-sm overflow-hidden" style="width: 80px; height: 80px;">
+                    @if($faculty->profile_image)
+                        <img src="{{ asset($faculty->profile_image) }}" alt="{{ $faculty->name }}" class="w-100 h-100 object-fit-cover">
+                    @else
+                        <i class="fas fa-user-tie fa-3x text-info"></i>
+                    @endif
                 </div>
                 <h5 class="fw-bold text-white mb-1">{{ $faculty->name }}</h5>
                 <p class="text-white opacity-75 small mb-0">{{ $faculty->designation->title ?? 'Staff Member' }}</p>
@@ -61,7 +65,7 @@
                             <i class="fas fa-calendar-check fs-4"></i>
                         </div>
                         <div>
-                            <div class="text-muted small">Present This Month</div>
+                            <div class="text-muted small">total day present</div>
                             <div class="fw-bold h4 mb-0 text-dark">{{ $attendanceCount }} Days</div>
                         </div>
                     </div>
@@ -96,7 +100,7 @@
                                 {{ strtoupper($latestSalary->payment_status) }}
                             </span>
                         </div>
-                        <a href="#" class="btn btn-info text-white rounded-pill px-4 shadow-sm">
+                        <a href="{{ route('faculty.salary-slips.download', $latestSalary) }}" class="btn btn-info text-white rounded-pill px-4 shadow-sm">
                             <i class="fas fa-download me-2"></i> Download Slip
                         </a>
                     </div>

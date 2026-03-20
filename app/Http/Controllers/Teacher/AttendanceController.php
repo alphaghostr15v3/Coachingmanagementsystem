@@ -21,15 +21,24 @@ class AttendanceController extends Controller
 
         if (!$teacher) {
             $attendances = collect();
+            $presentCount = 0;
+            $absentCount = 0;
+            $lateCount = 0;
+            $totalAttendance = 0;
         } else {
             $attendances = TeacherAttendance::where('teacher_id', $teacher->id)
                 ->whereMonth('date', $month)
                 ->whereYear('date', $year)
                 ->latest('date')
                 ->get();
+                
+            $presentCount = $attendances->where('status', 'present')->count();
+            $absentCount = $attendances->where('status', 'absent')->count();
+            $lateCount = $attendances->where('status', 'late')->count();
+            $totalAttendance = $attendances->count();
         }
 
-        return view('teacher.attendance.my_attendance', compact('attendances', 'month', 'year'));
+        return view('teacher.attendance.my_attendance', compact('attendances', 'month', 'year', 'presentCount', 'absentCount', 'lateCount', 'totalAttendance'));
     }
 
     public function index()

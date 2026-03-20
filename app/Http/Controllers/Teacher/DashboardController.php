@@ -17,10 +17,11 @@ class DashboardController extends Controller
         $batchCount = $teacher ? $teacher->batches()->count() : 0;
         $batchIds = $teacher ? $teacher->batches()->pluck('id')->toArray() : [];
         $examCount = Exam::whereIn('batch_id', $batchIds)->count();
-        $salarySlipCount = \App\Models\SalarySlip::where('teacher_id', auth()->id())->count();
+        $salarySlipCount = $teacher ? \App\Models\SalarySlip::where('teacher_id', $teacher->id)->count() : 0;
+        $attendanceCount = $teacher ? $teacher->attendances()->whereIn('status', ['present', 'late', 'half_day'])->count() : 0;
         $notices = Notice::latest()->take(5)->get();
         
-        return view('teacher.dashboard', compact('batchCount', 'examCount', 'salarySlipCount', 'notices'));
+        return view('teacher.dashboard', compact('batchCount', 'examCount', 'salarySlipCount', 'attendanceCount', 'notices'));
     }
 
     public function batches()

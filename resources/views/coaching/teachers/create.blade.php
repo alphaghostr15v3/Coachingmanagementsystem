@@ -77,13 +77,20 @@
                             <label for="joining_date" class="form-label fw-bold small text-uppercase text-secondary">Joining Date</label>
                             <input type="date" name="joining_date" id="joining_date" class="form-control form-control-lg border-0 bg-light rounded-4" value="{{ old('joining_date', date('Y-m-d')) }}">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-8">
+                            <label for="address" class="form-label fw-bold small text-uppercase text-secondary">Residential Address</label>
+                            <input type="text" name="address" id="address" class="form-control form-control-lg border-0 bg-light rounded-4 @error('address') is-invalid @enderror" value="{{ old('address') }}" placeholder="e.g. 123 Education St, Knowledge City">
+                            @error('address') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="col-md-4">
                             <label for="status" class="form-label fw-bold small text-uppercase text-secondary">Status <span class="text-danger">*</span></label>
                             <select name="status" id="status" class="form-select form-select-lg border-0 bg-light rounded-4" required>
                                 <option value="Active" {{ old('status') == 'Active' ? 'selected' : '' }}>Active</option>
                                 <option value="Inactive" {{ old('status') == 'Inactive' ? 'selected' : '' }}>Inactive</option>
                             </select>
                         </div>
+                    </div>
+
                     <div class="row g-4 mb-4">
                         <div class="col-md-12 animate__animated animate__fadeInUp" style="animation-delay: 1.1s">
                             <label for="profile_image" class="form-label fw-bold small text-uppercase text-secondary">Profile Image</label>

@@ -32,6 +32,53 @@
     </div>
 </div>
 
+<div class="row g-4 mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-white border-start border-primary border-4">
+            <div class="card-body p-4 text-center">
+                <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 50px; height: 50px;">
+                    <i class="fas fa-calendar-alt text-primary fa-lg"></i>
+                </div>
+                <h3 class="fw-bold mb-1">{{ $totalAttendance }}</h3>
+                <p class="text-muted small mb-0 text-uppercase tracking-wider">Total Days</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-white border-start border-success border-4">
+            <div class="card-body p-4 text-center">
+                <div class="rounded-circle bg-success-soft d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 50px; height: 50px;">
+                    <i class="fas fa-check-circle text-success fa-lg"></i>
+                </div>
+                <h3 class="fw-bold mb-1 text-success">{{ $presentCount }}</h3>
+                <p class="text-muted small mb-0 text-uppercase tracking-wider">Present</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-white border-start border-danger border-4">
+            <div class="card-body p-4 text-center">
+                <div class="rounded-circle bg-danger-soft d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 50px; height: 50px;">
+                    <i class="fas fa-times-circle text-danger fa-lg"></i>
+                </div>
+                <h3 class="fw-bold mb-1 text-danger">{{ $absentCount }}</h3>
+                <p class="text-muted small mb-0 text-uppercase tracking-wider">Absent</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-white border-start border-warning border-4">
+            <div class="card-body p-4 text-center">
+                <div class="rounded-circle bg-warning-soft d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 50px; height: 50px;">
+                    <i class="fas fa-clock text-warning fa-lg"></i>
+                </div>
+                <h3 class="fw-bold mb-1 text-warning">{{ $lateCount }}</h3>
+                <p class="text-muted small mb-0 text-uppercase tracking-wider">Late</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="card border-0 shadow-sm animate__animated animate__fadeInUp rounded-4 overflow-hidden">
     <div class="card-body p-0">
         <div class="table-responsive">

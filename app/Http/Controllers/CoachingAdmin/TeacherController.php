@@ -43,6 +43,7 @@ class TeacherController extends Controller
             'experience' => 'nullable|string|max:255',
             'joining_date' => 'nullable|date',
             'status' => 'required|string|in:Active,Inactive',
+            'address' => 'nullable|string|max:500',
             'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -113,6 +114,7 @@ class TeacherController extends Controller
             'experience' => 'nullable|string|max:255',
             'joining_date' => 'nullable|date',
             'status' => 'required|string|in:Active,Inactive',
+            'address' => 'nullable|string|max:500',
             'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 

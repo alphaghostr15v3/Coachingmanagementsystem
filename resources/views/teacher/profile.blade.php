@@ -34,7 +34,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="text-muted small d-block">Designation</label>
-                    <span class="fw-medium">{{ $teacher->designation->name ?? 'N/A' }}</span>
+                    <span class="fw-medium">{{ $teacher->designation->title ?? 'N/A' }}</span>
                 </div>
                 <div class="mb-3">
                     <label class="text-muted small d-block">Subject</label>
@@ -50,48 +50,31 @@
 
     <div class="col-md-8">
         <div class="card border-0 shadow-sm animate__animated animate__fadeInRight">
-            <div class="card-header bg-white py-3 border-0">
-                <h5 class="fw-bold mb-0">Edit Profile Information</h5>
+            <div class="card-header bg-white py-3 border-0 d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold mb-0">Profile Information</h5>
+                <span class="badge bg-soft-secondary text-secondary px-3 py-2 rounded-pill"><i class="fas fa-lock me-1"></i> Read Only</span>
             </div>
             <div class="card-body p-4">
-                <form action="{{ route('teacher.profile.update') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <label class="form-label text-secondary small text-uppercase fw-bold">Full Name</label>
-                            <input type="text" name="name" class="form-control border-0 bg-light p-3" value="{{ old('name', $teacher->name) }}" required>
-                            @error('name') <span class="text-danger small">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label text-secondary small text-uppercase fw-bold">Phone Number</label>
-                            <input type="text" name="phone" class="form-control border-0 bg-light p-3" value="{{ old('phone', $teacher->phone) }}">
-                            @error('phone') <span class="text-danger small">{{ $message }}</span> @enderror
-                        </div>
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-4 mb-md-0">
+                        <label class="form-label text-secondary small text-uppercase fw-bold">Full Name</label>
+                        <div class="p-3 bg-light rounded-3 fw-medium">{{ $teacher->name }}</div>
                     </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-secondary small text-uppercase fw-bold">Phone Number</label>
+                        <div class="p-3 bg-light rounded-3 fw-medium">{{ $teacher->phone ?? 'Not Provided' }}</div>
+                    </div>
+                </div>
 
-                    <div class="mb-4">
-                        <label class="form-label text-secondary small text-uppercase fw-bold">Email Address</label>
-                        <input type="email" class="form-control border-0 bg-light p-3 text-muted" value="{{ $teacher->email }}" disabled>
-                        <small class="text-muted">Email cannot be changed.</small>
-                    </div>
+                <div class="mb-4">
+                    <label class="form-label text-secondary small text-uppercase fw-bold">Email Address</label>
+                    <div class="p-3 bg-light rounded-3 fw-medium">{{ $teacher->email }}</div>
+                </div>
 
-                    <div class="mb-4">
-                        <label class="form-label text-secondary small text-uppercase fw-bold">Address</label>
-                        <textarea name="address" class="form-control border-0 bg-light p-3" rows="3">{{ old('address', $teacher->address) }}</textarea>
-                        @error('address') <span class="text-danger small">{{ $message }}</span> @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label text-secondary small text-uppercase fw-bold">Profile Image</label>
-                        <input type="file" name="profile_image" class="form-control border-0 bg-light p-3">
-                        <small class="text-muted">Recommended size: 300x300px. Max: 2MB.</small>
-                        @error('profile_image') <br><span class="text-danger small">{{ $message }}</span> @enderror
-                    </div>
-
-                    <div class="mt-5">
-                        <button type="submit" class="btn btn-primary px-5 py-3 rounded-pill fw-bold shadow-sm">Save Changes</button>
-                    </div>
-                </form>
+                <div class="mb-0">
+                    <label class="form-label text-secondary small text-uppercase fw-bold">Address</label>
+                    <div class="p-3 bg-light rounded-3 fw-medium" style="min-height: 100px;">{{ $teacher->address ?? 'Not Provided' }}</div>
+                </div>
             </div>
         </div>
     </div>
@@ -99,6 +82,6 @@
 
 <style>
     .bg-soft-primary { background: rgba(var(--bs-primary-rgb), 0.1); }
-    .form-control:focus { background-color: #fff !important; box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.1); }
+    .bg-soft-secondary { background: rgba(108, 117, 125, 0.1); }
 </style>
 @endsection
