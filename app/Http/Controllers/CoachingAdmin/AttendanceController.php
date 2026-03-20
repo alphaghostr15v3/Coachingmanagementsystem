@@ -5,6 +5,8 @@ namespace App\Http\Controllers\CoachingAdmin;
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use App\Models\Student;
+use App\Models\Course;
+use App\Models\Batch;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
@@ -12,10 +14,54 @@ class AttendanceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $attendances = Attendance::with('student')->latest()->get();
-        return view('coaching.attendance.index', compact('attendances'));
+        $courses = Course::all();
+        $batches = Batch::all();
+        $students = Student::all();
+
+        $query = Attendance::with(['student', 'batch']);
+
+        if ($request->filled('course_id')) {
+            $query->whereHas('student', function($q) use ($request) {
+                $q->where('course_id', $request->course_id);
+            });
+        }
+
+        if ($request->filled('batch_id')) {
+            $query->where('batch_id', $request->batch_id);
+        }
+
+        if ($request->filled('student_id')) {
+            $query->where('student_id', $request->student_id);
+        }
+
+        if ($request->filled('month')) {
+            $query->whereMonth('date', $request->month);
+        }
+
+        if ($request->filled('year')) {
+            $query->whereYear('date', $request->year);
+        }
+
+        $attendances = $query->latest('date')->get();
+
+        // Calculate statistics
+        $totalDays = $attendances->count();
+        $presentCount = $attendances->where('status', 'present')->count();
+        $absentCount = $attendances->where('status', 'absent')->count();
+        $attendancePercentage = $totalDays > 0 ? round(($presentCount / $totalDays) * 100, 2) : 0;
+
+        return view('coaching.attendance.index', compact(
+            'attendances', 
+            'courses', 
+            'batches', 
+            'students',
+            'presentCount', 
+            'absentCount', 
+            'totalDays', 
+            'attendancePercentage'
+        ));
     }
 
     /**

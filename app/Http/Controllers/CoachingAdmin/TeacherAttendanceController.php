@@ -12,10 +12,59 @@ class TeacherAttendanceController extends Controller
 {
     public function index(Request $request)
     {
-        $date = $request->get('date', Carbon::today()->toDateString());
-        $attendances = TeacherAttendance::with('teacher')->where('date', $date)->get();
+        $teachers = Teacher::all();
         
-        return view('coaching.teacher_attendance.index', compact('attendances', 'date'));
+        $query = TeacherAttendance::with('teacher');
+
+        if ($request->filled('teacher_id')) {
+            $query->where('teacher_id', $request->teacher_id);
+        }
+
+        if ($request->filled('month')) {
+            $query->whereMonth('date', $request->month);
+        } else {
+            // Default to current month if no specific date is requested
+            if (!$request->has('date')) {
+                $query->whereMonth('date', Carbon::today()->month);
+            }
+        }
+
+        if ($request->filled('year')) {
+            $query->whereYear('date', $request->year);
+        } else {
+            if (!$request->has('date')) {
+                $query->whereYear('date', Carbon::today()->year);
+            }
+        }
+
+        if ($request->has('date') && !$request->filled('teacher_id') && !$request->filled('month')) {
+            $date = $request->get('date', Carbon::today()->toDateString());
+            $query->where('date', $date);
+        } else {
+            $date = $request->get('date', Carbon::today()->toDateString());
+        }
+
+        $attendances = $query->latest('date')->get();
+
+        // Calculate statistics
+        $totalRecords = $attendances->count();
+        $presentCount = $attendances->where('status', 'present')->count();
+        $absentCount = $attendances->where('status', 'absent')->count();
+        $lateCount = $attendances->where('status', 'late')->count();
+        $leaveCount = $attendances->where('status', 'leave')->count();
+        $attendancePercentage = $totalRecords > 0 ? round(($presentCount / $totalRecords) * 100, 2) : 0;
+
+        return view('coaching.teacher_attendance.index', compact(
+            'attendances', 
+            'date', 
+            'teachers', 
+            'totalRecords', 
+            'presentCount', 
+            'absentCount', 
+            'lateCount', 
+            'leaveCount', 
+            'attendancePercentage'
+        ));
     }
 
     public function create(Request $request)
