@@ -84,15 +84,19 @@
                     </div>
 
                     <div class="mb-5">
-                        <label for="subscription_plan" class="form-label fw-bold small text-uppercase text-secondary">Subscription Tier <span class="text-danger">*</span></label>
+                        <label for="subscription_plan" class="form-label fw-bold small text-uppercase text-secondary">Coaching Plan <span class="text-danger">*</span></label>
                         <select name="subscription_plan" id="subscription_plan" class="form-select form-select-lg border-0 bg-light rounded-4 @error('subscription_plan') is-invalid @enderror" required>
-                            <option value="starter" {{ old('subscription_plan', $coaching->subscription_plan) == 'starter' ? 'selected' : '' }}>Starter Plan (Free)</option>
-                            <option value="pro" {{ old('subscription_plan', $coaching->subscription_plan) == 'pro' ? 'selected' : '' }}>Institutional Pro (Paid)</option>
-                            <option value="enterprise" {{ old('subscription_plan', $coaching->subscription_plan) == 'enterprise' ? 'selected' : '' }}>Enterprise Edge (Full-scale)</option>
+                            <option value="monthly" {{ old('subscription_plan', $coaching->subscription_plan) == 'monthly' ? 'selected' : '' }}>Monthly Billing</option>
+                            <option value="quarterly" {{ old('subscription_plan', $coaching->subscription_plan) == 'quarterly' ? 'selected' : '' }}>Quarterly (3 Months)</option>
+                            <option value="half-yearly" {{ old('subscription_plan', $coaching->subscription_plan) == 'half-yearly' ? 'selected' : '' }}>Half-Yearly (6 Months)</option>
+                            <option value="annual" {{ old('subscription_plan', $coaching->subscription_plan) == 'annual' ? 'selected' : '' }}>Annual (12 Months)</option>
                         </select>
                         @error('subscription_plan')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+                        <div class="form-text small opacity-75 mt-2">
+                            <i class="fas fa-info-circle me-1"></i> Changing the plan will automatically reset the <strong>Valid Date</strong> from today.
+                        </div>
                     </div>
 
                     <div class="d-flex justify-content-end gap-3 pt-3 border-top">

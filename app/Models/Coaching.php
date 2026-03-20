@@ -19,6 +19,7 @@ class Coaching extends Model
         'database_name',
         'status',
         'subscription_plan',
+        'expiry_date',
         'authorized_signatory',
         'signatory_image',
         'profile_image',

@@ -46,7 +46,11 @@
                     </tr>
                     <tr>
                         <th>Subscription Plan:</th>
-                        <td>{{ $coaching->subscription_plan ?? 'N/A' }}</td>
+                        <td>{{ ucfirst($coaching->subscription_plan) ?? 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Valid Until:</th>
+                        <td>{{ $coaching->expiry_date ? \Carbon\Carbon::parse($coaching->expiry_date)->format('d M, Y') : 'N/A' }}</td>
                     </tr>
                     <tr>
                         <th>Created Date:</th>

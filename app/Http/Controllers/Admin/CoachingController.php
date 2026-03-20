@@ -34,10 +34,16 @@ class CoachingController extends Controller
             'state' => 'required|string|max:100',
             'gst_number' => 'nullable|string|regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/',
             'password' => 'required|string|min:8',
-            'subscription_plan' => 'required|string|max:100',
+            'subscription_plan' => 'required|string|in:monthly,quarterly,half-yearly,annual',
         ]);
 
         $dbName = 'coaching_' . Str::slug($request->coaching_name) . '_' . time();
+
+        $expiryDate = now();
+        if ($request->subscription_plan == 'monthly') $expiryDate = $expiryDate->addMonth();
+        elseif ($request->subscription_plan == 'quarterly') $expiryDate = $expiryDate->addMonths(3);
+        elseif ($request->subscription_plan == 'half-yearly') $expiryDate = $expiryDate->addMonths(6);
+        elseif ($request->subscription_plan == 'annual') $expiryDate = $expiryDate->addYear();
 
         $coaching = Coaching::create([
             'coaching_name' => $request->coaching_name,
@@ -50,6 +56,7 @@ class CoachingController extends Controller
             'database_name' => $dbName,
             'status' => 'active',
             'subscription_plan' => $request->subscription_plan,
+            'expiry_date' => $expiryDate,
         ]);
 
         // Create Tenant DB and Run Migrations
@@ -97,10 +104,29 @@ class CoachingController extends Controller
             'mobile' => 'required|string|regex:/^[0-9]{10}$/',
             'state' => 'required|string|max:100',
             'gst_number' => 'nullable|string|regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/',
-            'subscription_plan' => 'required|string|max:100',
+            'subscription_plan' => 'required|string|in:monthly,quarterly,half-yearly,annual',
         ]);
 
-        $coaching->update($request->only('coaching_name', 'address', 'owner_name', 'email', 'mobile', 'state', 'gst_number', 'subscription_plan'));
+        $expiryDate = $coaching->expiry_date ? \Carbon\Carbon::parse($coaching->expiry_date) : now();
+        if ($request->subscription_plan != $coaching->subscription_plan) {
+            $expiryDate = now();
+            if ($request->subscription_plan == 'monthly') $expiryDate = $expiryDate->addMonth();
+            elseif ($request->subscription_plan == 'quarterly') $expiryDate = $expiryDate->addMonths(3);
+            elseif ($request->subscription_plan == 'half-yearly') $expiryDate = $expiryDate->addMonths(6);
+            elseif ($request->subscription_plan == 'annual') $expiryDate = $expiryDate->addYear();
+        }
+
+        $coaching->update([
+            'coaching_name' => $request->coaching_name,
+            'address' => $request->address,
+            'owner_name' => $request->owner_name,
+            'email' => $request->email,
+            'mobile' => $request->mobile,
+            'state' => $request->state,
+            'gst_number' => $request->gst_number,
+            'subscription_plan' => $request->subscription_plan,
+            'expiry_date' => $expiryDate,
+        ]);
 
         // Also update user email if exists
         $user = User::where('email', $request->email)->first();

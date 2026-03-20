@@ -36,7 +36,10 @@
                                 </div>
                                 <div>
                                     <div class="fw-bold text-dark">{{ $coaching->coaching_name }}</div>
-                                    <div class="text-muted small">Plan: {{ ucfirst($coaching->subscription_plan) }}</div>
+                                    <div class="text-muted small">
+                                        <span class="badge bg-soft-indigo text-indigo border border-indigo border-opacity-10 px-2 text-uppercase" style="font-size: 0.65rem;">{{ $coaching->subscription_plan }}</span>
+                                        <span class="ms-1"><i class="far fa-calendar-alt me-1"></i>Expires: {{ $coaching->expiry_date ? \Carbon\Carbon::parse($coaching->expiry_date)->format('d M, Y') : 'N/A' }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </td>

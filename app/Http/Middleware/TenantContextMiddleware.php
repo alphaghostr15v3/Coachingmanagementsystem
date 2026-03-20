@@ -37,6 +37,12 @@ class TenantContextMiddleware
             }
 
             if ($coaching) {
+                // Check Subscription Expiry
+                if ($coaching->expiry_date && \Carbon\Carbon::parse($coaching->expiry_date)->isPast()) {
+                    auth()->logout();
+                    return redirect()->route('login')->withErrors(['email' => 'Your subscription has expired. Please contact the administrator to renew.']);
+                }
+
                 if ($coaching->status === 'active') {
                     \App\Services\TenantService::switchToTenant($coaching);
                     view()->share('currentCoaching', $coaching);
