@@ -4,7 +4,10 @@
 <div class="d-flex justify-content-between align-items-center mb-4 animate__animated animate__fadeIn">
     <div>
         <h2 class="fw-bold">My Attendance Record</h2>
-        <p class="text-muted">View your daily presence status.</p>
+        <p class="text-muted">View your daily presence status. 
+            <span class="badge bg-soft-info text-info ms-2">{{ $attendancePercentage }}% Attendance</span>
+            <span class="badge bg-soft-success text-success ms-1">{{ $presentCount }} / {{ $totalDays }} Days</span>
+        </p>
     </div>
     
     <div class="card border-0 shadow-sm">
@@ -46,6 +49,10 @@
                         <td class="text-center">
                             @if($record->status === 'present')
                                 <span class="badge bg-soft-success text-success px-3 py-2 rounded-pill">Present</span>
+                            @elseif($record->status === 'late')
+                                <span class="badge bg-soft-warning text-warning px-3 py-2 rounded-pill">Late</span>
+                            @elseif($record->status === 'half_day')
+                                <span class="badge bg-soft-info text-info px-3 py-2 rounded-pill">Half Day</span>
                             @else
                                 <span class="badge bg-soft-danger text-danger px-3 py-2 rounded-pill">Absent</span>
                             @endif
@@ -65,5 +72,7 @@
 <style>
     .bg-soft-success { background: rgba(16, 185, 129, 0.1); }
     .bg-soft-danger { background: rgba(239, 68, 68, 0.1); }
+    .bg-soft-warning { background: rgba(245, 158, 11, 0.1); }
+    .bg-soft-info { background: rgba(14, 165, 233, 0.1); }
 </style>
 @endsection

@@ -17,10 +17,37 @@ class DashboardController extends Controller
         // Since students are in tenant DB, we find the student record by email
         $student = \App\Models\Student::where('email', $user->email)->first();
         
-        $marks = $student ? Mark::where('student_id', $student->id)->latest()->take(5)->get() : [];
+        $marks = $student ? Mark::with('exam.course')->where('student_id', $student->id)->latest()->take(5)->get() : [];
         $notices = Notice::latest()->take(5)->get();
         
-        return view('student.dashboard', compact('marks', 'notices', 'student'));
+        // Calculate attendance for current month
+        $attendancePercentage = 0;
+        $totalPresentDays = 0;
+        if ($student) {
+            $currentMonth = date('m');
+            $currentYear = date('Y');
+            
+            $totalAttendance = Attendance::where('student_id', $student->id)
+                ->whereMonth('date', $currentMonth)
+                ->whereYear('date', $currentYear)
+                ->count();
+            
+            if ($totalAttendance > 0) {
+                $presentCount = Attendance::where('student_id', $student->id)
+                    ->whereMonth('date', $currentMonth)
+                    ->whereYear('date', $currentYear)
+                    ->whereIn('status', ['present', 'late', 'half_day'])
+                    ->count();
+                
+                $attendancePercentage = round(($presentCount / $totalAttendance) * 100);
+            }
+            
+            $totalPresentDays = Attendance::where('student_id', $student->id)
+                ->whereIn('status', ['present', 'late', 'half_day'])
+                ->count();
+        }
+        
+        return view('student.dashboard', compact('marks', 'notices', 'student', 'attendancePercentage', 'totalPresentDays'));
     }
 
     public function attendance(Request $request)
@@ -37,7 +64,16 @@ class DashboardController extends Controller
             ->latest()
             ->get() : [];
 
-        return view('student.attendance.index', compact('attendance', 'month', 'year'));
+        $attendancePercentage = 0;
+        $presentCount = 0;
+        $totalDays = count($attendance);
+        
+        if ($totalDays > 0) {
+            $presentCount = $attendance->whereIn('status', ['present', 'late', 'half_day'])->count();
+            $attendancePercentage = round(($presentCount / $totalDays) * 100);
+        }
+
+        return view('student.attendance.index', compact('attendance', 'month', 'year', 'attendancePercentage', 'presentCount', 'totalDays'));
     }
 
     public function marks()

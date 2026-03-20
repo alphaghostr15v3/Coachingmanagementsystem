@@ -32,18 +32,9 @@
                 <div class="progress-bar bg-info" role="progressbar" style="width: {{ $mark->marks_obtained }}%"></div>
             </div>
 
-            @php
-                $grade = 'F';
-                if($mark->marks_obtained >= 90) $grade = 'A+';
-                elseif($mark->marks_obtained >= 80) $grade = 'A';
-                elseif($mark->marks_obtained >= 70) $grade = 'B';
-                elseif($mark->marks_obtained >= 60) $grade = 'C';
-                elseif($mark->marks_obtained >= 33) $grade = 'D';
-            @endphp
-            
             <div class="d-flex justify-content-between align-items-center">
-                <span class="text-secondary small">Grade: <span class="fw-bold text-dark">{{ $grade }}</span></span>
-                <span class="text-{{ $mark->marks_obtained >= 33 ? 'success' : 'danger' }} fw-bold small">
+                <span class="text-secondary small">Grade: <span class="fw-bold text-dark">{{ $mark->grade }}</span></span>
+                <span class="text-{{ $mark->grade_color }} fw-bold small">
                     {{ $mark->marks_obtained >= 33 ? 'QUALIFIED' : 'FAILED' }}
                 </span>
             </div>
