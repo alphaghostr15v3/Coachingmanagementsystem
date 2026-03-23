@@ -78,7 +78,13 @@
                                 <div class="col-7 text-dark fw-bold small">
                                     @php $batch = $student->batches->first(); @endphp
                                     <span class="text-truncate d-block">{{ $batch->name ?? 'Regular' }}</span>
-                                    <span class="x-small text-muted">{{ $batch->class_time ?? 'N/A' }}</span>
+                                    <span class="x-small text-muted">
+                                        @if($batch && $batch->start_time && $batch->end_time)
+                                            {{ \Carbon\Carbon::parse($batch->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($batch->end_time)->format('h:i A') }}
+                                        @else
+                                            {{ $batch->class_time ?? 'N/A' }}
+                                        @endif
+                                    </span>
                                 </div>
                             </div>
                             <div class="row gx-1 mb-0">
@@ -202,13 +208,28 @@
     }
 
     @media print {
-        .no-print { display: none !important; }
+        .sidebar, .topbar, footer, .no-print { display: none !important; }
+        .main-wrapper { margin: 0 !important; padding: 0 !important; }
+        .main-content { padding: 0 !important; margin: 0 !important; }
         body { background: white !important; }
-        .container { padding: 0 !important; }
+        .container { 
+            padding: 0 !important; 
+            margin: 0 !important;
+            max-width: none !important; 
+            width: 100% !important;
+        }
+        .id-card-wrapper {
+            margin: 0 !important;
+            padding: 0 !important;
+            display: flex !important;
+            justify-content: center !important;
+        }
         .id-card-main {
             box-shadow: none !important;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #eee !important;
             -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            margin-top: 0 !important;
         }
         .id-card-header, .id-card-footer {
             -webkit-print-color-adjust: exact;
