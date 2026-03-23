@@ -88,6 +88,16 @@ class StudentController extends Controller
     }
 
     /**
+     * Display the student ID card.
+     */
+    public function idCard(Student $student)
+    {
+        $coaching = auth()->user()->coaching ?? \App\Models\Coaching::where('email', auth()->user()->email)->first();
+        $student->load(['course', 'batches']);
+        return view('coaching.students.id_card', compact('student', 'coaching'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Student $student)

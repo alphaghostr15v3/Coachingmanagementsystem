@@ -41,6 +41,7 @@ Route::middleware(['auth', 'role:super_admin'])->prefix('admin')->name('admin.')
 Route::middleware(['auth', 'role:coaching_admin'])->prefix('coaching')->name('coaching.')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\CoachingAdmin\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('students', \App\Http\Controllers\CoachingAdmin\StudentController::class);
+    Route::get('students/{student}/id-card', [\App\Http\Controllers\CoachingAdmin\StudentController::class, 'idCard'])->name('students.id-card');
     Route::resource('teachers', \App\Http\Controllers\CoachingAdmin\TeacherController::class);
     Route::resource('faculties', \App\Http\Controllers\CoachingAdmin\FacultyController::class);
     Route::resource('departments', \App\Http\Controllers\CoachingAdmin\DepartmentController::class);

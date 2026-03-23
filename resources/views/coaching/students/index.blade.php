@@ -58,6 +58,9 @@
                                 <a href="{{ route('coaching.students.edit', $student) }}" class="btn btn-sm btn-outline-warning rounded-3" title="Edit Profile">
                                     <i class="fas fa-edit"></i>
                                 </a>
+                                <a href="{{ route('coaching.students.id-card', $student) }}" class="btn btn-sm btn-outline-info rounded-3" title="Student ID Card">
+                                    <i class="fas fa-id-card"></i>
+                                </a>
                                 <form action="{{ route('coaching.students.destroy', $student) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this student?')">
                                     @csrf
                                     @method('DELETE')

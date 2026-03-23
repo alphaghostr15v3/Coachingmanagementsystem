@@ -54,6 +54,12 @@
                             </div>
 
                             <div class="col-md-6">
+                                <label class="form-label fw-semibold">Contact Number</label>
+                                <input type="text" name="mobile" class="form-control rounded-3" value="{{ old('mobile', $currentCoaching->mobile) }}" required placeholder="e.g. +91 98765 43210">
+                                @error('mobile') <small class="text-danger">{{ $message }}</small> @enderror
+                            </div>
+
+                            <div class="col-md-6">
                                 <label class="form-label fw-semibold">Institute State (for GST)</label>
                                 <select name="state" class="form-select rounded-3" required>
                                     <option value="">Select State</option>

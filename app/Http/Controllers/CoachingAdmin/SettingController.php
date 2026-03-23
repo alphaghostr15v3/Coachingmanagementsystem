@@ -24,6 +24,7 @@ class SettingController extends Controller
             'address' => 'nullable|string',
             'state' => 'required|string|max:100',
             'gst_number' => 'nullable|string|max:20',
+            'mobile' => 'required|string|max:20',
             'authorized_signatory' => 'nullable|string|max:255',
             'signatory_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -31,6 +32,7 @@ class SettingController extends Controller
 
         $data = [
             'coaching_name' => $validated['coaching_name'],
+            'mobile' => $validated['mobile'],
             'address' => $validated['address'],
             'state' => $validated['state'],
             'gst_number' => $validated['gst_number'],
