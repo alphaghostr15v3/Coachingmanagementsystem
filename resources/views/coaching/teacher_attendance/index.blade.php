@@ -126,7 +126,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($attendances as $attendance)
+                    @foreach($attendances as $attendance)
                     <tr class="transition">
                         <td class="ps-4">
                             <div class="d-flex align-items-center">
@@ -176,17 +176,7 @@
                             </form>
                         </td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="5" class="text-center py-5 text-muted">
-                            <div class="opacity-50 mb-3">
-                                <i class="fas fa-clipboard-list fa-3x"></i>
-                            </div>
-                            <p class="mb-0">No attendance records found for the selected criteria.</p>
-                            <a href="{{ route('coaching.teacher-attendance.create', ['date' => $date]) }}" class="text-primary fw-bold text-decoration-none small mt-2 d-inline-block">Mark Attendance Now</a>
-                        </td>
-                    </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -204,7 +194,14 @@
                 paginate: {
                     next: '<i class="fas fa-chevron-right"></i>',
                     previous: '<i class="fas fa-chevron-left"></i>'
-                }
+                },
+                emptyTable: `<div class="text-center py-5 text-muted">
+                    <div class="opacity-50 mb-3">
+                        <i class="fas fa-clipboard-list fa-3x"></i>
+                    </div>
+                    <p class="mb-0">No attendance records found for the selected criteria.</p>
+                    <a href="{{ route('coaching.teacher-attendance.create', ['date' => $date]) }}" class="text-primary fw-bold text-decoration-none small mt-2 d-inline-block">Mark Attendance Now</a>
+                </div>`
             }
         });
     });
