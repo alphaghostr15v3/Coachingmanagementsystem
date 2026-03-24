@@ -141,7 +141,7 @@
             font-weight: bold;
             font-size: 14px;
             color: #1a1c1e;
-            text-transform: lowercase;
+            text-transform: uppercase;
         }
         .signature-label {
             display: block;

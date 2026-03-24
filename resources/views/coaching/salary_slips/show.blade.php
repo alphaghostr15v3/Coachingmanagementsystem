@@ -339,7 +339,7 @@
         font-weight: 700;
         color: #1a1c1e;
         font-size: 14px;
-        text-transform: lowercase;
+        text-transform: uppercase;
     }
     .signature-label {
         font-size: 10px;
