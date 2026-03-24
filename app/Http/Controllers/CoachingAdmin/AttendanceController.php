@@ -67,10 +67,25 @@ class AttendanceController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        $students = Student::all();
-        return view('coaching.attendance.create', compact('students'));
+        $batches = Batch::with(['course', 'teacher'])->get();
+        $batch = null;
+        $students = collect();
+        $date = $request->get('date', date('Y-m-d'));
+        $existingAttendance = collect();
+
+        if ($request->filled('batch_id')) {
+            $batch = Batch::with('students')->find($request->batch_id);
+            if ($batch) {
+                $students = $batch->students;
+                $existingAttendance = Attendance::where('batch_id', $batch->id)
+                    ->where('date', $date)
+                    ->pluck('status', 'student_id');
+            }
+        }
+
+        return view('coaching.attendance.create', compact('batches', 'batch', 'students', 'date', 'existingAttendance'));
     }
 
     /**
@@ -79,6 +94,7 @@ class AttendanceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'batch_id' => 'required|exists:tenant.batches,id',
             'date' => 'required|date',
             'attendance' => 'required|array',
             'attendance.*' => 'required|in:present,absent',
@@ -86,7 +102,7 @@ class AttendanceController extends Controller
 
         foreach ($request->attendance as $studentId => $status) {
             Attendance::updateOrCreate(
-                ['student_id' => $studentId, 'date' => $request->date],
+                ['student_id' => $studentId, 'batch_id' => $request->batch_id, 'date' => $request->date],
                 ['status' => $status]
             );
         }

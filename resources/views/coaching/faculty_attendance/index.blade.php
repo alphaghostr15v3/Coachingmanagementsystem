@@ -16,50 +16,69 @@
     </div>
 </div>
 
-<!-- Summary Cards -->
 <div class="row g-4 mb-4 animate__animated animate__fadeInUp">
     <div class="col-md-2">
         <div class="card border-0 shadow-sm bg-gradient-info text-white h-100">
-            <div class="card-body p-3">
-                <h6 class="text-white text-opacity-75 small text-uppercase fw-bold mb-1">Total</h6>
-                <h3 class="fw-bold mb-0">{{ $totalRecords }}</h3>
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="avatar-sm bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                        <i class="fas fa-clipboard-list fs-4"></i>
+                    </div>
+                </div>
+                <h6 class="text-white text-opacity-75 small text-uppercase fw-bold mb-1">Total Records</h6>
+                <h3 class="display-6 fw-bold mb-0" style="font-size: 1.8rem;">{{ $totalRecords }}</h3>
             </div>
         </div>
     </div>
     <div class="col-md-2">
         <div class="card border-0 shadow-sm bg-gradient-success text-white h-100">
-            <div class="card-body p-3">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="avatar-sm bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                        <i class="fas fa-check-circle fs-4"></i>
+                    </div>
+                </div>
                 <h6 class="text-white text-opacity-75 small text-uppercase fw-bold mb-1">Present</h6>
-                <h3 class="fw-bold mb-0">{{ $presentCount }}</h3>
+                <h3 class="display-6 fw-bold mb-0" style="font-size: 1.8rem;">{{ $presentCount }}</h3>
             </div>
         </div>
     </div>
     <div class="col-md-2">
         <div class="card border-0 shadow-sm bg-gradient-danger text-white h-100">
-            <div class="card-body p-3">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="avatar-sm bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                        <i class="fas fa-times-circle fs-4"></i>
+                    </div>
+                </div>
                 <h6 class="text-white text-opacity-75 small text-uppercase fw-bold mb-1">Absent</h6>
-                <h3 class="fw-bold mb-0">{{ $absentCount }}</h3>
+                <h3 class="display-6 fw-bold mb-0" style="font-size: 1.8rem;">{{ $absentCount }}</h3>
             </div>
         </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
         <div class="card border-0 shadow-sm bg-gradient-warning text-white h-100">
-            <div class="card-body p-3">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="avatar-sm bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                        <i class="fas fa-clock fs-4"></i>
+                    </div>
+                </div>
                 <h6 class="text-white text-opacity-75 small text-uppercase fw-bold mb-1">Late/Leave</h6>
-                <h3 class="fw-bold mb-0">{{ $lateCount + $leaveCount }}</h3>
+                <h3 class="display-6 fw-bold mb-0" style="font-size: 1.8rem;">{{ $lateCount + $leaveCount }}</h3>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card border-0 shadow-sm bg-dark text-white h-100">
-            <div class="card-body p-3 d-flex align-items-center justify-content-between">
-                <div>
-                    <h6 class="text-white text-opacity-75 small text-uppercase fw-bold mb-1">Attendance Rate</h6>
-                    <h3 class="fw-bold mb-0">{{ $attendancePercentage }}%</h3>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm bg-gradient-primary text-white h-100" style="background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="avatar-sm bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                        <i class="fas fa-percentage fs-4"></i>
+                    </div>
                 </div>
-                <div class="chart-circle" style="width: 45px; height: 45px;">
-                    <i class="fas fa-chart-bar fa-2x opacity-25"></i>
-                </div>
+                <h6 class="text-white text-opacity-75 small text-uppercase fw-bold mb-1">Attendance Rate</h6>
+                <h3 class="display-6 fw-bold mb-0" style="font-size: 1.8rem;">{{ $attendancePercentage }}%</h3>
             </div>
         </div>
     </div>
@@ -113,26 +132,32 @@
 </div>
 
 <div class="card border-0 shadow-sm animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
-    <div class="card-body p-0">
+    <div class="card-body p-4">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0" id="attendanceTable">
                 <thead class="bg-light">
                     <tr>
-                        <th class="ps-4 py-3 text-secondary small text-uppercase">Faculty Detail</th>
-                        <th class="py-3 text-secondary small text-uppercase">Date</th>
-                        <th class="py-3 text-secondary small text-uppercase">Status</th>
-                        <th class="py-3 text-secondary small text-uppercase">Remarks</th>
-                        <th class="pe-4 py-3 text-secondary small text-uppercase text-end">Action</th>
+                        <th class="text-secondary small text-uppercase">#</th>
+                        <th class="text-secondary small text-uppercase">Faculty Detail</th>
+                        <th class="text-secondary small text-uppercase">Date</th>
+                        <th class="text-secondary small text-uppercase">Status</th>
+                        <th class="text-secondary small text-uppercase">Remarks</th>
+                        <th class="text-center text-secondary small text-uppercase">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($attendances as $attendance)
                     <tr class="transition">
-                        <td class="ps-4">
+                        <td class="text-secondary">{{ $loop->iteration }}</td>
+                        <td>
                             <div class="d-flex align-items-center">
-                                <div class="avatar-sm bg-soft-info text-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                                    <i class="fas fa-user-tie"></i>
-                                </div>
+                                @if($attendance->faculty->profile_image)
+                                    <img src="{{ asset($attendance->faculty->profile_image) }}" alt="{{ $attendance->faculty->name }}" class="rounded-circle shadow-sm me-3" style="width: 40px; height: 40px; object-fit: cover;">
+                                @else
+                                    <div class="avatar-sm bg-soft-info text-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                @endif
                                 <div>
                                     <div class="fw-bold text-dark">{{ $attendance->faculty->name }}</div>
                                     <div class="small text-muted">{{ $attendance->faculty->designation->title ?? 'Staff' }}</div>
@@ -147,30 +172,30 @@
                         <td>
                             @if($attendance->status == 'present')
                                 <span class="badge-soft bg-soft-success text-success px-3 py-2 rounded-pill fw-bold small">
-                                    <i class="fas fa-check-circle me-1"></i> Present
+                                    <i class="fas fa-check-circle me-1"></i> PRESENT
                                 </span>
                             @elseif($attendance->status == 'absent')
                                 <span class="badge-soft bg-soft-danger text-danger px-3 py-2 rounded-pill fw-bold small">
-                                    <i class="fas fa-times-circle me-1"></i> Absent
+                                    <i class="fas fa-times-circle me-1"></i> ABSENT
                                 </span>
                             @elseif($attendance->status == 'late')
                                 <span class="badge-soft bg-soft-warning text-warning px-3 py-2 rounded-pill fw-bold small">
-                                    <i class="fas fa-clock me-1"></i> Late
+                                    <i class="fas fa-clock me-1"></i> LATE
                                 </span>
                             @elseif($attendance->status == 'leave')
                                 <span class="badge-soft bg-soft-info text-info px-3 py-2 rounded-pill fw-bold small">
-                                    <i class="fas fa-envelope me-1"></i> Leave
+                                    <i class="fas fa-envelope me-1"></i> LEAVE
                                 </span>
                             @endif
                         </td>
                         <td class="text-muted small">
                             {{ $attendance->remarks ?? '---' }}
                         </td>
-                        <td class="pe-4 text-end">
+                        <td class="text-center">
                             <form action="{{ route('coaching.faculty-attendance.destroy', $attendance) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-link text-danger p-0" onclick="return confirm('Are you sure you want to delete this record?')">
+                                <button type="submit" class="btn btn-sm btn-outline-danger border-0 rounded-circle" title="Delete Entry" style="width: 32px; height: 32px;" onclick="return confirm('Are you sure you want to delete this record?')">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </form>

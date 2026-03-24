@@ -149,9 +149,13 @@
                         <td class="text-secondary">{{ $loop->iteration }}</td>
                         <td>
                             <div class="d-flex align-items-center">
-                                <div class="avatar-xs bg-soft-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; font-size: 0.9rem;">
-                                    <i class="fas fa-user text-primary"></i>
-                                </div>
+                                @if($attendance->student->profile_image)
+                                    <img src="{{ asset($attendance->student->profile_image) }}" alt="Profile" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">
+                                @else
+                                    <div class="avatar-xs bg-soft-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; font-size: 0.9rem;">
+                                        <i class="fas fa-user text-primary"></i>
+                                    </div>
+                                @endif
                                 <div>
                                     <span class="fw-bold text-dark d-block">{{ $attendance->student->name }}</span>
                                     <span class="text-muted small">{{ $attendance->student->email }}</span>

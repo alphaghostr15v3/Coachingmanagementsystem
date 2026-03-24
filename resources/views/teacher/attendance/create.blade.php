@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="mb-4 animate__animated animate__fadeIn">
-    <h2 class="fw-bold">Mark Attendance: {{ $batch->name }}</h2>
+    <h2 class="fw-bold">Mark Attendance: {{ $batch->name }} {{ $batch->course ? '- ' . $batch->course->name : '' }}</h2>
     <p class="text-muted">Select students to mark them present/absent for today.</p>
 </div>
 
@@ -14,7 +14,7 @@
             
             <div class="mb-4">
                 <label class="form-label fw-bold small text-uppercase text-secondary">Attendance Date</label>
-                <input type="date" name="date" class="form-control form-control-lg border-0 bg-light rounded-4 w-auto" value="{{ date('Y-m-d') }}" required>
+                <input type="date" name="date" class="form-control form-control-lg border-0 bg-light rounded-4 w-auto" value="{{ $date }}" onchange="window.location.href='{{ route('teacher.attendance.create') }}?batch_id={{ $batch->id }}&date='+this.value" required>
             </div>
 
             <div class="table-responsive">
@@ -34,11 +34,11 @@
                             <td>
                                 <div class="d-flex justify-content-center gap-3">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="status[{{ $student->id }}]" id="p{{ $student->id }}" value="present" checked>
+                                        <input class="form-check-input" type="radio" name="status[{{ $student->id }}]" id="p{{ $student->id }}" value="present" {{ ($existingAttendance->get($student->id) ?? 'present') === 'present' ? 'checked' : '' }}>
                                         <label class="form-check-label text-success fw-bold" for="p{{ $student->id }}">Present</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="status[{{ $student->id }}]" id="a{{ $student->id }}" value="absent">
+                                        <input class="form-check-input" type="radio" name="status[{{ $student->id }}]" id="a{{ $student->id }}" value="absent" {{ ($existingAttendance->get($student->id)) === 'absent' ? 'checked' : '' }}>
                                         <label class="form-check-label text-danger fw-bold" for="a{{ $student->id }}">Absent</label>
                                     </div>
                                 </div>

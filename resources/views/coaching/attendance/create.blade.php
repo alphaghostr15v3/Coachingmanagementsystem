@@ -18,16 +18,38 @@
     </div>
 </div>
 
+<div class="card border-0 shadow-sm animate__animated animate__fadeInUp mb-4">
+    <div class="card-body p-4 p-md-5">
+        <form action="{{ route('coaching.attendance.create') }}" method="GET">
+            <div class="row align-items-end">
+                <div class="col-md-5">
+                    <label for="batch_id" class="form-label fw-bold small text-uppercase text-secondary">Select Batch <span class="text-danger">*</span></label>
+                    <select name="batch_id" id="batch_id" class="form-select form-select-lg border-0 bg-light rounded-4" onchange="this.form.submit()" required>
+                        <option value="">-- Choose Batch --</option>
+                        @foreach($batches as $b)
+                            <option value="{{ $b->id }}" {{ (isset($batch) && $batch->id == $b->id) ? 'selected' : '' }}>{{ $b->name }} {{ $b->course ? ' - ' . $b->course->name : '' }} {{ $b->teacher ? ' (' . $b->teacher->name . ')' : '' }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4 mt-3 mt-md-0">
+                    <label for="date_filter" class="form-label fw-bold small text-uppercase text-secondary">Attendance Date</label>
+                    <input type="date" name="date" id="date_filter" class="form-control form-control-lg border-0 bg-light rounded-4" value="{{ $date }}" onchange="this.form.submit()">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if(isset($batch))
 <div class="card border-0 shadow-sm animate__animated animate__fadeInUp">
     <div class="card-body p-4 p-md-5">
         <form action="{{ route('coaching.attendance.store') }}" method="POST">
             @csrf
+            <input type="hidden" name="batch_id" value="{{ $batch->id }}">
+            <input type="hidden" name="date" value="{{ $date }}">
+
             <div class="row mb-5 align-items-end">
-                <div class="col-md-4">
-                    <label for="date" class="form-label fw-bold small text-uppercase text-secondary">Attendance Date <span class="text-danger">*</span></label>
-                    <input type="date" name="date" id="date" class="form-control form-control-lg border-0 bg-light rounded-4" value="{{ date('Y-m-d') }}" required>
-                </div>
-                <div class="col-md-8 text-md-end mt-3 mt-md-0">
+                <div class="col-md-12 text-md-end mt-3 mt-md-0">
                     <p class="text-muted small m-0">Tip: Select "Absent" only for students who are not present today.</p>
                 </div>
             </div>
@@ -47,20 +69,24 @@
                             <td class="text-secondary ps-4">{{ $loop->iteration }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <div class="avatar-xs bg-soft-primary text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 35px; height: 35px;">
-                                        <i class="fas fa-user"></i>
-                                    </div>
+                                    @if($student->profile_image)
+                                        <img src="{{ asset($student->profile_image) }}" alt="Profile" class="rounded-circle me-3" style="width: 35px; height: 35px; object-fit: cover;">
+                                    @else
+                                        <div class="avatar-xs bg-soft-primary text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 35px; height: 35px;">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                    @endif
                                     <span class="fw-bold text-dark">{{ $student->name }}</span>
                                 </div>
                             </td>
                             <td class="text-center pe-4">
                                 <div class="btn-group w-100 p-1 bg-light rounded-4 border" role="group">
-                                    <input type="radio" class="btn-check" name="attendance[{{ $student->id }}]" id="present_{{ $student->id }}" value="present" checked autocomplete="off">
+                                    <input type="radio" class="btn-check" name="attendance[{{ $student->id }}]" id="present_{{ $student->id }}" value="present" {{ ($existingAttendance->get($student->id) ?? 'present') === 'present' ? 'checked' : '' }} autocomplete="off">
                                     <label class="btn btn-outline-success border-0 rounded-4 fw-bold py-2" for="present_{{ $student->id }}">
                                         <i class="fas fa-check-circle me-1"></i> PRESENT
                                     </label>
 
-                                    <input type="radio" class="btn-check" name="attendance[{{ $student->id }}]" id="absent_{{ $student->id }}" value="absent" autocomplete="off">
+                                    <input type="radio" class="btn-check" name="attendance[{{ $student->id }}]" id="absent_{{ $student->id }}" value="absent" {{ ($existingAttendance->get($student->id)) === 'absent' ? 'checked' : '' }} autocomplete="off">
                                     <label class="btn btn-outline-danger border-0 rounded-4 fw-bold py-2" for="absent_{{ $student->id }}">
                                         <i class="fas fa-times-circle me-1"></i> ABSENT
                                     </label>
@@ -89,6 +115,7 @@
         </form>
     </div>
 </div>
+@endif
 
 <style>
     .btn-check:checked + .btn-outline-success { background-color: #10b981 !important; color: #fff !important; }

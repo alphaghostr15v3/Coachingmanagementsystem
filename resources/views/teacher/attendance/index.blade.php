@@ -29,14 +29,23 @@
                     <tr>
                         <td class="ps-4 py-3">
                             <div class="d-flex align-items-center">
-                                <div class="bg-soft-primary p-2 rounded-3 text-primary me-3">
-                                    <i class="fas fa-user-graduate"></i>
+                                <div class="bg-soft-primary rounded-circle text-primary me-3 flex-shrink-0 overflow-hidden" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(79, 70, 229, 0.2);">
+                                    @if($attendance->student->profile_image)
+                                        <img src="{{ asset($attendance->student->profile_image) }}" alt="{{ $attendance->student->name }}" class="img-fluid h-100 w-100 object-fit-cover">
+                                    @else
+                                        <i class="fas fa-user-graduate"></i>
+                                    @endif
                                 </div>
                                 <span class="fw-bold text-dark">{{ $attendance->student->name }}</span>
                             </div>
                         </td>
                         <td>
-                            <span class="badge bg-soft-info text-info rounded-pill px-3">{{ $attendance->batch->name ?? 'N/A' }}</span>
+                            <span class="badge bg-soft-info text-info rounded-pill px-3">
+                                {{ $attendance->batch->name ?? 'N/A' }} 
+                                @if(isset($attendance->batch->course))
+                                    - {{ $attendance->batch->course->name }}
+                                @endif
+                            </span>
                         </td>
                         <td class="text-center">
                             <span class="text-muted small fw-medium">{{ date('d M, Y', strtotime($attendance->date)) }}</span>

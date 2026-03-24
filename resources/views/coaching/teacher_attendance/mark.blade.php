@@ -51,9 +51,13 @@
                             <td class="ps-4 text-secondary small">{{ $loop->iteration }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <div class="avatar-xs bg-soft-primary text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 35px; height: 35px;">
-                                        <i class="fas fa-user-tie"></i>
-                                    </div>
+                                    @if($teacher->profile_image)
+                                        <img src="{{ asset($teacher->profile_image) }}" alt="Profile" class="rounded-circle me-3" style="width: 35px; height: 35px; object-fit: cover;">
+                                    @else
+                                        <div class="avatar-xs bg-soft-primary text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 35px; height: 35px;">
+                                            <i class="fas fa-user-tie"></i>
+                                        </div>
+                                    @endif
                                     <div>
                                         <div class="fw-bold text-dark">{{ $teacher->name }}</div>
                                         <div class="small text-muted">{{ $teacher->subject }}</div>

@@ -43,15 +43,21 @@ class AttendanceController extends Controller
 
     public function index()
     {
-        $attendances = Attendance::with(['student', 'batch'])->latest()->take(100)->get();
+        $attendances = Attendance::with(['student', 'batch.course'])->latest()->take(100)->get();
         return view('teacher.attendance.index', compact('attendances'));
     }
 
     public function create(Request $request)
     {
-        $batch = Batch::with('students')->findOrFail($request->batch_id);
+        $batch = Batch::with(['students', 'course'])->findOrFail($request->batch_id);
         $students = $batch->students; 
-        return view('teacher.attendance.create', compact('batch', 'students'));
+        $date = $request->get('date', date('Y-m-d'));
+        
+        $existingAttendance = Attendance::where('batch_id', $batch->id)
+            ->where('date', $date)
+            ->pluck('status', 'student_id');
+
+        return view('teacher.attendance.create', compact('batch', 'students', 'date', 'existingAttendance'));
     }
 
     public function store(Request $request)
